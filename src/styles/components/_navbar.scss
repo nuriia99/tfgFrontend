@@ -1,0 +1,40 @@
+.navbar{
+  height: 3.125rem;
+  width: 100%;
+  background-color: $BlueIcs;
+  display: flex;
+  align-items: center;
+  &_container{
+    padding: 0 2.5rem;
+    height: 100%;
+    width: 100%;
+    max-width: 90rem;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    box-sizing: border-box;
+    
+    &_items{
+      display: flex;
+    }
+
+    &_item{
+      padding: 0 0.1875rem;
+      padding-bottom: 0.25rem;
+      margin: 0;
+      font-weight: 500;
+      font-size: 0.9375rem;
+      color: $LightBlack;
+    }
+
+    .buttonSettings{
+      padding: 0 0.625rem;
+      margin: 0;
+      color: white;
+      height: 1.5625rem;
+      width: 1.5625rem;
+    }
+  }
+  
+
+}
