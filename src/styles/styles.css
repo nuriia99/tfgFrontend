@@ -37,4 +37,84 @@ body, html {
   color: white;
   height: 1.5625rem;
   width: 1.5625rem;
+}
+
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background: linear-gradient(126deg, rgb(213, 255, 255) 25%, rgb(126, 199, 255) 100%);
+}
+.login_container {
+  background-color: white;
+  height: 250px;
+  width: 300px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+}
+.login_container h3 {
+  text-align: center;
+  color: black;
+}
+.login_container_input {
+  position: relative;
+  width: 80%;
+}
+.login_container_input input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid rgb(126, 199, 255);
+  border-radius: 5px;
+  outline: none;
+  color: black;
+  font-size: 1em;
+}
+.login_container_input span {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  padding: 10px;
+  pointer-events: none;
+  font-size: 1em;
+  color: rgb(68, 68, 68);
+  text-transform: uppercase;
+  transition: 0.5s;
+}
+.login_container_input input:valid ~ span, .login_container_input input:focus ~ span {
+  color: rgb(126, 199, 255);
+  transform: translateX(10px) translateY(-7px);
+  font-size: 0.65em;
+  padding: 0 10px;
+  background-color: white;
+}
+.login_container_button {
+  padding: 15px 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.login_container_button button {
+  width: 80%;
+  height: 50px;
+  font-size: 14px;
+  background: rgb(126, 199, 255);
+  border-radius: 25px;
+  border: 0;
+  color: black;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+  transition: background 0.5s ease-in-out;
+}
+.login_container_button button:hover {
+  background: rgb(166, 217, 255);
 }/*# sourceMappingURL=styles.css.map */
