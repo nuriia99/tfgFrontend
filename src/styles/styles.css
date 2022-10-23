@@ -90,11 +90,14 @@ body, html {
   transition: 0.5s;
 }
 .login_container_input input:valid ~ span, .login_container_input input:focus ~ span {
-  color: rgb(126, 199, 255);
+  color: black;
   transform: translateX(10px) translateY(-7px);
-  font-size: 0.65em;
+  font-size: 11px;
   padding: 0 10px;
   background-color: white;
+  border-left: 1px solid rgb(126, 199, 255);
+  border-right: 1px solid rgb(126, 199, 255);
+  letter-spacing: 0.1em;
 }
 .login_container_button {
   padding: 15px 0;

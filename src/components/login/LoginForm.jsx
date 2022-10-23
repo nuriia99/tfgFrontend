@@ -1,6 +1,11 @@
 import React from 'react'
 
-const Navbar = () => {
+const LoginForm = () => {
+  const handleClick = (e) => {
+    console.log(e)
+  }
+
+
   return (
       <div className="login">
         <div className="login_container">
@@ -13,11 +18,11 @@ const Navbar = () => {
             <span>Usuario</span>
           </div>
           <div className="login_container_input">
-            <input type="text" name="" id="" required="required"/>
+            <input type="password" name="" id="" required="required"/>
             <span>Contraseña</span>
           </div>
           <div className="login_container_button">
-           <button type="submit">Iniciar sesión</button>
+           <button onClick={handleClick}>Iniciar sesión</button>
           </div>
           
         </div>
@@ -25,4 +30,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default LoginForm

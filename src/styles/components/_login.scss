@@ -47,12 +47,17 @@
         transition: 0.5s
       }
       input:valid ~ span, input:focus ~ span {
-        color: $BlueIcs;
+        color: black;
         transform: translateX(10px) translateY(-7px);
-        font-size: 0.65em;
+        font-size: 11px;
         padding: 0 10px;
         background-color: white;
+        border-left: 1px solid $BlueIcs;
+        border-right: 1px solid $BlueIcs;
+        letter-spacing: 0.1em;
+
       }
+
     }
     &_button{
       padding: 15px 0;
