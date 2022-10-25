@@ -1,0 +1,33 @@
+.settings{
+  padding: 60px;
+  box-sizing: border-box;
+  min-height: 100vh;
+  background-color: $BlueIcsLight;
+  display: flex;
+  flex-direction: column;
+  &_container{
+    margin: 10px 0;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    &_item{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 50px;  
+      background-color: $BlueIcsLight2;
+      border: 1px solid white;
+      border-bottom: 0;
+      &:is(:first-child){
+        border-radius: 6px 6px 0 0;
+      }
+      &:is(:last-child){
+        border-radius: 0 0 6px 6px;
+        border-bottom: 1px solid white;
+      }
+
+      
+    }
+  }
+  
+}

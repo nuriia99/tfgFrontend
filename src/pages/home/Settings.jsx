@@ -1,11 +1,11 @@
 import React from 'react'
-import Login from '../../components/login/LoginForm'
+import ProfileSettings from '../../components/home/ProfileSettings'
 
 const Settings = () => {
   return (
-      <div>
-        <Login />
-      </div>
+      <>
+        <ProfileSettings />
+      </>
   )
 }
 

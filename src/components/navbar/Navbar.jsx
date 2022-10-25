@@ -3,6 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGear } from '@fortawesome/free-solid-svg-icons'
 
 const Navbar = () => {
+
+  const p = '\u00a1Eso es una prueba! Esto esta escrito en catal\u00e0.!'
+  console.log(p)
   return (
       <div className='navbar'>
         <div className="navbar_container">

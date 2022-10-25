@@ -3,6 +3,74 @@ body, html {
   font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
 }
 
+.select {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  padding: 20px 0;
+}
+.select_title {
+  padding: 10px 24px;
+  cursor: pointer;
+  background: rgb(166, 217, 255);
+  border-radius: 8px;
+  color: black;
+  position: relative;
+  order: 0;
+}
+.select_title::after {
+  content: "";
+  background-image: url("../images/arrow-down-solid.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  right: 20px;
+  top: 10px;
+  transition: all 0.4s;
+}
+.select_container {
+  background-color: rgb(166, 217, 255);
+  color: black;
+  max-height: 0;
+  width: 100%;
+  opacity: 0;
+  transition: all 0.4s;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.select_container.active {
+  max-height: 150px;
+  opacity: 1;
+  overflow-y: scroll;
+}
+.select_container::-webkit-scrollbar {
+  width: 8px;
+  background: rgb(126, 199, 255);
+  border-radius: 0 8px 8px 0;
+}
+.select_container::-webkit-scrollbar-thumb {
+  background: white;
+  border-radius: 0 8px 8px 0;
+}
+.select_container .option {
+  padding: 10px 24px;
+  cursor: pointer;
+}
+.select_container .option .radio {
+  display: none;
+}
+.select_container .option:hover {
+  background: rgb(197, 230, 255);
+}
+.select_container label {
+  cursor: pointer;
+}
+.select .select_container.active + .select_title::after {
+  transform: rotateX(180deg);
+}
+
 .navbar {
   height: 3.125rem;
   width: 100%;
@@ -120,4 +188,35 @@ body, html {
 }
 .login_container_button button:hover {
   background: rgb(166, 217, 255);
+}
+
+.settings {
+  padding: 60px;
+  box-sizing: border-box;
+  min-height: 100vh;
+  background-color: rgb(166, 217, 255);
+  display: flex;
+  flex-direction: column;
+}
+.settings_container {
+  margin: 10px 0;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+}
+.settings_container_item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 50px;
+  background-color: rgb(197, 230, 255);
+  border: 1px solid white;
+  border-bottom: 0;
+}
+.settings_container_item:is(:first-child) {
+  border-radius: 6px 6px 0 0;
+}
+.settings_container_item:is(:last-child) {
+  border-radius: 0 0 6px 6px;
+  border-bottom: 1px solid white;
 }/*# sourceMappingURL=styles.css.map */
