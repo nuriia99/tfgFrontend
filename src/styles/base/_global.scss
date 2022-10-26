@@ -88,3 +88,23 @@ body, html{
   }
 }
 
+
+//errors
+
+.error{
+  width: 80%;
+  height: 40px;
+  border-radius: 5px;
+  border: $RedError solid 1px;
+  background-color: $RedErrorLight;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &_message{
+    color: $RedError;
+    margin: 0;
+  }
+
+}

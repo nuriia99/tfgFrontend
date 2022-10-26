@@ -1,9 +1,15 @@
 import {React }from 'react'
 import Selector from './Selector'
+import { useGlobalContext } from '../../hooks/useGlobalContext'
 
 const ProfileSettings = () => {
 
   const opciones = ["opcion 1", "opcion 2", "opcion 3", "opcion 4", "opcion 4","opcion 4","opcion 4","opcion 4","opcion 4","opcion 4","opcion 4",]
+  const {reset} = useGlobalContext()
+
+  const handleLogout = () => {
+      reset()
+  }
 
   return (
       <div className='settings'>
@@ -25,6 +31,7 @@ const ProfileSettings = () => {
             </div>
             
           </div>
+          <button className='logout' onClick={handleLogout}><p className='logout_message'>Cerrar sesión</p></button>
         
       </div>
   )

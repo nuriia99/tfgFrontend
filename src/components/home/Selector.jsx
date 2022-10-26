@@ -1,6 +1,8 @@
-import {React, useState } from 'react'
+import {React, useState} from 'react'
+
 
 const ProfileSettings = ({currentSelect, options}) => {
+
   const [active, setActive] = useState(false)
   const handleClick = () => {
     setActive(!active)
@@ -13,11 +15,12 @@ const ProfileSettings = ({currentSelect, options}) => {
       <div className="select_title" onClick={handleClick}>{currentSelect}</div>
         <div className={active ? "select_container active" : "select_container"}>
           {
-            options.map(option => {
+            options.map((option, index) => {
+              
               return (
-                <div className="option">
+                <div key={index} className="option">
                   <input type="radio" className='radio' id={option}/>
-                  <label for={option}>{option}</label>
+                  <label>{option}</label>
                 </div>
               )
             })

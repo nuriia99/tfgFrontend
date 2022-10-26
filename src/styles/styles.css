@@ -71,6 +71,22 @@ body, html {
   transform: rotateX(180deg);
 }
 
+.error {
+  width: 80%;
+  height: 40px;
+  border-radius: 5px;
+  border: rgb(182, 0, 0) solid 1px;
+  background-color: rgb(255, 188, 188);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.error_message {
+  color: rgb(182, 0, 0);
+  margin: 0;
+}
+
 .navbar {
   height: 3.125rem;
   width: 100%;
@@ -117,7 +133,6 @@ body, html {
 }
 .login_container {
   background-color: white;
-  height: 250px;
   width: 300px;
   border-radius: 10px;
   display: flex;
@@ -219,4 +234,21 @@ body, html {
 .settings_container_item:is(:last-child) {
   border-radius: 0 0 6px 6px;
   border-bottom: 1px solid white;
+}
+
+.logout {
+  width: 20%;
+  height: 40px;
+  border-radius: 5px;
+  border: rgb(182, 0, 0) solid 1px;
+  background-color: rgb(255, 188, 188);
+  margin: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.logout_message {
+  color: rgb(182, 0, 0);
+  margin: 0;
 }/*# sourceMappingURL=styles.css.map */
