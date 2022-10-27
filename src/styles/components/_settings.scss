@@ -21,32 +21,46 @@
       &:is(:first-child){
         border-radius: 6px 6px 0 0;
       }
-      &:is(:last-child){
-        border-radius: 0 0 6px 6px;
-        border-bottom: 1px solid white;
-      }
 
       
     }
+    
+  }
+
+  &_submit{
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    padding: 0 50px;  
+    background-color: $BlueIcsLight2;
+    border: 1px solid white;
+    border-radius: 0 0 6px 6px;
+    border-bottom: 1px solid white;
+
+    
+  } 
+
+
+  .logout, &_submit_button{
+    width: 20%;
+      height: 40px;
+      border-radius: 5px;
+      border: $navyBlue solid 1px;
+      background-color: $navyBlueLight;
+      margin: 20px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    
+      &_message{
+        color: white;
+        margin: 0;
+        font-weight: 700;
+      }
   }
 
   
 }
 
-.logout{
-  width: 20%;
-  height: 40px;
-  border-radius: 5px;
-  border: $RedError solid 1px;
-  background-color: $RedErrorLight;
-  margin: 20px 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
 
-  &_message{
-    color: $RedError;
-    margin: 0;
-  }
-}

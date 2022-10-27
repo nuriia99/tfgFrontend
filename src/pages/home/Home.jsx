@@ -11,7 +11,7 @@ const Home = () => {
   useEffect(() => {
     if(error) navigate('/login')
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading])
+  }, [error])
   const {worker} = globalData
 
   return (

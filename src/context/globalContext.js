@@ -4,7 +4,7 @@ import { createContext, useEffect, useReducer } from "react";
 const INITIAL_STATE = {
   worker: null,
   token: null,
-  lenguage: 'es',
+  lenguage: null,
   center: null,
   role: null
 }
@@ -20,7 +20,7 @@ export const globalReducer = (state, action) => {
     case 'UPDATECENTER':
       return {...state, center:action.payload}
     case 'UPDATEROLE':
-      return {...state, rol:action.payload}
+      return {...state, role:action.payload}
     case 'RESET':
       return INITIAL_STATE
     default:

@@ -41,6 +41,7 @@ body, html {
   overflow: hidden;
 }
 .select_container.active {
+  border-top: 1px solid white;
   max-height: 150px;
   opacity: 1;
   overflow-y: scroll;
@@ -54,18 +55,20 @@ body, html {
   background: white;
   border-radius: 0 8px 8px 0;
 }
-.select_container .option {
-  padding: 10px 24px;
+.select_container button {
+  text-align: left;
+  font-size: 14px;
+  padding: 15px 40px;
+  background: rgb(166, 217, 255);
+  border-radius: 8px;
+  color: black;
+  height: 100%;
+  width: 100%;
+  border: 0;
   cursor: pointer;
 }
-.select_container .option .radio {
-  display: none;
-}
-.select_container .option:hover {
+.select_container button:hover {
   background: rgb(197, 230, 255);
-}
-.select_container label {
-  cursor: pointer;
 }
 .select .select_container.active + .select_title::after {
   transform: rotateX(180deg);
@@ -153,7 +156,7 @@ body, html {
 .login_container_input input {
   box-sizing: border-box;
   width: 100%;
-  padding: 10px;
+  padding: 13px;
   border: 1px solid rgb(126, 199, 255);
   border-radius: 5px;
   outline: none;
@@ -173,9 +176,9 @@ body, html {
   transition: 0.5s;
 }
 .login_container_input input:valid ~ span, .login_container_input input:focus ~ span {
-  color: black;
+  color: #0979b0;
   transform: translateX(10px) translateY(-7px);
-  font-size: 11px;
+  font-size: 10px;
   padding: 0 10px;
   background-color: white;
   border-left: 1px solid rgb(126, 199, 255);
@@ -231,24 +234,30 @@ body, html {
 .settings_container_item:is(:first-child) {
   border-radius: 6px 6px 0 0;
 }
-.settings_container_item:is(:last-child) {
+.settings_submit {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  padding: 0 50px;
+  background-color: rgb(197, 230, 255);
+  border: 1px solid white;
   border-radius: 0 0 6px 6px;
   border-bottom: 1px solid white;
 }
-
-.logout {
+.settings .logout, .settings_submit_button {
   width: 20%;
   height: 40px;
   border-radius: 5px;
-  border: rgb(182, 0, 0) solid 1px;
-  background-color: rgb(255, 188, 188);
+  border: #004173 solid 1px;
+  background-color: #0979b0;
   margin: 20px 0;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
 }
-.logout_message {
-  color: rgb(182, 0, 0);
+.settings .logout_message, .settings_submit_button_message {
+  color: white;
   margin: 0;
+  font-weight: 700;
 }/*# sourceMappingURL=styles.css.map */

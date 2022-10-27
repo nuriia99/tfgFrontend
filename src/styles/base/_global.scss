@@ -48,7 +48,7 @@ body, html{
     overflow: hidden;
 
     &.active{
-      
+      border-top: 1px solid white;
       max-height: 150px;
       opacity: 1;
       overflow-y: scroll;
@@ -67,19 +67,21 @@ body, html{
     }
 
 
-    .option{
-      padding: 10px 24px;
+    button{
+      text-align: left;
+      font-size: 14px;
+      padding: 15px 40px;
+      background: $BlueIcsLight;
+      border-radius: 8px;
+      color: black;
+      height: 100%;
+      width: 100%;
+      border: 0;
       cursor: pointer;
-      .radio{
-        display: none;
-      }
-    }
-    .option:hover{
-      background: $BlueIcsLight2;
-    }
 
-    label{
-      cursor: pointer;
+      &:hover{
+        background: $BlueIcsLight2;
+      }
     }
   }
 

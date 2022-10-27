@@ -1,13 +1,19 @@
 import {React, useState} from 'react'
 
 
-const ProfileSettings = ({currentSelect, options}) => {
+const ProfileSettings = ({name, currentSelect, options, handleChange}) => {
 
   const [active, setActive] = useState(false)
-  const handleClick = () => {
+
+  
+  const handleClick = (e) => {
     setActive(!active)
-    console.log(active)
   }
+
+  const handleClickInput = (e) => {
+    handleChange({name, value:e.target.value})
+  }
+
 
 
   return (
@@ -18,9 +24,8 @@ const ProfileSettings = ({currentSelect, options}) => {
             options.map((option, index) => {
               
               return (
-                <div key={index} className="option">
-                  <input type="radio" className='radio' id={option}/>
-                  <label>{option}</label>
+                <div key={index} value='a' onClick={handleClickInput} className="option">
+                  <button value ={option}>{option}</button>
                 </div>
               )
             })

@@ -6,7 +6,7 @@ import {useGlobalContext} from './useGlobalContext'
 export const useLogin = () => {
   const [loading, setLoading] = useState(null)
   const [error, setError] = useState(null)
-  const { updateWorker, resetWorker } = useGlobalContext()
+  const { updateWorker, updateData } = useGlobalContext()
   const navigate = useNavigate()
 
   const login = async (username, password) => {
@@ -15,7 +15,9 @@ export const useLogin = () => {
     
     await axios.post('/auth/login', {username, password})
     .then((response) => {
-      updateWorker(response.data)
+      const {workerData, token} = response.data
+      updateWorker({workerData, token})
+      updateData({ worker:workerData, token, center: workerData.turno.centro, lenguage: workerData.lenguaje, role: workerData.turno.rol })
       setLoading(false)
 
       navigate('/home')
@@ -28,12 +30,11 @@ export const useLogin = () => {
       else if(e.response.request.status === 400){
         setError('La contraseña es incorrecta!')
       }
+      else {
+        setError('Ha surgido un error inesperado.')
+      }
     })
   }
 
-  const logout  = async (username, password) => {
-    resetWorker()
-  }
-
-  return {login, logout, loading, error}
+  return {login, loading, error}
 }
