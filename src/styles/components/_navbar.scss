@@ -8,14 +8,13 @@
     padding: 0 2.5rem;
     height: 100%;
     width: 100%;
-    max-width: 90rem;
     display: flex;
-    justify-content: right;
+    justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
-    
     &_items{
       display: flex;
+      justify-content: right;
     }
 
     &_item{
@@ -27,7 +26,7 @@
       color: $LightBlack;
     }
 
-    .buttonSettings{
+    .button{
       padding: 0 0.625rem;
       margin: 0;
       color: white;

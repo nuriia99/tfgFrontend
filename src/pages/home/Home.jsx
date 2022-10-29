@@ -1,26 +1,21 @@
-import {React, useEffect} from 'react'
-import useFetch from '../../hooks/useFetch.js'
+import { React, useEffect } from 'react'
 import Navbar from '../../components/navbar/Navbar'
-import {useGlobalContext}  from '../../hooks/useGlobalContext'
-import {useNavigate} from 'react-router-dom'
+import { useGlobalContext } from '../../hooks/useGlobalContext'
+import { useNavigate } from 'react-router-dom'
 
 const Home = () => {
-  const {globalData} = useGlobalContext() 
+  const { globalData } = useGlobalContext()
+  const { worker } = globalData
   const navigate = useNavigate()
-  const {isLoading, error} = useFetch('/home')
   useEffect(() => {
-    if(error) navigate('/login')
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error])
-  const {worker} = globalData
-
+    if (!worker) navigate('/login')
+  }, [])
   return (
-    
-    !isLoading && worker ? <div>
+    worker
+      ? <div>
       <Navbar/>
-    </div> : <div></div>
-    
-      
+    </div>
+      : null
   )
 }
 

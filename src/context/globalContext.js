@@ -1,5 +1,4 @@
-import { createContext, useEffect, useReducer } from "react";
-
+import { React, createContext, useEffect, useReducer } from 'react'
 
 const INITIAL_STATE = {
   worker: null,
@@ -12,15 +11,17 @@ const INITIAL_STATE = {
 const globalContext = createContext(INITIAL_STATE)
 
 export const globalReducer = (state, action) => {
+  const newWorker = state.worker
   switch (action.type) {
     case 'UPDATEWORKER':
-      return {...state, worker:action.payload.workerData, token: action.payload.token}
+      return { ...state, worker: action.payload.workerData, token: action.payload.token }
     case 'UPDATELENGUAGE':
-      return {...state, lenguage:action.payload}
+      newWorker.lenguaje = action.payload
+      return { ...state, worker: newWorker, lenguage: action.payload }
     case 'UPDATECENTER':
-      return {...state, center:action.payload}
+      return { ...state, center: action.payload }
     case 'UPDATEROLE':
-      return {...state, role:action.payload}
+      return { ...state, role: action.payload }
     case 'RESET':
       return INITIAL_STATE
     default:
@@ -28,20 +29,19 @@ export const globalReducer = (state, action) => {
   }
 }
 
-export const GlobalContextProvider = ({children}) => {
+export const GlobalContextProvider = ({ children }) => {
   const [globalData, dispatch] = useReducer(globalReducer, JSON.parse(localStorage.getItem('globalContext')) || INITIAL_STATE)
 
-  
   useEffect(() => {
     window.localStorage.setItem('globalContext', JSON.stringify(globalData))
     console.log('ha cambiado globalData ->', globalData)
   }, [globalData])
 
   return (
-    <globalContext.Provider value={{ globalData, dispatch}}>
+    <globalContext.Provider value={{ globalData, dispatch }}>
       {children}
     </globalContext.Provider>
   )
 }
 
-export default globalContext;
+export default globalContext

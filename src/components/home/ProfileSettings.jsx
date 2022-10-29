@@ -1,27 +1,30 @@
-import {React, useState }from 'react'
+import { React, useState } from 'react'
 import Selector from './Selector'
 import { useGlobalContext } from '../../hooks/useGlobalContext'
-import {usePost} from '../../hooks/usePost'
-
+import { updateLenguage } from '../../services/worker'
+import { es, ca } from '../../translations/settings'
 
 const ProfileSettings = () => {
-
-  const lenguages = ["Español", "Catalán"]
-  const {globalData, updateData, reset} = useGlobalContext()
+  const lenguages = ['Español', 'Catalán']
+  const { globalData, updateData, reset } = useGlobalContext()
+  let leng = es
+  if (globalData.lenguage === 'es') {
+    leng = es
+  } else {
+    leng = ca
+  }
 
   const [currentData, setCurrentData] = useState({
     currentCenter: globalData.center,
     optionsCenter: globalData.worker.centros.filter((item) => item !== globalData.worker.turno.centro),
     currentRole: globalData.role,
     optionsRole: globalData.worker.especialidades.filter((item) => item !== globalData.worker.turno.rol),
-    currentLenguage: globalData.lenguage,
-    optionsLenguage: lenguages.filter((item) => item !== globalData.worker.lenguaje)
+    currentLenguage: globalData.worker.lenguaje === 'es' ? 'Español' : 'Catalán',
+    optionsLenguage: lenguages.filter((item) => item !== (globalData.worker.lenguaje === 'es' ? 'Español' : 'Catalán'))
   })
 
-  
-
   const handleLogout = () => {
-      reset()
+    reset()
   }
 
   const handleChange = (info) => {
@@ -29,47 +32,74 @@ const ProfileSettings = () => {
       const currentValue = info.value
       if (info.name === 'center') {
         const options = globalData.worker.centros.filter((item) => item !== currentValue)
-        return {...prev, currentCenter: currentValue, optionsCenter: options}
+        return { ...prev, currentCenter: currentValue, optionsCenter: options }
       } else if (info.name === 'role') {
         const options = globalData.worker.especialidades.filter((item) => item !== currentValue)
-        return {...prev, currentRole: currentValue, optionsRole: options}
+        return { ...prev, currentRole: currentValue, optionsRole: options }
       } else {
         const options = lenguages.filter((item) => item !== currentValue)
-        return {...prev, currentLenguage: currentValue, optionsLenguage: options}
+        return { ...prev, currentLenguage: currentValue, optionsLenguage: options }
       }
     })
   }
-  const handleSubmit = () => {
-    //const {error} = usePost()
-    updateData({ worker:globalData.worker, token: globalData.token, center: currentData.currentCenter, lenguage: currentData.currentLenguage, role: currentData.currentRole })
-  }
 
+  const [correct, setCorrect] = useState(null)
+  const [loading, setLoading] = useState(null)
+  const [message, setMessage] = useState(null)
+
+  const handleSubmit = async () => {
+    setLoading(true)
+    const res = await updateLenguage({ id: globalData.worker._id, token: globalData.token, lenguage: currentData.currentLenguage === 'Español' ? 'es' : 'ca' })
+    if (res.status === 200) {
+      updateData({ worker: globalData.worker, token: globalData.token, center: currentData.currentCenter, lenguage: currentData.currentLenguage === 'Español' ? 'es' : 'ca', role: currentData.currentRole })
+      setMessage(es.cambios_exito)
+      setCorrect(true)
+      setLoading(false)
+    } else {
+      setMessage(es.cambios_error)
+      setCorrect(false)
+      setLoading(false)
+    }
+  }
 
   return (
       <div className='settings'>
-        <h1>Configuración</h1>
-        <h3>Ajustes de perfil</h3>
-          <p>Cambia los datos relacionados a tu cuenta.</p>
+        <h1>{leng.settings}</h1>
+        <h3>{leng.ajustes_perfil}</h3>
+          <p>{leng.cambia_datos}</p>
           <div className="settings_container">
             <div className="settings_container_item">
-              <h5>Cambiar el centro</h5>
+              <h5>{leng.cambia_centro}</h5>
               <Selector name='center' currentSelect={currentData.currentCenter} options={currentData.optionsCenter} handleChange={handleChange}/>
             </div>
             <div className="settings_container_item">
-              <h5>Cambiar de especialidad</h5>
+              <h5>{leng.cambia_espe}</h5>
               <Selector name='role' currentSelect={currentData.currentRole} options={currentData.optionsRole} handleChange={handleChange}/>
             </div>
             <div className="settings_container_item">
-              <h5>Cambiar el lenguaje</h5>
+              <h5>{leng.cambia_leng}</h5>
               <Selector name='lenguage' currentSelect={currentData.currentLenguage} options={currentData.optionsLenguage} handleChange={handleChange}/>
             </div>
             <div className="settings_submit">
-              <button className='settings_submit_button' onClick={handleSubmit}><p className='settings_submit_button_message'>Aplicar cambios</p></button>
+                { loading
+                  ? <div className="loading">
+                    <p>Esta cargando</p>
+                    </div>
+                  : null}
+                { correct && message
+                  ? <div className="correct">
+                    <p className='correct_message'>{message}</p>
+                  </div>
+                  : null}
+                { !correct && message
+                  ? <div className="error">
+                    <p className='error_message'>{message}</p>
+                  </div>
+                  : null}
+              <button className='settings_submit_button' onClick={handleSubmit}><p className='settings_submit_button_message'>{leng.aplicar}</p></button>
             </div>
-            
           </div>
-          <button className='logout' onClick={handleLogout}><p className='logout_message'>Cerrar sesión</p></button>
-        
+          <button className='logout' onClick={handleLogout}><p className='logout_message'>{leng.cerrar_sesion}</p></button>
       </div>
   )
 }

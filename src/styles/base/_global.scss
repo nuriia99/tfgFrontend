@@ -17,7 +17,7 @@ body, html{
   &_title{
     padding: 10px 24px;
     cursor: pointer;
-    background: $BlueIcsLight;
+    background: $BlueIcs;
     border-radius: 8px;
     color: black;
     position: relative;
@@ -38,7 +38,7 @@ body, html{
   }
 
   &_container{
-    background-color: $BlueIcsLight;
+    background-color: $BlueIcs;
     color: black;
     max-height: 0;
     width: 100%;
@@ -71,7 +71,7 @@ body, html{
       text-align: left;
       font-size: 14px;
       padding: 15px 40px;
-      background: $BlueIcsLight;
+      background: $BlueIcs;
       border-radius: 8px;
       color: black;
       height: 100%;
@@ -95,7 +95,7 @@ body, html{
 
 .error{
   width: 80%;
-  height: 40px;
+  height: fit-content;
   border-radius: 5px;
   border: $RedError solid 1px;
   background-color: $RedErrorLight;
@@ -103,10 +103,42 @@ body, html{
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 15px;
 
   &_message{
-    color: $RedError;
+    padding: 10px;
     margin: 0;
+    text-align: center;
+    color: $RedError;
   }
 
+}
+
+.correct{
+  width: 80%;
+  height: fit-content;
+  border-radius: 5px;
+  border: $GreenCorrect solid 1px;
+  background-color: $GreenCorrectLight;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 15px;
+
+  &_message{
+    padding: 10px;
+    margin: 0;
+    text-align: center;
+    color: $GreenCorrect;
+  }
+
+}
+
+.pageNotFound{
+  padding: 100px;
+  h1, h2{
+    width: 100%;
+    text-align: center;
+  }
 }

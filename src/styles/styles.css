@@ -12,7 +12,7 @@ body, html {
 .select_title {
   padding: 10px 24px;
   cursor: pointer;
-  background: rgb(166, 217, 255);
+  background: rgb(126, 199, 255);
   border-radius: 8px;
   color: black;
   position: relative;
@@ -31,7 +31,7 @@ body, html {
   transition: all 0.4s;
 }
 .select_container {
-  background-color: rgb(166, 217, 255);
+  background-color: rgb(126, 199, 255);
   color: black;
   max-height: 0;
   width: 100%;
@@ -59,7 +59,7 @@ body, html {
   text-align: left;
   font-size: 14px;
   padding: 15px 40px;
-  background: rgb(166, 217, 255);
+  background: rgb(126, 199, 255);
   border-radius: 8px;
   color: black;
   height: 100%;
@@ -68,7 +68,7 @@ body, html {
   cursor: pointer;
 }
 .select_container button:hover {
-  background: rgb(197, 230, 255);
+  background: rgb(203, 232, 255);
 }
 .select .select_container.active + .select_title::after {
   transform: rotateX(180deg);
@@ -76,7 +76,9 @@ body, html {
 
 .error {
   width: 80%;
-  height: 40px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
   border-radius: 5px;
   border: rgb(182, 0, 0) solid 1px;
   background-color: rgb(255, 188, 188);
@@ -84,10 +86,42 @@ body, html {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 15px;
 }
 .error_message {
-  color: rgb(182, 0, 0);
+  padding: 10px;
   margin: 0;
+  text-align: center;
+  color: rgb(182, 0, 0);
+}
+
+.correct {
+  width: 80%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  border-radius: 5px;
+  border: rgb(63, 130, 43) solid 1px;
+  background-color: rgb(150, 219, 129);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 15px;
+}
+.correct_message {
+  padding: 10px;
+  margin: 0;
+  text-align: center;
+  color: rgb(63, 130, 43);
+}
+
+.pageNotFound {
+  padding: 100px;
+}
+.pageNotFound h1, .pageNotFound h2 {
+  width: 100%;
+  text-align: center;
 }
 
 .navbar {
@@ -101,14 +135,14 @@ body, html {
   padding: 0 2.5rem;
   height: 100%;
   width: 100%;
-  max-width: 90rem;
   display: flex;
-  justify-content: right;
+  justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
 }
 .navbar_container_items {
   display: flex;
+  justify-content: right;
 }
 .navbar_container_item {
   padding: 0 0.1875rem;
@@ -118,7 +152,7 @@ body, html {
   font-size: 0.9375rem;
   color: rgb(68, 68, 68);
 }
-.navbar_container .buttonSettings {
+.navbar_container .button {
   padding: 0 0.625rem;
   margin: 0;
   color: white;
@@ -186,10 +220,14 @@ body, html {
   letter-spacing: 0.1em;
 }
 .login_container_button {
-  padding: 15px 0;
+  padding: 15px;
   width: 100%;
   display: flex;
   justify-content: center;
+}
+.login_container_button:not(:last-child) {
+  padding: 0;
+  padding-top: 1px;
 }
 .login_container_button button {
   width: 80%;
@@ -209,16 +247,16 @@ body, html {
 }
 
 .settings {
-  padding: 60px;
+  padding: 3.75rem;
   box-sizing: border-box;
   min-height: 100vh;
-  background-color: rgb(166, 217, 255);
+  background-color: rgb(203, 232, 255);
   display: flex;
   flex-direction: column;
 }
 .settings_container {
-  margin: 10px 0;
-  max-width: 800px;
+  margin: 0.625rem 0;
+  max-width: 50rem;
   display: flex;
   flex-direction: column;
 }
@@ -226,31 +264,38 @@ body, html {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 50px;
-  background-color: rgb(197, 230, 255);
+  padding: 0 3.125rem;
+  background-color: rgb(166, 217, 255);
   border: 1px solid white;
   border-bottom: 0;
 }
 .settings_container_item:is(:first-child) {
-  border-radius: 6px 6px 0 0;
+  border-radius: 0.375rem 0.375rem 0 0;
 }
 .settings_submit {
   display: flex;
   justify-content: right;
   align-items: center;
-  padding: 0 50px;
-  background-color: rgb(197, 230, 255);
+  padding: 0 3.125rem;
+  background-color: rgb(166, 217, 255);
   border: 1px solid white;
-  border-radius: 0 0 6px 6px;
-  border-bottom: 1px solid white;
+  border-radius: 0 0 0.375rem 0.375rem;
+  border-bottom: 0.0625rem solid white;
+}
+.settings_submit:has(.correct), .settings_submit:has(.error) {
+  justify-content: space-between;
+}
+.settings_submit .correct, .settings_submit .error {
+  margin: 0;
+  margin-right: 1.25rem;
 }
 .settings .logout, .settings_submit_button {
-  width: 20%;
-  height: 40px;
-  border-radius: 5px;
+  width: 9.375rem;
+  height: 2.5rem;
+  border-radius: 0.3125rem;
   border: #004173 solid 1px;
   background-color: #0979b0;
-  margin: 20px 0;
+  margin: 1.25rem 0;
   display: flex;
   align-items: center;
   justify-content: center;
