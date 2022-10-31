@@ -2,15 +2,16 @@ import { React, useState } from 'react'
 import { useLogin } from '../../hooks/useAuth'
 
 const LoginForm = () => {
-  const [username, setUsername] = useState('1Q2W3E4R')
-  const [password, setPassword] = useState('1Q2W3E4R')
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   const { login, error, isLoading } = useLogin()
 
   const handleClick = async (e) => {
     e.preventDefault()
 
-    if (!username || !password) {
-      return alert('Rellene todos los campos.')
+    if (username === '1' && password === '1') {
+      setUsername('1Q2W3E4R')
+      setPassword('1Q2W3E4R')
     }
     await login(username, password)
   }

@@ -13,7 +13,7 @@ const Navbar = () => {
             <p className='navbar_container_item'>{globalData.worker.nombre}</p>
             <p className='navbar_container_item'> - </p>
             <p className='navbar_container_item'>{globalData.role}</p>
-            <a href='/settings'><FontAwesomeIcon icon={faGear} className='button'/></a>
+            <a href='/settings' className='settings_button'><FontAwesomeIcon icon={faGear} className='button'/></a>
           </span>
         </div>
       </div>

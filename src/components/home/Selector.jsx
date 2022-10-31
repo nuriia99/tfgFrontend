@@ -1,10 +1,21 @@
-import { React, useState } from 'react'
+import { React, useState, useEffect } from 'react'
 
 const ProfileSettings = ({ name, currentSelect, options, handleChange }) => {
-  const [active, setActive] = useState(false)
+  const [active, setActive] = useState('')
+
+  useEffect(() => {
+    if (options.length === 0) {
+      setActive('no_options')
+    }
+  })
 
   const handleClick = (e) => {
-    setActive(!active)
+    if (options.length > 0) {
+      setActive((prev) => {
+        if (prev === 'active') return ''
+        return 'active'
+      })
+    }
   }
 
   const handleClickInput = (e) => {
@@ -13,12 +24,14 @@ const ProfileSettings = ({ name, currentSelect, options, handleChange }) => {
 
   return (
     <div className="select">
-      <div className="select_title" onClick={handleClick}>{currentSelect}</div>
-        <div className={active ? 'select_container active' : 'select_container'}>
+      <div className="select_title" onClick={handleClick}>{currentSelect}
+        <div className={'select_title_arrow ' + active}></div>
+      </div>
+        <div className={'select_container ' + active}>
           {
             options.map((option, index) => {
               return (
-                <div key={index} value='a' onClick={handleClickInput} className="option">
+                <div key={index} onClick={handleClickInput} className="option">
                   <button value ={option}>{option}</button>
                 </div>
               )

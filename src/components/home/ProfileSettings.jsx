@@ -13,7 +13,6 @@ const ProfileSettings = () => {
   } else {
     leng = ca
   }
-
   const [currentData, setCurrentData] = useState({
     currentCenter: globalData.center,
     optionsCenter: globalData.worker.centros.filter((item) => item !== globalData.worker.turno.centro),
