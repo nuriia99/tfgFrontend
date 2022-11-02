@@ -1,4 +1,4 @@
-export const es = {
+export const settingsEs = {
   settings: 'Configuración',
   ajustes_perfil: 'Ajustes de perfil',
   cambia_datos: 'Cambia los datos relacionados a tu cuenta.',
@@ -11,7 +11,7 @@ export const es = {
   cerrar_sesion: 'Cerrar sesión'
 }
 
-export const ca = {
+export const settingsCa = {
   settings: 'Configuració',
   ajustes_perfil: 'Ajustaments del perfil',
   cambia_datos: 'Canvia les dades relacionades al teu compte.',

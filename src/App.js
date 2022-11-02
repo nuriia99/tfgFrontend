@@ -5,6 +5,7 @@ import Home from './pages/home/Home'
 import Settings from './pages/home/Settings'
 import PageNotFound from './pages/home/PageNotFound'
 import Login from './pages/login/Login'
+import Patient from './pages/patient/Patient'
 
 function App () {
   return (
@@ -14,6 +15,7 @@ function App () {
           <Route path='/login' element={<Login/>}></Route>
           <Route path='/home' element={<Home/>}></Route>
           <Route path='/settings' element={<Settings/>}></Route>
+          <Route path='/patients/:id' element={<Patient/>}></Route>
           <Route path='*' element={<PageNotFound/>}></Route>
         </Routes>
       </BrowserRouter>

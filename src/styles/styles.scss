@@ -2,7 +2,12 @@
 @import './base/variables';
 @import './base/global';
 
+//pages 
+@import './pages/patient';
+
 //components
 @import './components/navbar';
 @import './components/login';
-@import './components/settings';
+@import './components/settings'
+
+

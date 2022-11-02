@@ -2,22 +2,17 @@ import { React, useState } from 'react'
 import Selector from './Selector'
 import { useGlobalContext } from '../../hooks/useGlobalContext'
 import { updateLenguage } from '../../services/worker'
-import { es, ca } from '../../translations/settings'
+import { getLenguage } from '../../services/lenguage'
 
 const ProfileSettings = () => {
   const lenguages = ['Español', 'Catalán']
   const { globalData, updateData, reset } = useGlobalContext()
-  let leng = es
-  if (globalData.lenguage === 'es') {
-    leng = es
-  } else {
-    leng = ca
-  }
+  let leng = getLenguage(globalData.lenguage, 'settings')
   const [currentData, setCurrentData] = useState({
     currentCenter: globalData.center,
-    optionsCenter: globalData.worker.centros.filter((item) => item !== globalData.worker.turno.centro),
+    optionsCenter: globalData.worker.centros.filter((item) => item !== globalData.center),
     currentRole: globalData.role,
-    optionsRole: globalData.worker.especialidades.filter((item) => item !== globalData.worker.turno.rol),
+    optionsRole: globalData.worker.especialidades.filter((item) => item !== globalData.role),
     currentLenguage: globalData.worker.lenguaje === 'es' ? 'Español' : 'Catalán',
     optionsLenguage: lenguages.filter((item) => item !== (globalData.worker.lenguaje === 'es' ? 'Español' : 'Catalán'))
   })
@@ -51,11 +46,12 @@ const ProfileSettings = () => {
     const res = await updateLenguage({ id: globalData.worker._id, token: globalData.token, lenguage: currentData.currentLenguage === 'Español' ? 'es' : 'ca' })
     if (res.status === 200) {
       updateData({ worker: globalData.worker, token: globalData.token, center: currentData.currentCenter, lenguage: currentData.currentLenguage === 'Español' ? 'es' : 'ca', role: currentData.currentRole })
-      setMessage(es.cambios_exito)
+      leng = getLenguage(currentData.currentLenguage === 'Español' ? 'es' : 'ca', 'settings')
+      setMessage(leng.cambios_exito)
       setCorrect(true)
       setLoading(false)
     } else {
-      setMessage(es.cambios_error)
+      setMessage(leng.cambios_error)
       setCorrect(false)
       setLoading(false)
     }

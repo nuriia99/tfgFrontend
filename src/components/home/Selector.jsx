@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from 'react'
 
 const ProfileSettings = ({ name, currentSelect, options, handleChange }) => {
-  const [active, setActive] = useState('')
+  const [active, setActive] = useState('inactive')
 
   useEffect(() => {
     if (options.length === 0) {

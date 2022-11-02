@@ -1,0 +1,26 @@
+.patient {
+  width: 100%;
+  height: calc(100vh - 3.125rem);
+  &_container{
+    height: 100%;
+    display: grid;
+
+grid-template-areas: 
+    "info entries entries"
+    "visits entries entries";
+
+    &_info{
+      border: 1px solid red;
+      grid-area: info;
+    }
+    &_visits{
+      border: 1px solid orange;
+      grid-area: visits;
+    }
+    &_entries{
+      border: 1px solid green;
+      grid-area: entries
+    }
+  }
+
+}

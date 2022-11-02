@@ -22,7 +22,7 @@ body, html{
     color: black;
     position: relative;
     order: 0;
-    &_arrow{
+    &_arrow.inactive{
       background-image: url("../images/arrow-down-solid.svg");
       background-size: contain;
       background-repeat: no-repeat;
@@ -35,16 +35,6 @@ body, html{
     }
     &_arrow.active{
       transform: rotateX(180deg);
-    }
-    &_arrow.no_options{
-      background-image: url("");
-      background-size: contain;
-      background-repeat: no-repeat;
-      position: absolute;
-      height: 20px;
-      width: 20px;
-      right: 20px;
-      top: 10px;
     }
     
   }

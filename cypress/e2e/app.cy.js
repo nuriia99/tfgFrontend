@@ -27,11 +27,9 @@ describe('settings works correctly', () => {
     cy.get('.select_title').eq(0).click()
     cy.get('.option').eq(0).click()
     cy.get('.settings_submit_button').click()
-    cy.intercept('http://localhost:3001/trabajadores/**/updateLenguage').as('update_lenguage')
-    cy.wait('@update_lenguage')
     cy.visit('http://localhost:3001/settings')
     cy.get('.select_title').eq(0).click()
-    cy.contains('CAP Antón de Borja').should('have.length', 1)
+    cy.get('.option').eq(0).contains('CUAP Gran Corazón')
   })
 })
 
@@ -49,12 +47,7 @@ describe('navbar works correctly', () => {
   })
 })
 
-describe('login and settings tests', () => {
-  it('frontpage can be opened', () => {
-    cy.visit('http://localhost:3001/login')
-    cy.contains('Iniciar sesión')
-  })
-
+describe('redirects and 404 not found works correctly', () => {
   it('home redirect to login if the user is not autheticated', () => {
     cy.visit('http://localhost:3001/home')
     cy.contains('Iniciar sesión')
@@ -65,16 +58,37 @@ describe('login and settings tests', () => {
     cy.contains('Iniciar sesión')
   })
 
-  it('the login works correctly', () => {
+  it('settings redirect to login if the user is not autheticated', () => {
+    cy.visit('http://localhost:3001/')
+    cy.contains('404')
+  })
+})
+
+describe('login and settings tests', () => {
+  beforeEach(() => {
     cy.visit('http://localhost:3001/login')
+  })
+
+  it('the login works correctly', () => {
     cy.get('[name=inputUsername]').type('1Q2W3E4R')
     cy.get('[name=inputPassword]').type('1Q2W3E4R')
     cy.get('#button_submit_login').click()
     cy.get('#navbar')
   })
 
+  it('the logout works correctly', () => {
+    cy.get('[name=inputUsername]').type('1Q2W3E4R')
+    cy.get('[name=inputPassword]').type('1Q2W3E4R')
+    cy.get('#button_submit_login').click()
+    cy.get('#navbar')
+    cy.get('.settings_button').click()
+    cy.get('.logout').click()
+    cy.get('#button_submit_login')
+    cy.visit('http://localhost:3001/home')
+    cy.contains('Iniciar sesión')
+  })
+
   it('if the user does not exists return an error message', () => {
-    cy.visit('http://localhost:3001/login')
     cy.get('[name=inputUsername]').type('1Q24R')
     cy.get('[name=inputPassword]').type('12W3ER')
     cy.get('#button_submit_login').click()
@@ -82,7 +96,6 @@ describe('login and settings tests', () => {
   })
 
   it('if the password is incorrect return an error message', () => {
-    cy.visit('http://localhost:3001/login')
     cy.get('[name=inputUsername]').type('1Q2W3E4R')
     cy.get('[name=inputPassword]').type('12W3ER')
     cy.get('#button_submit_login').click()

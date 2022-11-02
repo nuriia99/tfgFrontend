@@ -13,7 +13,7 @@ const useFetch = (url) => {
       try {
         await axios.get(url, {
           headers: {
-            Authoritation: `Bearer ${globalData.token}`
+            Authorization: `Bearer ${globalData.token}`
           }
         }).then((response) => {
           setData(response.data)
