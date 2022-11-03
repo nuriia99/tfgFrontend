@@ -30,6 +30,15 @@ body, html {
   transition: all 0.4s;
 }
 .select_title_arrow.active {
+  background-image: url("../images/arrow-down-solid.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  right: 20px;
+  top: 10px;
+  transition: all 0.4s;
   transform: rotateX(180deg);
 }
 .select_container {
@@ -123,31 +132,70 @@ body, html {
   text-align: center;
 }
 
+.button_classic {
+  width: 100%;
+  height: 25px;
+  border-radius: 0.3125rem;
+  border: rgb(126, 199, 255) solid 1px;
+  background-color: rgb(203, 232, 255);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+}
+
 .patient {
   width: 100%;
   height: calc(100vh - 3.125rem);
 }
 .patient_container {
+  background-color: rgb(247, 250, 252);
   height: 100%;
-  display: grid;
-  grid-template-areas: "info entries entries" "visits entries entries";
+  width: 100%;
+  display: flex;
 }
-.patient_container_info {
-  border: 1px solid red;
-  grid-area: info;
+.patient_container_left {
+  display: flex;
+  flex-direction: column;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: 10px;
+  row-gap: 10px;
 }
-.patient_container_visits {
-  border: 1px solid orange;
-  grid-area: visits;
+.patient_container_left_info {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  width: 100%;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+  transition: all 0.5s ease-in-out;
 }
-.patient_container_entries {
-  border: 1px solid green;
-  grid-area: entries;
+.patient_container_left_ai {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  width: 100%;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+  transition: all 0.5s ease-in-out;
+}
+.patient_container_left_visits {
+  margin: 10px;
+  flex: 1;
+  height: 50vh;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
 }
 
 .navbar {
   height: 3.125rem;
-  width: 100%;
+  width: 100vw;
   background-color: rgb(126, 199, 255);
   display: flex;
   align-items: center;
@@ -326,4 +374,106 @@ body, html {
   color: white;
   margin: 0;
   font-weight: 700;
+}
+
+.patient_info {
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+}
+.patient_info h3 {
+  text-align: center;
+}
+.patient_info .icon {
+  padding: 0 5px;
+}
+.patient_info p {
+  margin: 0;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.patient_info_name {
+  display: flex;
+  font-size: 20px;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+  gap: 10px;
+  font-weight: 500;
+}
+.patient_info_line {
+  display: flex;
+  justify-content: left;
+  align-self: center;
+  max-height: -webkit-fit-content;
+  max-height: -moz-fit-content;
+  max-height: fit-content;
+  transition: all 0.4s;
+}
+.patient_info_line .title {
+  padding-bottom: 4px;
+  font-weight: 600;
+  color: rgb(74, 85, 104);
+  font-size: 14px;
+}
+.patient_info_line .value {
+  padding-bottom: 4px;
+  font-size: 14px;
+}
+.patient_info_line_button {
+  background-color: white;
+  border: 0;
+  padding-top: 4px;
+  align-self: flex-start;
+  transition: all 0.5s ease-in-out;
+}
+.patient_info_line_button.active {
+  transform: rotateX(180deg);
+}
+.patient_info_extra {
+  color: black;
+  max-height: 0;
+  width: 100%;
+  opacity: 0;
+  transition: all 0.5s ease-in-out;
+  top: 20px;
+  visibility: hidden;
+}
+.patient_info_extra.active {
+  visibility: visible;
+  max-height: 200px;
+  opacity: 1;
+}
+.patient_info_extra .title {
+  padding: 0 5px 4px 20px;
+}
+
+.patient_ai_title {
+  border-bottom: 1px solid rgb(126, 199, 255);
+  margin: 0;
+  padding: 10px 20px;
+  font-weight: 500;
+}
+.patient_ai_container {
+  padding: 10px 20px;
+}
+.patient_ai_container_item {
+  display: flex;
+  align-items: center;
+}
+.patient_ai_container_item .icon {
+  height: 30px;
+  width: 30px;
+  color: rgb(126, 199, 255);
+}
+.patient_ai_container_item .title {
+  padding: 0 10px 0 20px;
+}
+.patient_ai_button {
+  padding: 10px;
+  padding-top: 0;
 }/*# sourceMappingURL=styles.css.map */

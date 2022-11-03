@@ -2,25 +2,45 @@
   width: 100%;
   height: calc(100vh - 3.125rem);
   &_container{
+    background-color: $greyLight;
     height: 100%;
-    display: grid;
+    width: 100%;
+    display: flex;
 
-grid-template-areas: 
-    "info entries entries"
-    "visits entries entries";
-
-    &_info{
-      border: 1px solid red;
-      grid-area: info;
-    }
-    &_visits{
-      border: 1px solid orange;
-      grid-area: visits;
-    }
-    &_entries{
-      border: 1px solid green;
-      grid-area: entries
+    
+    &_left{
+      display: flex;
+      flex-direction: column;
+      width: fit-content;
+      margin: 10px;
+      row-gap: 10px;
+      
+      &_info{
+        height: fit-content;
+        width: 100%;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+        transition: all 0.5s ease-in-out;
+      }
+      &_ai{
+        height: fit-content;
+        width: 100%;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+        transition: all 0.5s ease-in-out;
+      }
+      &_visits{
+        margin: 10px;
+        flex: 1;
+        height: calc(50vh);
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+      }
     }
   }
 
 }
+

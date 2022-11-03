@@ -12,7 +12,7 @@ const ProfileSettings = ({ name, currentSelect, options, handleChange }) => {
   const handleClick = (e) => {
     if (options.length > 0) {
       setActive((prev) => {
-        if (prev === 'active') return ''
+        if (prev === 'active') return 'inactive'
         return 'active'
       })
     }
