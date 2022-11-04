@@ -25,3 +25,65 @@
     padding-top: 0;
   }
 }
+
+.patient_ai_panel{
+  background-color: $greyLight;
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  &_container {
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .patient_ai_table{
+      margin: 20px;
+      width: fit-content;
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+      table-layout:fixed;
+
+      th {
+        border-radius: 5px;
+        font-size: 20px;
+        height: 30px;
+      }
+
+      td {
+        border: 1px solid white;
+        padding: 0;
+        border-radius: 5px;
+        font-size: 20px;
+        height: 11px;
+        background-color: $BlueIcsLight2;
+        text-align: center;
+      }
+
+      .fixed {
+        position: sticky;
+        background: white;
+        width: 310px;
+        left: 0;
+        z-index: 1;
+      }
+
+      .dates {
+        padding: 3px 10px;
+        text-align: left;
+        background-color: $BlueIcs;
+      }
+
+      .names{
+        padding-left: 10px;
+        text-align: left;
+        background-color: $BlueIcs;
+      }
+    }
+  }
+}

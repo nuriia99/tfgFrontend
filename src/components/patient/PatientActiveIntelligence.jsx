@@ -1,33 +1,53 @@
 import { React } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faWeightScale } from '@fortawesome/free-solid-svg-icons'
-import { getLenguage } from '../../services/lenguage'
-import { useGlobalContext } from '../../hooks/useGlobalContext'
 
-const PatientActiveIntelligence = ({ ai }) => {
-  const { globalData } = useGlobalContext()
-  const leng = getLenguage(globalData.lenguage, 'patient')
+const PatientActiveIntelligence = ({ ai, handleClick }) => {
+  console.log(ai)
   return (
-    <div className="patient_ai">
-      <p className="patient_ai_title">{leng.inteligenciaActiva}</p>
-        <div className="patient_ai_container">
-          <div className="patient_ai_container_item">
-           <FontAwesomeIcon className='icon' icon={faWeightScale}/>
-           <p className='title'>IMC: </p>
-           <p className='value'>{(ai.peso / (ai.estatura * 2 / 100)).toFixed(2) } kg/m²</p>
-          </div>
-          <div className="patient_ai_container_item">
-           <FontAwesomeIcon className='icon' icon={faWeightScale}/>
-           <p className='title'>IMC: </p>
-           <p className='value'>{(ai.peso / (ai.estatura * 2 / 100)).toFixed(2) } kg/m²</p>
-          </div>
-        </div>
-        <div className="patient_ai_button">
-          <button className='button_classic'>{leng.infoCompleta}</button>
-        </div>
+    <div className='patient_ai_panel'>
+      <div className='patient_ai_panel_container'>
+        <table className='patient_ai_table'>
+          {
+            ai.map((row, index) => {
+              if (index === 0) {
+                // primera fila
+                return (
+                  <tr key={index}>
+                    {row.map((column, index) => {
+                      if (index === 0) {
+                        return <th key={index} className='fixed title'>{column}</th>
+                      }
+                      return <th key={index} className='dates'>{column}</th>
+                    })}
+                  </tr>
+                )
+              } else {
+                return (
+                  <tr key={index}>
+                    {row.map((column, index) => {
+                      if (index === 0) {
+                        return (
+                          <tr key={index}>
+                            <th key={index} className='fixed names'>{column}</th>
+                          </tr>
+                        )
+                      } else {
+                        if (column !== '-') {
+                          return (
+                            <td key={index} className='values'>{column}</td>
+                          )
+                        }
+                        return <td key={index}></td>
+                      }
+                    })}
+                  </tr>
+                )
+              }
+            })
+          }
+        </table>
+      </div>
     </div>
   )
 }
-// habitos toxicos
-// alergias
+
 export default PatientActiveIntelligence

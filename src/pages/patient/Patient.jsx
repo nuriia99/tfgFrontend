@@ -6,38 +6,28 @@ import { getPatient } from '../../services/patient'
 import PatientInfo from '../../components/patient/PatientInfo'
 import PatientVisits from '../../components/patient/PatientVisits'
 import PatientEntries from '../../components/patient/PatientEntries'
+import PatientActiveIntelligenceCard from '../../components/patient/PatientActiveIntelligenceCard'
 import PatientActiveIntelligence from '../../components/patient/PatientActiveIntelligence'
+import { getAi } from '../../services/activeIntelligence'
 
 const Patient = () => {
   const { globalData } = useGlobalContext()
   const { worker } = globalData
-  const [info, setInfo] = useState({
-    name: null,
-    sex: null,
-    genre: null,
-    age: null,
-    dni: null,
-    telephone: null,
-    address: null,
-    cip: null,
-    mail: null,
-    country: null,
-    bornDate: null
-  })
-  const [ai, setAi] = useState({
-    tabaquismo: null,
-    actividadFisica: null,
-    valoracionPacientesCronicos: null,
-    frecuenciaCardiaca: null,
-    peso: null,
-    estatura: null,
-    colesterolTotal: null
-  })
+  const [info, setInfo] = useState()
+  const [ai, setAi] = useState()
+  const [aiPanel, setAiPanel] = useState(false)
+  const [aiInfo, setAiInfo] = useState()
+
+  const handleClickAiPanel = () => {
+    setAiPanel(!aiPanel)
+  }
+
   const navigate = useNavigate()
   useEffect(() => {
     if (!worker) navigate('/login')
   }, [])
 
+  const token = globalData.token
   const { id: patientId } = useParams()
 
   useEffect(() => {
@@ -45,6 +35,11 @@ const Patient = () => {
       const res = await getPatient({ id: patientId, token: globalData.token })
       if (res.request.status === 200) {
         setInfo(() => {
+          const date = new Date(res.data.fechaNacimiento)
+          let day = date.getDay()
+          if (day < 10) day = '0' + day
+          let month = date.getMonth()
+          if (month < 10) month = '0' + month
           return ({
             name: res.data.nombre + ' ' + res.data.apellido1 + ' ' + res.data.apellido2,
             sex: res.data.sexo,
@@ -56,18 +51,18 @@ const Patient = () => {
             cip: res.data.cip,
             mail: res.data.correo,
             country: res.data.paisOrigen,
-            bornDate: res.data.fechaNacimiento
+            bornDate: day + '/' + month + '/' + date.getFullYear()
           })
         })
+        setAiInfo(await getAi({ id: patientId, token }))
         setAi(() => {
           return ({
             tabaquismo: res.data.inteligenciaActiva.tabaquismo,
-            actividadFisica: res.data.inteligenciaActiva.actividadFisica,
-            valoracionPacientesCronicos: res.data.inteligenciaActiva.valoracionPacientesCronicos,
-            frecuenciaCardiaca: res.data.inteligenciaActiva.frecuenciaCardiaca,
             peso: res.data.inteligenciaActiva.peso,
             estatura: res.data.inteligenciaActiva.estatura,
-            colesterolTotal: res.data.inteligenciaActiva.colesterolTotal
+            alergias: res.data.alergias,
+            alcohol: res.data.inteligenciaActiva.alcohol,
+            drogas: res.data.inteligenciaActiva.drogas
           })
         })
       } else {
@@ -76,28 +71,30 @@ const Patient = () => {
     }
     fetchData()
   }, [])
-
   return (
     worker
       ? <>
       <Navbar/>
       <div className='patient'>
-        <div className='patient_container'>
-          <div className='patient_container_left'>
-            <div className='patient_container_left_info'>
-              <PatientInfo info={info}/>
+        {aiPanel
+          ? <PatientActiveIntelligence ai={aiInfo} handleClick={handleClickAiPanel}/>
+          : <div className='patient_container'>
+              <div className='patient_container_left'>
+                <div className='patient_container_left_info'>
+                  {info ? <PatientInfo info={info}/> : null}
+                </div>
+                <div className='patient_container_left_ai'>
+                  {ai ? <PatientActiveIntelligenceCard ai={ai} handleClick={handleClickAiPanel}/> : null}
+                </div>
+                <div className='patient_container_left_visits'>
+                  <PatientVisits/>
+                </div>
+              </div>
+              <div className='patient_container_entries patient_container_card'>
+                <PatientEntries/>
+              </div>
             </div>
-            <div className='patient_container_left_ai'>
-              <PatientActiveIntelligence ai={ai}/>
-            </div>
-            <div className='patient_container_left_visits'>
-              <PatientVisits/>
-            </div>
-          </div>
-          <div className='patient_container_entries patient_container_card'>
-            <PatientEntries/>
-          </div>
-        </div>
+        }
       </div>
     </>
       : null

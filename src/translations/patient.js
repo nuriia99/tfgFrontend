@@ -11,7 +11,8 @@ export const patientEs = {
   direccion: 'Dirección: ',
   frec: 'Frecuencia cardíaca',
   genero: 'Género',
-  habitos: 'Hábitos tóxicos'
+  habitos: 'Hábitos tóxicos',
+  alergias: 'Alergias'
 }
 
 export const patientCa = {
@@ -27,5 +28,6 @@ export const patientCa = {
   direccion: 'Direcció: ',
   frec: 'Freqüència cardíaca',
   genero: 'Gènere',
-  habitos: 'Hàbits tòxics'
+  habitos: 'Hàbits tòxics',
+  alergias: 'Al·lèrgies'
 }

@@ -1,6 +1,6 @@
 body, html {
   margin: 0;
-  font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  font-family: "Segoe UI", Helvetica, Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 .select {
@@ -143,11 +143,13 @@ body, html {
   justify-content: center;
   cursor: pointer;
   font-size: 14px;
+  font-weight: 700;
+  color: rgb(68, 68, 68);
 }
 
 .patient {
   width: 100%;
-  height: calc(100vh - 3.125rem);
+  height: calc(100vh - 50px);
 }
 .patient_container {
   background-color: rgb(247, 250, 252);
@@ -185,12 +187,15 @@ body, html {
   transition: all 0.5s ease-in-out;
 }
 .patient_container_left_visits {
-  margin: 10px;
   flex: 1;
-  height: 50vh;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  width: 100%;
   background-color: white;
   border-radius: 10px;
   box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+  transition: all 0.5s ease-in-out;
 }
 
 .navbar {
@@ -476,4 +481,64 @@ body, html {
 .patient_ai_button {
   padding: 10px;
   padding-top: 0;
+}
+
+.patient_ai_panel {
+  background-color: rgb(247, 250, 252);
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.patient_ai_panel_container {
+  height: 100%;
+  width: 100%;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.patient_ai_panel_container .patient_ai_table {
+  margin: 20px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+  table-layout: fixed;
+}
+.patient_ai_panel_container .patient_ai_table th {
+  border-radius: 5px;
+  font-size: 20px;
+  height: 30px;
+}
+.patient_ai_panel_container .patient_ai_table td {
+  border: 1px solid white;
+  padding: 0;
+  border-radius: 5px;
+  font-size: 20px;
+  height: 11px;
+  background-color: rgb(203, 232, 255);
+  text-align: center;
+}
+.patient_ai_panel_container .patient_ai_table .fixed {
+  position: -webkit-sticky;
+  position: sticky;
+  background: white;
+  width: 310px;
+  left: 0;
+  z-index: 1;
+}
+.patient_ai_panel_container .patient_ai_table .dates {
+  padding: 3px 10px;
+  text-align: left;
+  background-color: rgb(126, 199, 255);
+}
+.patient_ai_panel_container .patient_ai_table .names {
+  padding-left: 10px;
+  text-align: left;
+  background-color: rgb(126, 199, 255);
 }/*# sourceMappingURL=styles.css.map */

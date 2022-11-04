@@ -27,17 +27,17 @@ const ProfileSettings = ({ name, currentSelect, options, handleChange }) => {
       <div className="select_title" onClick={handleClick}>{currentSelect}
         <div className={'select_title_arrow ' + active}></div>
       </div>
-        <div className={'select_container ' + active}>
-          {
-            options.map((option, index) => {
-              return (
-                <div key={index} onClick={handleClickInput} className="option">
-                  <button value ={option}>{option}</button>
-                </div>
-              )
-            })
-          }
-        </div>
+      <div className={'select_container ' + active}>
+        {
+          options.map((option, index) => {
+            return (
+              <div key={index} onClick={handleClickInput} className="option">
+                <button value ={option}>{option}</button>
+              </div>
+            )
+          })
+        }
+      </div>
     </div>
   )
 }

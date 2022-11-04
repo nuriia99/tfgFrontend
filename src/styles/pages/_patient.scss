@@ -1,6 +1,6 @@
 .patient {
   width: 100%;
-  height: calc(100vh - 3.125rem);
+  height: calc(100vh - 50px);
   &_container{
     background-color: $greyLight;
     height: 100%;
@@ -32,12 +32,13 @@
         transition: all 0.5s ease-in-out;
       }
       &_visits{
-        margin: 10px;
         flex: 1;
-        height: calc(50vh);
+        height: fit-content;
+        width: 100%;
         background-color: white;
         border-radius: 10px;
         box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+        transition: all 0.5s ease-in-out;
       }
     }
   }
