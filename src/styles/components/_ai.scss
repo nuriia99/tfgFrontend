@@ -41,6 +41,22 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+
+    &_button{
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: white;
+      border: 0;
+      padding: 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      .icon{
+        height: 30px;
+        width: 30px;
+      }
+    }
     .patient_ai_table{
       margin: 20px;
       width: fit-content;
@@ -65,6 +81,11 @@
         text-align: center;
       }
 
+      .fixed.title{
+        background-color: $navyBlue;
+        color: white;
+      }
+
       .fixed {
         position: sticky;
         background: white;
@@ -83,6 +104,22 @@
         padding-left: 10px;
         text-align: left;
         background-color: $BlueIcs;
+      }
+
+      .currentDate{
+        background-color: $navyBlue;
+        color: white;
+        padding: 3px 10px;
+        text-align: center;
+        position: sticky;
+        right: 0;
+        z-index: 1;
+      }
+
+      .fixed_values{
+        position: sticky;
+        right: 0;
+        z-index: 1;
       }
     }
   }

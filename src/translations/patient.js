@@ -12,7 +12,16 @@ export const patientEs = {
   frec: 'Frecuencia cardíaca',
   genero: 'Género',
   habitos: 'Hábitos tóxicos',
-  alergias: 'Alergias'
+  alergias: 'Alergias',
+  tabaquismo: 'Tabaquismo',
+  actividadFisica: 'Actividad Física',
+  cronicos: 'Valoración Pacientes Crónicos',
+  frecCardiaca: 'Frecuencia Cardiaca',
+  peso: 'Peso',
+  estatura: 'Estatura',
+  colesterol: 'Colesterol Total',
+  alcohol: 'Alcohol',
+  drogas: 'Drogas'
 }
 
 export const patientCa = {
@@ -29,5 +38,14 @@ export const patientCa = {
   frec: 'Freqüència cardíaca',
   genero: 'Gènere',
   habitos: 'Hàbits tòxics',
-  alergias: 'Al·lèrgies'
+  alergias: 'Al·lèrgies',
+  tabaquismo: 'Tabaquisme',
+  actividadFisica: 'Activitat Física',
+  cronicos: 'Valoració Pacients Crònics',
+  frecCardiaca: 'Freqüència Cardíaca',
+  peso: 'Pes',
+  estatura: 'Estatura',
+  colesterol: 'Colesterol Total',
+  alcohol: 'Alcohol',
+  drogas: 'Drogues'
 }

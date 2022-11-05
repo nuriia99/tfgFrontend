@@ -7,7 +7,7 @@ import { useGlobalContext } from '../../hooks/useGlobalContext'
 const PatientActiveIntelligenceCard = ({ ai, handleClick }) => {
   const { globalData } = useGlobalContext()
   const leng = getLenguage(globalData.lenguage, 'patient')
-
+  console.log(ai)
   return (
     <div className="patient_ai">
       <p className="patient_ai_title">{leng.inteligenciaActiva}</p>
@@ -15,7 +15,7 @@ const PatientActiveIntelligenceCard = ({ ai, handleClick }) => {
           <div className="patient_ai_container_item">
            <FontAwesomeIcon className='icon' icon={faWeightScale}/>
            <p className='title'>IMC: </p>
-           <p className='value'>{(ai.peso / (ai.estatura * 2 / 100)).toFixed(2) } kg/m²</p>
+           <p className='value'>{(ai.peso.at(-1).value / (ai.estatura.at(-1).value * 2 / 100)).toFixed(2) } kg/m²</p>
           </div>
           <div className="patient_ai_container_item">
            <FontAwesomeIcon className='icon' icon={faSkullCrossbones}/>

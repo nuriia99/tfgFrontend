@@ -499,6 +499,21 @@ body, html {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+}
+.patient_ai_panel_container_button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: white;
+  border: 0;
+  padding: 20px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.patient_ai_panel_container_button .icon {
+  height: 30px;
+  width: 30px;
 }
 .patient_ai_panel_container .patient_ai_table {
   margin: 20px;
@@ -524,6 +539,10 @@ body, html {
   background-color: rgb(203, 232, 255);
   text-align: center;
 }
+.patient_ai_panel_container .patient_ai_table .fixed.title {
+  background-color: #004173;
+  color: white;
+}
 .patient_ai_panel_container .patient_ai_table .fixed {
   position: -webkit-sticky;
   position: sticky;
@@ -541,4 +560,20 @@ body, html {
   padding-left: 10px;
   text-align: left;
   background-color: rgb(126, 199, 255);
+}
+.patient_ai_panel_container .patient_ai_table .currentDate {
+  background-color: #004173;
+  color: white;
+  padding: 3px 10px;
+  text-align: center;
+  position: -webkit-sticky;
+  position: sticky;
+  right: 0;
+  z-index: 1;
+}
+.patient_ai_panel_container .patient_ai_table .fixed_values {
+  position: -webkit-sticky;
+  position: sticky;
+  right: 0;
+  z-index: 1;
 }/*# sourceMappingURL=styles.css.map */
