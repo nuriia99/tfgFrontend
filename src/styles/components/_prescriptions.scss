@@ -1,0 +1,101 @@
+.prescriptions{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+  &_container{
+    height: 100%;
+    width: 100%;
+    border: 1px solid $navyBlue;
+    border-radius: 10px;
+
+    &_info{
+      display: flex;
+      align-items: center;
+      padding: 30px;
+      border-bottom: 1px solid $navyBlue;
+      height: 10%;
+
+      &_title{
+        font-weight: 700;
+        padding: 0 10px;
+        font-size: 1.125em;
+      }
+    }
+
+    &_table{
+      padding: 20px;
+      .table{
+        display: grid;
+        padding: 30px;
+        row-gap: 3px;
+        overflow-y: auto;
+        overflow-x: auto;
+  
+        .table_row{
+          display: flex;
+          width: 100%;
+          justify-content: center;
+          column-gap: 3px;
+  
+          &_title{
+            padding: 10px;
+            background-color: $BlueIcs;
+            border-radius: 10px;
+            font-weight: 700;
+  
+  
+            &.name{
+              width: 400px;
+            }
+  
+            &.component{
+              width: 150px;
+            }
+  
+            &.frecuencia{
+              width: 100px;
+            }
+  
+            &.duracion{
+              width: 100px;
+            }
+          }
+          &_values{
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: $BlueIcsLight2;
+            border-radius: 10px;
+            
+  
+            &.name{
+              width: 400px;
+            }
+  
+            &.component{
+              width: 150px;
+            }
+  
+            &.frecuencia{
+              width: 100px;
+            }
+  
+            &.duracion{
+              width: 100px;
+            }
+
+            &.alert{
+              color: $RedError;
+            }
+          }
+        }
+      }
+    }
+    
+
+  }
+}

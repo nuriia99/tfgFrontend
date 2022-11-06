@@ -1,0 +1,70 @@
+.patient_entries{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+  &_container{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    &_list{
+      height: 100%;
+      overflow-y: scroll;
+      width: 70%;
+      background-color: $greyLight;
+      &::-webkit-scrollbar{
+        width: 8px;
+        background: white;
+        border-radius: 0 8px 8px 0;
+      }
+      &::-webkit-scrollbar-thumb{
+        background: $navyBlue;
+        border-radius: 0 8px 8px 0;
+      }
+      .entry{
+        background-color: $BlueIcsLight2;
+        cursor: pointer;
+        &_info{
+          background-color: $navyBlueLight;
+          color: white;padding: 4px;
+          padding-left: 10px;
+        }
+
+        .note{
+          padding: 5px 20px;
+          &_diagnosis{
+            padding: 3px;
+            font-weight: 600;
+            font-size: 17px;
+          }
+  
+          &_row{
+            padding: 2px;
+            display: flex;
+            &_letter{
+              align-self: center;
+              font-weight: 600;
+              color: $navyBlue;
+            }
+            &_content{
+              padding-left: 10px;
+            }
+          }
+        }
+        
+
+        
+      }
+    }
+
+    &_diagnosis{
+      height: 100%;
+      width: 30%;
+      border: 1px solid green;
+    }
+  }
+  
+}

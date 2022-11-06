@@ -2,17 +2,27 @@
   width: 100%;
   height: calc(100vh - 50px);
   &_container{
-    background-color: $greyLight;
+    background-color: $BlueIcsLight2;
     height: 100%;
     width: 100%;
     display: flex;
 
+    &_right{
+        flex: 1;
+        background-color: white;
+        border-radius: 10px;
+        margin: 10px;
+        box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+        transition: all 0.5s ease-in-out;
+        min-width: 400px;
+    }
     
     &_left{
       display: flex;
       flex-direction: column;
       width: fit-content;
-      margin: 10px;
+      padding: 10px;
+      box-sizing: border-box;
       row-gap: 10px;
       
       &_info{
@@ -31,14 +41,33 @@
         box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
         transition: all 0.5s ease-in-out;
       }
-      &_visits{
+      &_extra_features{
         flex: 1;
-        height: fit-content;
         width: 100%;
         background-color: white;
         border-radius: 10px;
         box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
         transition: all 0.5s ease-in-out;
+
+        .extra_features{
+          display: flex;
+          flex-direction: column;
+          padding: 10px;
+          box-sizing: border-box;
+          height: 100%;
+          &_options{
+            display: flex;
+            justify-content: left;
+            align-items: flex-end;
+          }
+          &_container{
+            flex: 1;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            border: 1px solid $navyBlueLight;
+          }
+        }
       }
     }
   }

@@ -21,7 +21,14 @@ export const patientEs = {
   estatura: 'Estatura',
   colesterol: 'Colesterol Total',
   alcohol: 'Alcohol',
-  drogas: 'Drogas'
+  drogas: 'Drogas',
+
+  nombreMedicamento: 'Medicamento',
+  frecuencia: 'Frecuencia',
+  duracion: 'Duración',
+  principioActivo: 'Principio activo',
+  nombreDoc: 'Nombre del documento',
+  fechaSubida: 'Fecha de subida'
 }
 
 export const patientCa = {
@@ -47,5 +54,12 @@ export const patientCa = {
   estatura: 'Estatura',
   colesterol: 'Colesterol Total',
   alcohol: 'Alcohol',
-  drogas: 'Drogues'
+  drogas: 'Drogues',
+
+  nombreMedicamento: 'Medicament',
+  frecuencia: 'Freqüència',
+  duracion: 'Durada',
+  principioActivo: 'Principi actiu',
+  nombreDoc: 'Nom del document',
+  fechaSubida: 'Data de pujada'
 }

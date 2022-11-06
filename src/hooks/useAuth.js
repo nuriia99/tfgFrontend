@@ -19,7 +19,7 @@ export const useLogin = () => {
         updateData({ worker: workerData, token, center: workerData.turno.centro, lenguage: workerData.lenguaje, role: workerData.turno.rol })
         setLoading(false)
 
-        navigate('/home')
+        navigate('/app/home')
       })
       .catch((e) => {
         setLoading(false)

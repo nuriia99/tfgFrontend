@@ -9,7 +9,7 @@ const Settings = () => {
   const { worker } = globalData
   const navigate = useNavigate()
   useEffect(() => {
-    if (!worker) navigate('/login')
+    if (!worker) navigate('/app/login')
   }, [])
   return (
     worker

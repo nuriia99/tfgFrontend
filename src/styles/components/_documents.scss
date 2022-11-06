@@ -1,0 +1,66 @@
+.documents{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+  &_container{
+    height: 100%;
+    width: 100%;
+    border: 1px solid $navyBlue;
+    border-radius: 10px;
+
+    &_table{
+      padding: 20px;
+      .table{
+        display: grid;
+        padding: 30px;
+        row-gap: 3px;
+        overflow-y: auto;
+        overflow-x: auto;
+
+        .table_row{
+          display: flex;
+          width: 100%;
+          justify-content: left;
+          column-gap: 3px;
+          border-radius: 10px;
+          height: 40px;
+          cursor: pointer;  
+
+    
+          &.name{
+            display: flex;
+            align-items: center;
+            background-color: $BlueIcs;
+            padding-left: 15px;
+            font-weight: 700;
+          }
+          &.date{
+            display: flex;
+            align-items: center;
+            padding-left: 15px;
+            font-weight: 700;
+            background-color: $BlueIcs;
+          }
+          &.nameValue{
+            display: flex;
+            align-items: center;
+            padding-left: 15px;
+            background-color: $BlueIcsLight2;
+          }
+          &.dateValue{
+            display: flex;
+            align-items: center;
+            padding-left: 15px;
+            background-color: $BlueIcsLight2;
+          }
+        }
+      }
+    }
+    
+
+  }
+}

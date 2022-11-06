@@ -8,12 +8,12 @@ const Navbar = () => {
   return (
       <div id="navbar" className='navbar'>
         <div className="navbar_container">
-        <a href='/home'><FontAwesomeIcon icon={faHouseChimney} className='button'/></a>
+        <a href='/app/home'><FontAwesomeIcon icon={faHouseChimney} className='button'/></a>
           <span className="navbar_container_items">
             <p className='navbar_container_item'>{globalData.worker.nombre}</p>
             <p className='navbar_container_item'> - </p>
             <p className='navbar_container_item'>{globalData.role}</p>
-            <a href='/settings' className='settings_button'><FontAwesomeIcon icon={faGear} className='button'/></a>
+            <a href='/app/settings' className='settings_button'><FontAwesomeIcon icon={faGear} className='button'/></a>
           </span>
         </div>
       </div>

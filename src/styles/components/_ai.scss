@@ -13,7 +13,7 @@
       .icon{
         height: 30px;
         width: 30px;
-        color: $BlueIcs;
+        color: $navyBlueLight;
       }
       .title{
         padding: 0 10px 0 20px;
@@ -27,7 +27,7 @@
 }
 
 .patient_ai_panel{
-  background-color: $greyLight;
+  background-color: $BlueIcsLight2;
   height: 100%;
   width: 100%;
   padding: 10px;
@@ -59,67 +59,98 @@
     }
     .patient_ai_table{
       margin: 20px;
-      width: fit-content;
-      display: block;
+      display: grid;
       overflow-x: auto;
-      white-space: nowrap;
-      table-layout:fixed;
 
-      th {
-        border-radius: 5px;
-        font-size: 20px;
-        height: 30px;
+      &_row{
+        display: flex;
       }
 
-      td {
-        border: 1px solid white;
-        padding: 0;
-        border-radius: 5px;
-        font-size: 20px;
-        height: 11px;
-        background-color: $BlueIcsLight2;
+      .values{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        padding: 3px 10px;
         text-align: center;
+        width: 130px;
+        background-color: $BlueIcsLight2;
+        border-radius: 10px;
+        border: 1px solid white;
+        min-height: 35px;
       }
 
       .fixed.title{
+        display: flex;
+        align-items: center;
         background-color: $navyBlue;
+        width: 300px;
         color: white;
-      }
-
-      .fixed {
-        position: sticky;
-        background: white;
-        width: 310px;
         left: 0;
         z-index: 1;
+        position: sticky; 
+        border-radius: 10px;
+        padding-left: 20px;
+        box-sizing: border-box;
+        min-height: 35px;
+      }
+
+      .fixed_names {
+        display: flex;
+        align-items: center;
+        background-color: $BlueIcs;
+        position: sticky; 
+        width: 300px;
+        left: 0;
+        z-index: 1;
+        border-radius: 10px;
+        border: 1px solid white;
+        padding-left: 20px;
+        box-sizing: border-box;
+        min-height: 35px;
       }
 
       .dates {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
         padding: 3px 10px;
-        text-align: left;
+        text-align: center;
+        width: 130px;
         background-color: $BlueIcs;
-      }
-
-      .names{
-        padding-left: 10px;
-        text-align: left;
-        background-color: $BlueIcs;
+        border-radius: 10px;
+        border: 1px solid white;
+        min-height: 35px;
       }
 
       .currentDate{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
         background-color: $navyBlue;
         color: white;
         padding: 3px 10px;
         text-align: center;
         position: sticky;
+        width: 180px;
         right: 0;
         z-index: 1;
+        border-radius: 10px;
+        min-height: 35px;
       }
 
       .fixed_values{
         position: sticky;
         right: 0;
+        width: 180px;
         z-index: 1;
+        background-color: $BlueIcsLight2;
+        border-radius: 10px;
+        border: 1px solid white;
+        text-align: center;
+        min-height: 35px;
       }
     }
   }

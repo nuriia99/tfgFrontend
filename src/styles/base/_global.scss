@@ -1,6 +1,7 @@
 body, html{
   margin: 0;
   font-family: "Segoe UI",Helvetica,Arial,sans-serif,"Segoe UI Emoji","Segoe UI Symbol";
+  background-color: $BlueIcsLight2;
 }
 
 
@@ -152,10 +153,10 @@ body, html{
   }
 }
 
-//button
+//buttons
 .button_classic {
   width: 100%;
-  height: 25px;
+  height: 40px;
   border-radius: 0.3125rem;
   border: $BlueIcs solid 1px;
   background-color: $BlueIcsLight2;
@@ -166,4 +167,36 @@ body, html{
   font-size: 14px;
   font-weight: 700;
   color: $LightBlack;
+}
+
+.button_tag.active {
+  padding: 10px;
+  width: fit-content;
+  height: 30px;
+  background-color: $navyBlueLight;
+  color: white;
+  display: flex;
+  border: 0;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.button_tag.inactive {
+  width: fit-content;
+  height: 25px;
+  border: $BlueIcs solid 1px;
+  background-color: $BlueIcsLight2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  color: $LightBlack;
+  &:hover{
+    background-color: $BlueIcs;
+  }
 }

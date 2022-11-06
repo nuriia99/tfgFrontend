@@ -4,7 +4,7 @@ import { faHospitalUser, faAnglesDown } from '@fortawesome/free-solid-svg-icons'
 import { getLenguage } from '../../services/lenguage'
 import { useGlobalContext } from '../../hooks/useGlobalContext'
 import PatientInfoItem from './PatientInfoItem'
-const PatientInfo = ({ info }) => {
+const PatientInfo = ({ info, handleClickPrincipalComponent }) => {
   const { globalData } = useGlobalContext()
   const leng = getLenguage(globalData.lenguage, 'patient')
   const [active, setActive] = useState('inactive')
@@ -12,9 +12,10 @@ const PatientInfo = ({ info }) => {
     if (active === 'inactive') return setActive('active')
     return setActive('inactive')
   }
+
   return (
       <div className="patient_info">
-        <p className='patient_info_name'><FontAwesomeIcon className='icon' icon={faHospitalUser}/>{info.name}</p>
+        <p name='entries' onClick={handleClickPrincipalComponent} className='patient_info_name'><FontAwesomeIcon className='icon' icon={faHospitalUser}/>{info.name}</p>
         <div className='patient_info_line'>
           <p className='title'>{leng.edad}: {info.age} {leng.años} - {leng.sexo}: {info.sex} - {leng.genero}: {info.genre}</p>
           <button className={'patient_info_line_button ' + active} onClick={handleClick}><FontAwesomeIcon className='icon' icon={faAnglesDown}/></button>

@@ -1,7 +1,7 @@
 .navbar{
   height: 3.125rem;
   width: 100vw;
-  background-color: $BlueIcs;
+  background-color: $navyBlueLight;
   display: flex;
   align-items: center;
   &_container{
@@ -23,7 +23,7 @@
       margin: 0;
       font-weight: 500;
       font-size: 0.9375rem;
-      color: $LightBlack;
+      color: white;
     }
 
     .button{

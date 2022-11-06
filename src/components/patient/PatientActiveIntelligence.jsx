@@ -3,17 +3,13 @@ import { useGlobalContext } from '../../hooks/useGlobalContext'
 import { getLenguage } from '../../services/lenguage'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { getCurrentDate } from '../../services/utils'
 
 const PatientActiveIntelligence = ({ ai, handleClick }) => {
   const { globalData } = useGlobalContext()
   const leng = getLenguage(globalData.lenguage, 'patient')
-  const d = new Date()
-  let day = d.getDay()
-  if (day < 10) day = '0' + day
-  let month = d.getMonth()
-  if (month < 10) month = '0' + month
-  const actualDate = day + '/' + month + '/' + d.getFullYear()
-
+  const actualDate = getCurrentDate()
+  console.log(ai)
   const names = {
     Tabaquismo: leng.tabaquismo,
     ActividadFisica: leng.actividadFisica,
@@ -26,56 +22,54 @@ const PatientActiveIntelligence = ({ ai, handleClick }) => {
     Alcohol: leng.alcohol,
     Drogas: leng.drogas
   }
-  console.log(ai)
+
   return (
     <div className='patient_ai_panel'>
       <div className='patient_ai_panel_container'>
         <button className='patient_ai_panel_container_button' onClick={handleClick}><FontAwesomeIcon className='icon' icon={faArrowLeft}/></button>
-        <table className='patient_ai_table'>
+        <div className='patient_ai_table'>
           {
             ai.map((row, index) => {
               if (index === 0) {
                 // primera fila
                 return (
-                  <tr key={index}>
+                  <div className='patient_ai_table_row' key={index}>
                     {row.map((column, index) => {
                       if (index === 0) {
-                        if (column === '-') return <th key={index} className='fixed title'>{leng.inteligenciaActiva}</th>
-                        return <th key={index} className='fixed title'>{column}</th>
+                        if (column === '-') return <div key={index} className='fixed title'>{leng.inteligenciaActiva}</div>
+                        return <div key={index} className='fixed title'>{column}</div>
                       }
-                      return <th key={index} className='dates'>{column}</th>
+                      return <div key={index} className='dates'>{column}</div>
                     })}
-                    <th className='currentDate'>{actualDate}</th>
-                  </tr>
+                    <div className='currentDate'>{actualDate}</div>
+                  </div>
                 )
               } else {
                 let lastValue = ''
                 return (
-                  <tr key={index}>
+                  <div className='patient_ai_table_row' key={index}>
                     {row.map((column, index) => {
                       if (index === 0) {
                         return (
-                          <tr key={index}>
-                            <th key={index} className='fixed names'>{names[column.replace(/\s+/g, '')]}</th>
-                          </tr>
+                          <div key={index} className='fixed_names'>{names[column.replace(/\s+/g, '')]}</div>
                         )
                       } else {
                         if (column !== '-') {
                           lastValue = column
                           return (
-                            <td key={index} className='values'>{column}</td>
+                            <div key={index} className='values'>{column}</div>
                           )
                         }
-                        return <td key={index}></td>
+                        return <div key={index} className='values'></div>
                       }
                     })}
-                    <td key={index} className='fixed_values'>{lastValue}</td>
-                  </tr>
+                    <div key={index} className='fixed_values'>{lastValue}</div>
+                  </div>
                 )
               }
             })
           }
-        </table>
+        </div>
       </div>
     </div>
   )
