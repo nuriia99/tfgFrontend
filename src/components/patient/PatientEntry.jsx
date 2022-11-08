@@ -11,7 +11,7 @@ const PatientEntries = ({ entry }) => {
       <div className="entry">
         <div className="entry_info">{date + ' ' + hour + ' ' + _.toUpper(entry.trabajador.name) + ' - ' + _.toUpper(entry.trabajador.role)}</div>
         <div className="entry_content">
-          {entry.nota.map((note, index) => {
+          {entry.notas.map((note, index) => {
             return <PatientNote key={index} note={note}/>
           })}
         </div>

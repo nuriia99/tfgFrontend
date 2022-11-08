@@ -8,8 +8,8 @@ const DocumentsList = () => {
   const leng = getLenguage(globalData.lenguage, 'patient')
   const documents = globalData.patient.documentos
 
-  const openPdf = () => {
-    window.open('/app/pdf', '_blank', 'noopener,noreferrer')
+  const openPdf = (e) => {
+    window.open('/app/pdf/docs/' + e.target.getAttribute('name'), '_blank', 'noopener,noreferrer')
   }
 
   return (
@@ -19,17 +19,17 @@ const DocumentsList = () => {
           <div className="documents_container_table">
             <div className="table">
               <div className="table_row">
-                <div className="table_row name">{leng.nombreDoc}</div>
-                <div className="table_row date">{leng.fechaSubida}</div>
+                <div className="name">{leng.nombreDoc}</div>
+                <div className="date">{leng.fechaSubida}</div>
               </div>
               {
                 documents.map((doc, index) => {
                   return (
                     <div key={index} onClick={openPdf} className="table_row">
-                      <div className='table_row nameValue'>
+                      <div className='nameValue' name={doc.pdfUrl}>
                         {doc.nombre}
                       </div>
-                      <div className='table_row dateValue'>
+                      <div id={'table_row_' + index} className='dateValue'>
                         {getDate(doc.fechaSubida)}
                       </div>
                     </div>

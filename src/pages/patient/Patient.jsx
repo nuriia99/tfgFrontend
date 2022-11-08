@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from 'react'
 import Navbar from '../../components/navbar/Navbar'
 import { useGlobalContext } from '../../hooks/useGlobalContext'
+import { getLenguage } from '../../services/lenguage'
 import { useNavigate, useParams } from 'react-router-dom'
 import { getPatient } from '../../services/patient'
 import PatientInfo from '../../components/patient/PatientInfo'
@@ -17,6 +18,7 @@ import { getDate } from '../../services/utils'
 
 const Patient = () => {
   const { globalData, updatePatient } = useGlobalContext()
+  const leng = getLenguage(globalData.lenguage, 'patient')
   const { worker } = globalData
   const [info, setInfo] = useState()
   const [ai, setAi] = useState()
@@ -147,9 +149,9 @@ const Patient = () => {
                       <div className='patient_container_left_extra_features'>
                         <div className="extra_features">
                           <div className="extra_features_options">
-                            <button name="prescripciones" onClick={handleExtraFeatures} className={'button_tag ' + extraFeaturesActive.prescriptions}>Prescripciones</button>
-                            <button name="documentos" onClick={handleExtraFeatures} className={'button_tag ' + extraFeaturesActive.documents}>Documentos</button>
-                            <button name="visitas" onClick={handleExtraFeatures} className={'button_tag ' + extraFeaturesActive.visits}>Visitas</button>
+                            <button id='prescription_section' name="prescripciones" onClick={handleExtraFeatures} className={'button_tag ' + extraFeaturesActive.prescriptions}>{leng.prescripciones}</button>
+                            <button id='documents_section' name="documentos" onClick={handleExtraFeatures} className={'button_tag ' + extraFeaturesActive.documents}>{leng.documentos}</button>
+                            <button id='visits_section' name="visitas" onClick={handleExtraFeatures} className={'button_tag ' + extraFeaturesActive.visits}>{leng.visitas}</button>
                           </div>
                           <div className="extra_features_container">
                             {extraFeatures}

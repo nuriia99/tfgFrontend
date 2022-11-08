@@ -1,0 +1,189 @@
+.home {
+  width: 100%;
+  height: calc(100vh - 50px);
+  background-color: $BlueIcsLight2;
+  display: flex;
+  padding: 10px;
+  box-sizing: border-box;
+  &_container{
+    display: flex;
+    width: 100%;
+    min-width: 600px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+
+    &_left{
+      height: 100%;
+      width: 20%;
+      border-right: 1px solid $BlueIcs;
+      min-width: 220px;
+      padding-top: 10px;
+      box-sizing: border-box;
+      &_search{
+        margin: 10px;
+        min-width: 200px;
+        border: 1px solid $BlueIcs;
+        position: relative;
+        span{
+          position: absolute;
+          z-index: 1;
+          left: 0;
+          top: 0;
+          color: $LightBlack;
+          text-transform: uppercase;
+          transform: translateX(10px) translateY(-13px);
+          font-size: 12px;
+          padding: 5px 10px;
+          background-color: white;
+          border: 1px solid $BlueIcs;
+          letter-spacing: 0.0688rem;
+        }
+
+        form{
+          height: 100%;
+        }
+        .search_container{
+          box-sizing: border-box;
+          padding: 20px;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          background-color: $BlueIcsLight2;
+          padding-bottom: 10px;
+
+          
+
+          &_item{
+            padding: 1px;
+            
+            display: flex;
+            flex-direction: column;
+
+            
+            label{
+              font-size: 14px;
+              padding-bottom: 3px;
+              font-weight: 600;
+              padding-left: 7px;
+            }
+            input{
+              box-sizing: border-box;
+              width: 100%;
+              padding: 6px;
+              font-size: 12px;
+              border: 1px solid #dadce0;
+              border-radius: 3px;
+              border-radius: 10px;
+              padding-left: 15px;
+              color: $LightBlack;
+            }
+            &_radio {
+              display: flex;
+              padding-bottom: 5px;
+              padding-right: 10px;
+              label{
+                padding: 0;
+              }
+            }
+          }
+          &_button{
+            padding-top: 10px;
+            align-self: center;
+            width: 80%;
+            #button_submit_search{
+              background-color: $BlueIcs;
+            }
+          }
+          
+        }
+      }
+    }
+    &_right{
+      height: 100%;
+      width: 80%;
+      min-width: 220px;
+      padding: 40px;
+      box-sizing: border-box;
+      
+      .table{
+        display: grid;
+        padding: 30px;
+        row-gap: 3px;
+        overflow-y: auto;
+        overflow-x: auto;
+        .table_row{
+          display: flex;
+          width: 100%;
+          justify-content: left;
+          column-gap: 3px;
+          &:not(:first-child){
+            cursor: pointer;  
+          }
+
+    
+          .name{
+            display: flex;
+            align-items: center;
+            background-color: $BlueIcs;
+            padding: 0 15px;
+            font-weight: 700;
+            border-radius: 10px;
+            height: 40px;
+            width: 100%;
+            min-width: 120px;
+          }
+          .sex{
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            font-weight: 700;
+            background-color: $BlueIcs;
+            border-radius: 10px;
+            height: 40px;
+            width: 30%;
+          }
+          .age{
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            font-weight: 700;
+            background-color: $BlueIcs;
+            border-radius: 10px;
+            height: 40px;
+            width: 30%;
+          }
+          .nameValue{
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            background-color: $BlueIcsLight2;
+            border-radius: 10px;
+            height: 40px;
+            width: 100%;
+            min-width: 120px;
+          }
+          .sexValue{
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            background-color: $BlueIcsLight2;
+            border-radius: 10px;
+            height: 40px;
+            width: 30%;
+          }
+          .ageValue{
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            background-color: $BlueIcsLight2;
+            border-radius: 10px;
+            height: 40px;
+            width: 30%;
+          }
+        }
+      }
+    }
+  }
+}

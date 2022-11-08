@@ -3,7 +3,7 @@
 
 describe('settings works correctly', () => {
   beforeEach(() => { // login
-    cy.visit('http://localhost:3001/login')
+    cy.visit('http://localhost:3001/app/login')
     cy.get('[name=inputUsername]').type('FBU578MN')
     cy.get('[name=inputPassword]').type('FBU578MN')
     cy.get('#button_submit_login').click()
@@ -27,7 +27,7 @@ describe('settings works correctly', () => {
     cy.get('.select_title').eq(0).click()
     cy.get('.option').eq(0).click()
     cy.get('.settings_submit_button').click()
-    cy.visit('http://localhost:3001/settings')
+    cy.visit('http://localhost:3001/app/settings')
     cy.get('.select_title').eq(0).click()
     cy.get('.option').eq(0).contains('CUAP Gran Corazón')
   })
@@ -35,7 +35,7 @@ describe('settings works correctly', () => {
 
 describe('navbar works correctly', () => {
   beforeEach(() => { // login
-    cy.visit('http://localhost:3001/login')
+    cy.visit('http://localhost:3001/app/login')
     cy.get('[name=inputUsername]').type('1Q2W3E4R')
     cy.get('[name=inputPassword]').type('1Q2W3E4R')
     cy.get('#button_submit_login').click()
@@ -49,30 +49,39 @@ describe('navbar works correctly', () => {
 
 describe('redirects and 404 not found works correctly', () => {
   it('home redirect to login if the user is not autheticated', () => {
-    cy.visit('http://localhost:3001/home')
+    cy.visit('http://localhost:3001/app/home')
     cy.contains('Iniciar sesión')
   })
 
   it('settings redirect to login if the user is not autheticated', () => {
-    cy.visit('http://localhost:3001/settings')
+    cy.visit('http://localhost:3001/app/settings')
     cy.contains('Iniciar sesión')
   })
 
-  it('settings redirect to login if the user is not autheticated', () => {
+  it('main page redirect to login if the user is not autheticated ', () => {
     cy.visit('http://localhost:3001/')
-    cy.contains('404')
+    cy.contains('Iniciar sesión')
   })
 })
 
 describe('login and settings tests', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:3001/login')
+    cy.visit('http://localhost:3001/app/login')
   })
 
   it('the login works correctly', () => {
     cy.get('[name=inputUsername]').type('1Q2W3E4R')
     cy.get('[name=inputPassword]').type('1Q2W3E4R')
     cy.get('#button_submit_login').click()
+    cy.get('#navbar')
+  })
+
+  it('main page redirect to app/home if the user is autheticated', () => {
+    cy.get('[name=inputUsername]').type('1Q2W3E4R')
+    cy.get('[name=inputPassword]').type('1Q2W3E4R')
+    cy.get('#button_submit_login').click()
+    cy.get('#navbar')
+    cy.visit('http://localhost:3001/')
     cy.get('#navbar')
   })
 
@@ -84,7 +93,7 @@ describe('login and settings tests', () => {
     cy.get('.settings_button').click()
     cy.get('.logout').click()
     cy.get('#button_submit_login')
-    cy.visit('http://localhost:3001/home')
+    cy.visit('http://localhost:3001/app/home')
     cy.contains('Iniciar sesión')
   })
 

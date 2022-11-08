@@ -28,7 +28,7 @@ const PatientActiveIntelligenceCard = ({ ai, handleClick }) => {
           </div>
         </div>
         <div className="patient_ai_button">
-          <button className='button_classic' onClick={handleClick}>{leng.infoCompleta}</button>
+          <button id='ai_button' className='button_classic' onClick={handleClick}>{leng.infoCompleta}</button>
         </div>
     </div>
   )

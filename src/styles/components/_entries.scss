@@ -61,9 +61,56 @@
     }
 
     &_diagnosis{
-      height: 100%;
       width: 30%;
-      border: 1px solid green;
+      border: 1px solid $navyBlue;
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+      box-sizing: border-box;
+      height: 100%;
+      min-width: 160px;
+
+      &_options{
+        display: flex;
+        justify-content: left;
+        align-items: flex-end;
+      }
+      &_list{
+        flex: 1;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid $navyBlueLight;
+        min-width: 120px;
+        overflow-y: auto;
+
+        .diagnosis_item{
+          display: flex;
+          padding: 3px;
+          column-gap: 8px;
+          &.active{
+            padding-left: 10px;
+            background-color: rgb(255, 234, 0);
+            border-radius: 10px;
+          }
+          cursor: pointer;
+          &_color{
+            height: 13px;
+            width: 13px;
+            align-self: center;
+
+            &.leve{
+              background-color: rgb(255, 194, 72);
+            }
+            &.medio{
+              background-color: $RedError;
+            }
+            &.grave{
+              background-color: purple;
+            }
+          }
+        }
+      }
     }
   }
   

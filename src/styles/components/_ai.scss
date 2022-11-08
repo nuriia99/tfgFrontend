@@ -143,6 +143,9 @@
 
       .fixed_values{
         position: sticky;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         right: 0;
         width: 180px;
         z-index: 1;

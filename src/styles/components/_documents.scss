@@ -26,36 +26,48 @@
           width: 100%;
           justify-content: left;
           column-gap: 3px;
-          border-radius: 10px;
-          height: 40px;
-          cursor: pointer;  
+          &:not(:first-child){
+            cursor: pointer;  
+          }  
 
     
-          &.name{
+          .name{
             display: flex;
             align-items: center;
             background-color: $BlueIcs;
             padding-left: 15px;
             font-weight: 700;
+            border-radius: 10px;
+            height: 40px;
+            width: 100%;
           }
-          &.date{
+          .date{
             display: flex;
             align-items: center;
             padding-left: 15px;
             font-weight: 700;
             background-color: $BlueIcs;
+            border-radius: 10px;
+            height: 40px;
+            width: 100%;
           }
-          &.nameValue{
+          .nameValue{
             display: flex;
             align-items: center;
             padding-left: 15px;
             background-color: $BlueIcsLight2;
+            border-radius: 10px;
+            height: 40px;
+            width: 100%;
           }
-          &.dateValue{
+          .dateValue{
             display: flex;
             align-items: center;
             padding-left: 15px;
             background-color: $BlueIcsLight2;
+            border-radius: 10px;
+            height: 40px;
+            width: 100%;
           }
         }
       }

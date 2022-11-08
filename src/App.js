@@ -18,7 +18,7 @@ function App () {
           <Route path='/app/settings' element={<Settings/>}></Route>
           <Route path='/app/patients/:id' element={<Patient/>}></Route>
           <Route path='/' element={<Navigate to='/app/home'/>}></Route>
-          <Route path='/app/pdf' element={<PDFFile/>}></Route>
+          <Route path='/app/pdf/docs/:name' element={<PDFFile/>}></Route>
           <Route path='*' element={<PageNotFound/>}></Route>
         </Routes>
       </BrowserRouter>
