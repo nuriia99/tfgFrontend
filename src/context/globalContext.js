@@ -13,11 +13,14 @@ const globalContext = createContext(INITIAL_STATE)
 
 export const globalReducer = (state, action) => {
   const newWorker = state.worker
+  const patient = state.patient
   switch (action.type) {
     case 'UPDATEWORKER':
       return { ...state, worker: action.payload.workerData, token: action.payload.token }
     case 'UPDATEPATIENT':
       return { ...state, patient: action.payload }
+    case 'UPDATEENTRIES':
+      return { ...state, patient: { ...patient, entradas: action.payload } }
     case 'UPDATELENGUAGE':
       newWorker.lenguaje = action.payload
       return { ...state, worker: newWorker, lenguage: action.payload }

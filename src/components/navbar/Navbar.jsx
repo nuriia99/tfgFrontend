@@ -13,6 +13,10 @@ const Navbar = () => {
             <p className='navbar_container_item'>{globalData.worker.nombre}</p>
             <p className='navbar_container_item'> - </p>
             <p className='navbar_container_item'>{globalData.role}</p>
+            <p className='navbar_container_item'> - </p>
+            <p className='navbar_container_item'>{globalData.worker.numColegiado}</p>
+            <p className='navbar_container_item'> - </p>
+            <p className='navbar_container_item'>{globalData.center}</p>
             <a href='/app/settings' className='settings_button'><FontAwesomeIcon icon={faGear} className='button'/></a>
           </span>
         </div>

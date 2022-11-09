@@ -279,9 +279,8 @@ body, html {
 }
 .home_container_left {
   height: 100%;
-  width: 20%;
+  width: 240px;
   border-right: 1px solid rgb(126, 199, 255);
-  min-width: 220px;
   padding-top: 10px;
   box-sizing: border-box;
 }
@@ -347,6 +346,10 @@ body, html {
 }
 .home_container_left_search .search_container_item_radio label {
   padding: 0;
+  padding-left: 3px;
+}
+.home_container_left_search .search_container_item_radio input {
+  width: 15px;
 }
 .home_container_left_search .search_container_button {
   padding-top: 10px;
@@ -357,6 +360,7 @@ body, html {
   background-color: rgb(126, 199, 255);
 }
 .home_container_right {
+  flex: 1;
   height: 100%;
   width: 80%;
   min-width: 220px;
@@ -563,12 +567,40 @@ body, html {
 }
 
 .settings {
-  padding: 3.75rem;
+  padding: 60px;
+  padding-left: 80px;
   box-sizing: border-box;
   min-height: 100vh;
   background-color: #d8eefe;
   display: flex;
   flex-direction: column;
+}
+.settings h1 {
+  margin-left: -20px;
+}
+.settings h3 {
+  margin: 0;
+  padding-bottom: 10px;
+}
+.settings p {
+  margin: 0;
+}
+.settings .info_container {
+  padding-bottom: 15px;
+}
+.settings .info_container_item {
+  padding: 3px 0;
+  padding-left: 30px;
+  display: flex;
+}
+.settings .info_container_item .info_title {
+  margin: 0;
+  padding-right: 10px;
+  color: rgb(68, 68, 68);
+  font-weight: 700;
+}
+.settings .info_container_item .info_value {
+  margin: 0;
 }
 .settings_container {
   margin: 0.625rem 0;
@@ -894,6 +926,19 @@ body, html {
   color: white;
   padding: 4px;
   padding-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 10px;
+  cursor: auto;
+}
+.patient_entries_container_list .entry_info .button_classic {
+  visibility: hidden;
+  width: 70px;
+  height: 25px;
+}
+.patient_entries_container_list .entry_info .button_classic.visible {
+  visibility: visible;
 }
 .patient_entries_container_list .entry .note {
   padding: 5px 20px;

@@ -1,5 +1,6 @@
 /* global cy */
 /* eslint-disable no-undef */
+const username = '1Q2W3E4R'
 
 describe('settings works correctly', () => {
   beforeEach(() => { // login
@@ -27,9 +28,27 @@ describe('settings works correctly', () => {
     cy.get('.select_title').eq(0).click()
     cy.get('.option').eq(0).click()
     cy.get('.settings_submit_button').click()
+    cy.wait(1000)
+    cy.get('.correct')
     cy.visit('http://localhost:3001/app/settings')
     cy.get('.select_title').eq(0).click()
     cy.get('.option').eq(0).contains('CUAP Gran Corazón')
+  })
+})
+
+describe('search patient works correctly', () => {
+  beforeEach(() => {
+    cy.visit('http://localhost:3001/app/login')
+    cy.get('[name=inputUsername]').type(username)
+    cy.get('[name=inputPassword]').type(username)
+    cy.get('#button_submit_login').click()
+    cy.get('#navbar')
+  })
+  it('search finds the patient', () => {
+    cy.get('[name=inputName]').type('alex')
+    cy.get('[name=inputFem]').click()
+    cy.get('#button_submit_search').click()
+    cy.get('.nameValue').eq(0).contains('Alexandra')
   })
 })
 

@@ -60,6 +60,33 @@ const ProfileSettings = () => {
   return (
       <div className='settings'>
         <h1>{leng.settings}</h1>
+        <h3>{leng.informacionCuenta}</h3>
+        <div className="info_container">
+        <div className="info_container_item">
+          <p className='info_title'>{leng.nombre}:</p>
+          <p className='info_value'>{globalData.worker.nombre}</p>
+        </div>
+        <div className="info_container_item">
+          <p className='info_title'>DNI:</p>
+          <p className='info_value'>{globalData.worker.dni}</p>
+        </div>
+        <div className="info_container_item">
+          <p className='info_title'>{leng.numColegiado}:</p>
+          <p className='info_value'>{globalData.worker.numColegiado}</p>
+        </div>
+        <div className="info_container_item">
+          <p className='info_title'>{leng.usuario}:</p>
+          <p className='info_value'>{globalData.worker.username}</p>
+        </div>
+        <div className="info_container_item">
+          <p className='info_title'>{leng.correo}:</p>
+          <p className='info_value'>{globalData.worker.correo}</p>
+        </div>
+        <div className="info_container_item">
+          <p className='info_title'>{leng.telefono}:</p>
+          <p className='info_value'>{globalData.worker.telefono}</p>
+        </div>
+        </div>
         <h3>{leng.ajustes_perfil}</h3>
           <p>{leng.cambia_datos}</p>
           <div className="settings_container">

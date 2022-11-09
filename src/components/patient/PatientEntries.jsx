@@ -6,11 +6,11 @@ import { getLenguage } from '../../services/lenguage'
 import DiagnosisList from './DiagnosisList'
 
 const PatientEntries = ({ info }) => {
-  const { globalData } = useGlobalContext()
+  const { globalData, updateEntries } = useGlobalContext()
   const leng = getLenguage(globalData.lenguage, 'patient')
-  const [loading, setLoading] = useState(false)
-  const [allEntries, setAllEntries] = useState()
-  const [entries, setEntries] = useState()
+  const [loading, setLoading] = useState(true)
+  const [allEntries, setAllEntries] = useState([])
+  const [entries, setEntries] = useState([])
   const [diagnosisComponent, setDiagnosisComponent] = useState()
   const [status, setStatus] = useState({
     active: 'active',
@@ -56,6 +56,7 @@ const PatientEntries = ({ info }) => {
       const fetchData = async () => {
         setLoading(true)
         const data = await getEntries({ id: info.id, token: info.token })
+        updateEntries(data)
         setAllEntries(data)
         setEntries(data)
         data.map((entry) => {
@@ -71,6 +72,7 @@ const PatientEntries = ({ info }) => {
   useEffect(() => {
     setDiagnosisComponent(<DiagnosisList diagnosis={activeDiagnosis} filterDiagnosis={filterDiagnosis}/>)
   }, [activeDiagnosis])
+
   return (
     !loading
       ? <>
@@ -80,9 +82,9 @@ const PatientEntries = ({ info }) => {
             <div className="patient_entries_container">
               <div className="patient_entries_container_list">
                 {
-                  entries.map((entry, index) => {
+                  entries.map((e) => {
                     return (
-                      <PatientEntry key={index} entry={entry}></PatientEntry>
+                      <PatientEntry key={e._id} entry={e}></PatientEntry>
                     )
                   })
                 }

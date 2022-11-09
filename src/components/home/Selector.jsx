@@ -32,7 +32,7 @@ const ProfileSettings = ({ name, currentSelect, options, handleChange }) => {
           options.map((option, index) => {
             return (
               <div key={index} onClick={handleClickInput} className="option">
-                <button value ={option}>{option}</button>
+                <button id={option} value ={option}>{option}</button>
               </div>
             )
           })

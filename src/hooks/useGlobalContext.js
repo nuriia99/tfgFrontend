@@ -15,6 +15,10 @@ export const useGlobalContext = () => {
     dispatch({ type: 'UPDATEPATIENT', payload: data })
   }
 
+  const updateEntries = (data) => {
+    dispatch({ type: 'UPDATEENTRIES', payload: data })
+  }
+
   const updateData = async (data) => {
     dispatch({ type: 'UPDATECENTER', payload: data.center })
     dispatch({ type: 'UPDATELENGUAGE', payload: data.lenguage })
@@ -25,5 +29,5 @@ export const useGlobalContext = () => {
     dispatch({ type: 'RESET' })
     navigate('/app/login')
   }
-  return { globalData, updateWorker, updateData, reset, updatePatient }
+  return { globalData, updateWorker, updateData, reset, updatePatient, updateEntries }
 }

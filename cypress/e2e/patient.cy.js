@@ -4,6 +4,28 @@
 const patientId = '63663957fff537e2cca3f844'
 const username = 'FBU578MN'
 
+describe('tests related to entries', () => {
+  beforeEach(() => {
+    cy.visit('http://localhost:3001/app/login')
+    cy.get('[name=inputUsername]').type(username)
+    cy.get('[name=inputPassword]').type(username)
+    cy.get('#button_submit_login').click()
+    cy.get('#navbar')
+    cy.visit('http://localhost:3001/app/patients/' + patientId)
+  })
+  // it('translate the entries works correctly', () => {
+  //   cy.get('.visible').eq(0).click()
+  //   cy.wait(4000)
+  //   cy.get('.note_row_content').eq(0).contains('El pacient ve a consulta per una febre alta.')
+  // })
+  it('filter the entries works correctly', () => {
+    cy.get('#inactive_section').click()
+    cy.get('.diagnosis_item_name').eq(0).click()
+    cy.get('.diagnosis_item').eq(0).should('have.css', 'background-color', 'rgb(255, 234, 0)')
+    cy.get('.note_diagnosis').contains('URTICÀRIA AL·LÈRGICA')
+  })
+})
+
 describe('tests related to prescriptions', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3001/app/login')
@@ -23,6 +45,9 @@ describe('tests related to prescriptions', () => {
   })
   it('if we have an allergy, the name is red color', () => {
     cy.get('.table_row_values').eq(4).should('have.css', 'color', 'rgb(182, 0, 0)')
+  })
+  it('the outdate prescriptions does not show', () => {
+    cy.get('.table_row').should('have.length', 3)
   })
 })
 
@@ -82,8 +107,8 @@ describe('tests related to active intelligence', () => {
     cy.get('#navbar')
     cy.visit('http://localhost:3001/app/patients/' + patientId)
     cy.get('.patient_ai_container').contains('IMC: 17.30 kg/m²')
-    cy.get('.patient_ai_container').contains('Hábitos tóxicos: Sí')
-    cy.get('.patient_ai_container').contains('Alergias: Sí')
+    cy.get('.patient_ai_container').contains('Hàbits tòxics: Sí')
+    cy.get('.patient_ai_container').contains('Al·lèrgies: Sí')
   })
 
   it('if we press the button we acces to the ai panel and view correctly the information', () => {

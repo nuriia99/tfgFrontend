@@ -1,10 +1,38 @@
 .settings{
-  padding: 3.75rem;
+  padding: 60px;
+  padding-left: 80px;
   box-sizing: border-box;
   min-height: 100vh; 
   background-color: $BlueIcsLight2;
   display: flex;
   flex-direction: column;
+  h1{
+    margin-left: -20px;
+  }
+  h3{
+    margin: 0;
+    padding-bottom: 10px;
+  }
+  p{
+    margin: 0;
+  }
+  .info_container{
+    padding-bottom: 15px;
+    &_item{
+      padding: 3px 0;
+      padding-left: 30px;
+      display: flex;
+      .info_title{
+        margin: 0;
+        padding-right: 10px;
+        color: $LightBlack;
+        font-weight: 700;
+      }
+      .info_value{
+        margin: 0;
+      }
+    }
+  }
   &_container{
     margin: 0.625rem 0;
     max-width: 50rem;

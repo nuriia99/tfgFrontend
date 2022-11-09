@@ -25,6 +25,7 @@ export const patientEs = {
   activo: 'Activo',
   inactivo: 'Inactivo',
   visitas: 'Visitas',
+  traducir: 'Traducir',
 
   nombreMedicamento: 'Medicamento',
   frecuencia: 'Frecuencia',
@@ -65,6 +66,7 @@ export const patientCa = {
   prescripciones: 'Prescripcions',
   documentos: 'Documents',
   visitas: 'Visites',
+  traducir: 'Traduir',
 
   nombreMedicamento: 'Medicament',
   frecuencia: 'Freqüència',

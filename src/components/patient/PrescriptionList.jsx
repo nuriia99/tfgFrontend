@@ -7,7 +7,10 @@ const PrescriptionList = () => {
   const { globalData } = useGlobalContext()
   const leng = getLenguage(globalData.lenguage, 'patient')
   const allergy = globalData.patient.inteligenciaActiva.alergias
-  const prescriptions = globalData.patient.prescripciones
+  const currentDate = new Date()
+  const prescriptions = globalData.patient.prescripciones.filter((prescription) => {
+    return new Date(prescription.fechaFinal).getTime() > currentDate.getTime()
+  })
   return (
     <>
       <div className="prescriptions">
