@@ -19,7 +19,7 @@ const PatientActiveIntelligenceCard = ({ ai, handleClick }) => {
           <div className="patient_ai_container_item">
             <FontAwesomeIcon className='icon' icon={faSkullCrossbones}/>
             <p className='title'>{leng.habitos}: </p>
-            <p className='value'>{ai.alcohol || ai.tabaquismo || ai.drogas.length > 0 ? 'Sí' : 'No'}</p>
+            <p className='value'>{ai.alcohol.length || ai.tabaquismo.length || ai.drogas.length > 0 ? 'Sí' : 'No'}</p>
           </div>
           <div className="patient_ai_container_item">
             <FontAwesomeIcon className='icon' icon={faPersonDotsFromLine}/>
