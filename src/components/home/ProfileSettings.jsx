@@ -1,8 +1,8 @@
 import { React, useState } from 'react'
-import Selector from './Selector'
 import { useGlobalContext } from '../../hooks/useGlobalContext'
 import { updateLenguage } from '../../services/worker'
 import { getLenguage } from '../../services/lenguage'
+import { Select, Option } from './Select'
 
 const ProfileSettings = () => {
   const lenguages = ['Español', 'Catalán']
@@ -23,7 +23,7 @@ const ProfileSettings = () => {
 
   const handleChange = (info) => {
     setCurrentData((prev) => {
-      const currentValue = info.value
+      const currentValue = info.option
       if (info.name === 'center') {
         const options = globalData.worker.centros.filter((item) => item !== currentValue)
         return { ...prev, currentCenter: currentValue, optionsCenter: options }
@@ -92,15 +92,33 @@ const ProfileSettings = () => {
           <div className="settings_container">
             <div className="settings_container_item">
               <h5>{leng.cambia_centro}</h5>
-              <Selector name='center' currentSelect={currentData.currentCenter} options={currentData.optionsCenter} handleChange={handleChange}/>
+              <Select currentSelect={currentData.currentCenter} handleChange={(option) => { handleChange({ name: 'center', option }) }}>
+                {
+                  currentData.optionsCenter.map((option, index) => {
+                    return <Option key={index} option={option}>{option}</Option>
+                  })
+                }
+              </Select>
             </div>
             <div className="settings_container_item">
               <h5>{leng.cambia_espe}</h5>
-              <Selector name='role' currentSelect={currentData.currentRole} options={currentData.optionsRole} handleChange={handleChange}/>
+              <Select currentSelect={currentData.currentRole} handleChange={(option) => { handleChange({ name: 'role', option }) }}>
+                {
+                  currentData.optionsRole.map((option, index) => {
+                    return <Option key={index} option={option}>{option}</Option>
+                  })
+                }
+              </Select>
             </div>
             <div className="settings_container_item">
               <h5>{leng.cambia_leng}</h5>
-              <Selector name='lenguage' currentSelect={currentData.currentLenguage} options={currentData.optionsLenguage} handleChange={handleChange}/>
+              <Select currentSelect={currentData.currentLenguage} handleChange={(option) => { handleChange({ name: 'lenguage', option }) }}>
+                {
+                  currentData.optionsLenguage.map((option, index) => {
+                    return <Option key={index} option={option}>{option}</Option>
+                  })
+                }
+              </Select>
             </div>
             <div className="settings_submit">
                 { loading

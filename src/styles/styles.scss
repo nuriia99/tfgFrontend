@@ -3,17 +3,15 @@
 @import './base/global';
 
 //pages 
-@import './pages/patient';
-@import './pages/home';
+@import '../pages/home/home';
+@import '../pages/patient/patient';
 
 //components
-@import './components/navbar';
-@import './components/login';
-@import './components/settings';
-@import './components/info';
-@import './components/ai';
-@import './components/entries';
-@import './components/prescriptions';
-@import './components/documents';
+@import '../components/navbar/navbar';
+@import '../components/login/login';
+@import '../components/home/settings';
+@import '../components/patient/patientInfo/info';
+@import '../components/patient/patientEntries/entries';
+
 
 

@@ -7,7 +7,7 @@ export const getEntries = async ({ id, token }) => {
         authorization: `Bearer ${token}`
       }
     })
-    return res.data
+    return res
   } catch (error) {
     return error
   }

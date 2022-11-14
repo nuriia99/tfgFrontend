@@ -1,10 +1,10 @@
 import { React, useState, useEffect } from 'react'
-import { getDate, getHour } from '../../services/utils'
-import { useGlobalContext } from '../../hooks/useGlobalContext'
-import { getLenguage } from '../../services/lenguage'
+import { getDate, getHour } from '../../../utils/utils'
+import { useGlobalContext } from '../../../hooks/useGlobalContext'
+import { getLenguage } from '../../../services/lenguage'
 import _ from 'lodash'
 import PatientNote from './PatientNote'
-import { translateNotes } from '../../services/entries'
+import { translateNotes } from '../../../services/entries'
 
 const PatientEntries = ({ entry }) => {
   const { globalData } = useGlobalContext()
@@ -23,7 +23,6 @@ const PatientEntries = ({ entry }) => {
     const newNotes = await translateNotes({ notes, lengWorker })
     setNotes(newNotes)
   }
-  console.log(visibility)
   return (
     <>
     {

@@ -1,8 +1,9 @@
 import { React } from 'react'
-import { useGlobalContext } from '../../hooks/useGlobalContext'
-import { getLenguage } from '../../services/lenguage'
+import { useGlobalContext } from '../../../hooks/useGlobalContext'
+import { getLenguage } from '../../../services/lenguage'
 import PrescriptionRow from './PrescriptionRow'
 
+// patient={{ allergy: globalData.patient.inteligenciaActiva.alergias, prescriptions: globalData.patient.prescripciones }}
 const PrescriptionList = () => {
   const { globalData } = useGlobalContext()
   const leng = getLenguage(globalData.lenguage, 'patient')

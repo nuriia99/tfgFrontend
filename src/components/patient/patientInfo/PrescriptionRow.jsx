@@ -1,5 +1,5 @@
 import { React } from 'react'
-import { useGlobalContext } from '../../hooks/useGlobalContext'
+import { useGlobalContext } from '../../../hooks/useGlobalContext'
 import _ from 'lodash'
 
 const PrescriptionRow = ({ prescription }) => {

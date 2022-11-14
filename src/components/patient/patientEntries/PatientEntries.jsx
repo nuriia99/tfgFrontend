@@ -1,12 +1,13 @@
 import { React, useEffect, useState } from 'react'
-import { getEntries } from '../../services/entries'
 import PatientEntry from './PatientEntry'
-import { useGlobalContext } from '../../hooks/useGlobalContext'
-import { getLenguage } from '../../services/lenguage'
+import { useGlobalContext } from '../../../hooks/useGlobalContext'
+import { getLenguage } from '../../../services/lenguage'
 import DiagnosisList from './DiagnosisList'
+import { usePatientContext } from '../../../hooks/usePatientContext'
 
 const PatientEntries = ({ info }) => {
-  const { globalData, updateEntries } = useGlobalContext()
+  const { globalData } = useGlobalContext()
+  const { patientData } = usePatientContext()
   const leng = getLenguage(globalData.lenguage, 'patient')
   const [loading, setLoading] = useState(true)
   const [allEntries, setAllEntries] = useState([])
@@ -52,22 +53,19 @@ const PatientEntries = ({ info }) => {
     })
   }
   useEffect(() => {
-    if (info) {
-      const fetchData = async () => {
-        setLoading(true)
-        const data = await getEntries({ id: info.id, token: info.token })
-        updateEntries(data)
-        setAllEntries(data)
-        setEntries(data)
-        data.map((entry) => {
-          return entry.notas.map(nota => {
-            return nota.estado === 'activo' ? setActiveDiagnosis(prev => [...prev, { nombre: nota.diagnostico, severidad: nota.severidad }]) : setInactiveDiagnosis(prev => [...prev, { nombre: nota.diagnostico, severidad: nota.severidad }])
-          })
+    const fetchData = async () => {
+      setLoading(true)
+      console.log(patientData.entradas)
+      setAllEntries(patientData.entradas)
+      setEntries(patientData.entradas)
+      patientData.entradas.map((entry) => {
+        return entry.notas.map(nota => {
+          return nota.estado === 'activo' ? setActiveDiagnosis(prev => [...prev, { nombre: nota.diagnostico, severidad: nota.severidad }]) : setInactiveDiagnosis(prev => [...prev, { nombre: nota.diagnostico, severidad: nota.severidad }])
         })
-        setLoading(false)
-      }
-      fetchData()
+      })
+      setLoading(false)
     }
+    fetchData()
   }, [])
   useEffect(() => {
     setDiagnosisComponent(<DiagnosisList diagnosis={activeDiagnosis} filterDiagnosis={filterDiagnosis}/>)

@@ -1,7 +1,7 @@
 import { React } from 'react'
-import { useGlobalContext } from '../../hooks/useGlobalContext'
-import { getLenguage } from '../../services/lenguage'
-import { getDate } from '../../services/utils'
+import { useGlobalContext } from '../../../hooks/useGlobalContext'
+import { getLenguage } from '../../../services/lenguage'
+import { getDate } from '../../../utils/utils'
 
 const DocumentsList = () => {
   const { globalData } = useGlobalContext()

@@ -1,11 +1,14 @@
 import { React } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faWeightScale, faSkullCrossbones, faPersonDotsFromLine } from '@fortawesome/free-solid-svg-icons'
-import { getLenguage } from '../../services/lenguage'
-import { useGlobalContext } from '../../hooks/useGlobalContext'
+import { getLenguage } from '../../../services/lenguage'
+import { useGlobalContext } from '../../../hooks/useGlobalContext'
+import { usePatientContext } from '../../../hooks/usePatientContext'
 
-const PatientActiveIntelligenceCard = ({ ai, handleClick }) => {
+const PatientActiveIntelligenceCard = ({ handleClick }) => {
   const { globalData } = useGlobalContext()
+  const { patientData } = usePatientContext()
+  const ai = patientData.patient.inteligenciaActiva
   const leng = getLenguage(globalData.lenguage, 'patient')
   return (
     <div className="patient_ai">

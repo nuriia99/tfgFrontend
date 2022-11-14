@@ -1,9 +1,9 @@
 import { React } from 'react'
-import { useGlobalContext } from '../../hooks/useGlobalContext'
-import { getLenguage } from '../../services/lenguage'
+import { useGlobalContext } from '../../../hooks/useGlobalContext'
+import { getLenguage } from '../../../services/lenguage'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
-import { getCurrentDate } from '../../services/utils'
+import { getCurrentDate } from '../../../utils/utils'
 
 const PatientActiveIntelligence = ({ ai, handleClick }) => {
   const { globalData } = useGlobalContext()

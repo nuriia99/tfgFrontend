@@ -3,20 +3,11 @@ import globalContext from '../context/globalContext'
 import { useNavigate } from 'react-router-dom'
 
 export const useGlobalContext = () => {
-  const { dispatch } = useContext(globalContext)
+  const { globalData, dispatch } = useContext(globalContext)
   const navigate = useNavigate()
-  const { globalData } = useContext(globalContext)
 
   const updateWorker = (data) => {
     dispatch({ type: 'UPDATEWORKER', payload: data })
-  }
-
-  const updatePatient = (data) => {
-    dispatch({ type: 'UPDATEPATIENT', payload: data })
-  }
-
-  const updateEntries = (data) => {
-    dispatch({ type: 'UPDATEENTRIES', payload: data })
   }
 
   const updateData = async (data) => {
@@ -29,5 +20,5 @@ export const useGlobalContext = () => {
     dispatch({ type: 'RESET' })
     navigate('/app/login')
   }
-  return { globalData, updateWorker, updateData, reset, updatePatient, updateEntries }
+  return { globalData, updateWorker, updateData, reset }
 }

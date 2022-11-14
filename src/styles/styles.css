@@ -184,83 +184,6 @@ body, html {
   background-color: rgb(126, 199, 255);
 }
 
-.patient {
-  width: 100%;
-  height: calc(100vh - 50px);
-}
-.patient_container {
-  background-color: #d8eefe;
-  height: 100%;
-  width: 100%;
-  display: flex;
-}
-.patient_container_right {
-  flex: 1;
-  background-color: white;
-  border-radius: 10px;
-  margin: 10px;
-  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
-  transition: all 0.5s ease-in-out;
-  min-width: 400px;
-}
-.patient_container_left {
-  display: flex;
-  flex-direction: column;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-  padding: 10px;
-  box-sizing: border-box;
-  row-gap: 10px;
-}
-.patient_container_left_info {
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
-  width: 100%;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
-  transition: all 0.5s ease-in-out;
-}
-.patient_container_left_ai {
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
-  width: 100%;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
-  transition: all 0.5s ease-in-out;
-}
-.patient_container_left_extra_features {
-  flex: 1;
-  width: 100%;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
-  transition: all 0.5s ease-in-out;
-}
-.patient_container_left_extra_features .extra_features {
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  box-sizing: border-box;
-  height: 100%;
-}
-.patient_container_left_extra_features .extra_features_options {
-  display: flex;
-  justify-content: left;
-  align-items: flex-end;
-}
-.patient_container_left_extra_features .extra_features_container {
-  flex: 1;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  border: 1px solid #0979b0;
-}
-
 .home {
   width: 100%;
   height: calc(100vh - 50px);
@@ -442,6 +365,83 @@ body, html {
   border-radius: 10px;
   height: 40px;
   width: 30%;
+}
+
+.patient {
+  width: 100%;
+  height: calc(100vh - 50px);
+}
+.patient_container {
+  background-color: #d8eefe;
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+.patient_container_right {
+  flex: 1;
+  background-color: white;
+  border-radius: 10px;
+  margin: 10px;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+  transition: all 0.5s ease-in-out;
+  min-width: 400px;
+}
+.patient_container_left {
+  display: flex;
+  flex-direction: column;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 10px;
+  box-sizing: border-box;
+  row-gap: 10px;
+}
+.patient_container_left_info {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  width: 100%;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+  transition: all 0.5s ease-in-out;
+}
+.patient_container_left_ai {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  width: 100%;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+  transition: all 0.5s ease-in-out;
+}
+.patient_container_left_extra_features {
+  flex: 1;
+  width: 100%;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+  transition: all 0.5s ease-in-out;
+}
+.patient_container_left_extra_features .extra_features {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  box-sizing: border-box;
+  height: 100%;
+}
+.patient_container_left_extra_features .extra_features_options {
+  display: flex;
+  justify-content: left;
+  align-items: flex-end;
+}
+.patient_container_left_extra_features .extra_features_container {
+  flex: 1;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #0979b0;
 }
 
 .navbar {
@@ -678,7 +678,7 @@ body, html {
 }
 .patient_info_name {
   display: flex;
-  font-size: 20px;
+  font-size: 17px;
   justify-content: center;
   align-items: center;
   text-align: left;
@@ -888,6 +888,165 @@ body, html {
   min-height: 35px;
 }
 
+.documents {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+.documents_container {
+  height: 100%;
+  width: 100%;
+  border: 1px solid #004173;
+  border-radius: 10px;
+}
+.documents_container_table {
+  padding: 20px;
+}
+.documents_container_table .table {
+  display: grid;
+  padding: 30px;
+  row-gap: 3px;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+.documents_container_table .table .table_row {
+  display: flex;
+  width: 100%;
+  justify-content: left;
+  -moz-column-gap: 3px;
+       column-gap: 3px;
+}
+.documents_container_table .table .table_row:not(:first-child) {
+  cursor: pointer;
+}
+.documents_container_table .table .table_row .name {
+  display: flex;
+  align-items: center;
+  background-color: rgb(126, 199, 255);
+  padding-left: 15px;
+  font-weight: 700;
+  border-radius: 10px;
+  height: 40px;
+  width: 100%;
+}
+.documents_container_table .table .table_row .date {
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+  font-weight: 700;
+  background-color: rgb(126, 199, 255);
+  border-radius: 10px;
+  height: 40px;
+  width: 100%;
+}
+.documents_container_table .table .table_row .nameValue {
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+  background-color: #d8eefe;
+  border-radius: 10px;
+  height: 40px;
+  width: 100%;
+}
+.documents_container_table .table .table_row .dateValue {
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+  background-color: #d8eefe;
+  border-radius: 10px;
+  height: 40px;
+  width: 100%;
+}
+
+.prescriptions {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+.prescriptions_container {
+  height: 100%;
+  width: 100%;
+  border: 1px solid #004173;
+  border-radius: 10px;
+}
+.prescriptions_container_info {
+  display: flex;
+  align-items: center;
+  padding: 30px;
+  border-bottom: 1px solid #004173;
+  height: 10%;
+}
+.prescriptions_container_info_title {
+  font-weight: 700;
+  padding: 0 10px;
+  font-size: 1.125em;
+}
+.prescriptions_container_table {
+  padding: 20px;
+}
+.prescriptions_container_table .table {
+  display: grid;
+  padding: 30px;
+  row-gap: 3px;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+.prescriptions_container_table .table .table_row {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  -moz-column-gap: 3px;
+       column-gap: 3px;
+}
+.prescriptions_container_table .table .table_row_title {
+  padding: 10px;
+  background-color: rgb(126, 199, 255);
+  border-radius: 10px;
+  font-weight: 700;
+}
+.prescriptions_container_table .table .table_row_title.name {
+  width: 400px;
+}
+.prescriptions_container_table .table .table_row_title.component {
+  width: 150px;
+}
+.prescriptions_container_table .table .table_row_title.frecuencia {
+  width: 100px;
+}
+.prescriptions_container_table .table .table_row_title.duracion {
+  width: 100px;
+}
+.prescriptions_container_table .table .table_row_values {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #d8eefe;
+  border-radius: 10px;
+}
+.prescriptions_container_table .table .table_row_values.name {
+  width: 400px;
+}
+.prescriptions_container_table .table .table_row_values.component {
+  width: 150px;
+}
+.prescriptions_container_table .table .table_row_values.frecuencia {
+  width: 100px;
+}
+.prescriptions_container_table .table .table_row_values.duracion {
+  width: 100px;
+}
+.prescriptions_container_table .table .table_row_values.alert {
+  color: rgb(182, 0, 0);
+}
+
 .patient_entries {
   height: 100%;
   width: 100%;
@@ -1009,163 +1168,4 @@ body, html {
 }
 .patient_entries_container_diagnosis_list .diagnosis_item_color.grave {
   background-color: purple;
-}
-
-.prescriptions {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  box-sizing: border-box;
-}
-.prescriptions_container {
-  height: 100%;
-  width: 100%;
-  border: 1px solid #004173;
-  border-radius: 10px;
-}
-.prescriptions_container_info {
-  display: flex;
-  align-items: center;
-  padding: 30px;
-  border-bottom: 1px solid #004173;
-  height: 10%;
-}
-.prescriptions_container_info_title {
-  font-weight: 700;
-  padding: 0 10px;
-  font-size: 1.125em;
-}
-.prescriptions_container_table {
-  padding: 20px;
-}
-.prescriptions_container_table .table {
-  display: grid;
-  padding: 30px;
-  row-gap: 3px;
-  overflow-y: auto;
-  overflow-x: auto;
-}
-.prescriptions_container_table .table .table_row {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  -moz-column-gap: 3px;
-       column-gap: 3px;
-}
-.prescriptions_container_table .table .table_row_title {
-  padding: 10px;
-  background-color: rgb(126, 199, 255);
-  border-radius: 10px;
-  font-weight: 700;
-}
-.prescriptions_container_table .table .table_row_title.name {
-  width: 400px;
-}
-.prescriptions_container_table .table .table_row_title.component {
-  width: 150px;
-}
-.prescriptions_container_table .table .table_row_title.frecuencia {
-  width: 100px;
-}
-.prescriptions_container_table .table .table_row_title.duracion {
-  width: 100px;
-}
-.prescriptions_container_table .table .table_row_values {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  background-color: #d8eefe;
-  border-radius: 10px;
-}
-.prescriptions_container_table .table .table_row_values.name {
-  width: 400px;
-}
-.prescriptions_container_table .table .table_row_values.component {
-  width: 150px;
-}
-.prescriptions_container_table .table .table_row_values.frecuencia {
-  width: 100px;
-}
-.prescriptions_container_table .table .table_row_values.duracion {
-  width: 100px;
-}
-.prescriptions_container_table .table .table_row_values.alert {
-  color: rgb(182, 0, 0);
-}
-
-.documents {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  box-sizing: border-box;
-}
-.documents_container {
-  height: 100%;
-  width: 100%;
-  border: 1px solid #004173;
-  border-radius: 10px;
-}
-.documents_container_table {
-  padding: 20px;
-}
-.documents_container_table .table {
-  display: grid;
-  padding: 30px;
-  row-gap: 3px;
-  overflow-y: auto;
-  overflow-x: auto;
-}
-.documents_container_table .table .table_row {
-  display: flex;
-  width: 100%;
-  justify-content: left;
-  -moz-column-gap: 3px;
-       column-gap: 3px;
-}
-.documents_container_table .table .table_row:not(:first-child) {
-  cursor: pointer;
-}
-.documents_container_table .table .table_row .name {
-  display: flex;
-  align-items: center;
-  background-color: rgb(126, 199, 255);
-  padding-left: 15px;
-  font-weight: 700;
-  border-radius: 10px;
-  height: 40px;
-  width: 100%;
-}
-.documents_container_table .table .table_row .date {
-  display: flex;
-  align-items: center;
-  padding-left: 15px;
-  font-weight: 700;
-  background-color: rgb(126, 199, 255);
-  border-radius: 10px;
-  height: 40px;
-  width: 100%;
-}
-.documents_container_table .table .table_row .nameValue {
-  display: flex;
-  align-items: center;
-  padding-left: 15px;
-  background-color: #d8eefe;
-  border-radius: 10px;
-  height: 40px;
-  width: 100%;
-}
-.documents_container_table .table .table_row .dateValue {
-  display: flex;
-  align-items: center;
-  padding-left: 15px;
-  background-color: #d8eefe;
-  border-radius: 10px;
-  height: 40px;
-  width: 100%;
 }/*# sourceMappingURL=styles.css.map */
