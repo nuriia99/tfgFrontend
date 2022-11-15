@@ -1,7 +1,8 @@
 import { React, createContext, useReducer } from 'react'
 
 const patientContext = createContext({
-  patient: ''
+  patient: '',
+  entradas: ''
 })
 
 export const patientReducer = (state, action) => {

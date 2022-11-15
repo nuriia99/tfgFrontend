@@ -1,7 +1,7 @@
-import { React, useState } from 'react'
+import { React, useEffect, useState } from 'react'
+import useFetch from '../../hooks/useFetch'
 import { useGlobalContext } from '../../hooks/useGlobalContext'
 import { getLenguage } from '../../services/lenguage'
-import { getSearchPatient } from '../../services/patient'
 
 const SearchForm = ({ handleSearch }) => {
   const { globalData } = useGlobalContext()
@@ -14,11 +14,18 @@ const SearchForm = ({ handleSearch }) => {
   const [dni, setDni] = useState('')
   const [cip, setCip] = useState('')
 
+  const { fetchData: fetchDataSearch, data: dataSearch } = useFetch()
+
   const handleClick = async (e) => {
     e.preventDefault()
-    const res = await getSearchPatient({ name, firstSurname, secondSurname, sex, dni, cip, token: globalData.token })
-    handleSearch(res.data)
+    let url = `/patients/?${name ? 'nombre=' + name : ''}${name ? '&&' : ''}${firstSurname ? 'apellido1=' + firstSurname : ''}${firstSurname ? '&&' : ''}${secondSurname ? 'apellido2=' + secondSurname : ''}${secondSurname ? '&&' : ''}${sex ? 'sexo=' + sex : ''}${sex ? '&&' : ''}${dni ? 'dni=' + dni : ''}${dni ? '&&' : ''}${cip ? 'cip=' + cip : ''}${cip ? '&&' : ''}`
+    url = url.substring(0, url.length - 2)
+    await fetchDataSearch(url)
   }
+
+  useEffect(() => {
+    handleSearch(dataSearch)
+  }, [dataSearch])
 
   return (
     <>

@@ -55,7 +55,6 @@ const PatientEntries = ({ info }) => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
-      console.log(patientData.entradas)
       setAllEntries(patientData.entradas)
       setEntries(patientData.entradas)
       patientData.entradas.map((entry) => {

@@ -1,12 +1,14 @@
 import { React } from 'react'
 import { useGlobalContext } from '../../../hooks/useGlobalContext'
+import { usePatientContext } from '../../../hooks/usePatientContext'
 import { getLenguage } from '../../../services/lenguage'
 import { getDate } from '../../../utils/utils'
 
 const DocumentsList = () => {
   const { globalData } = useGlobalContext()
+  const { patientData } = usePatientContext()
   const leng = getLenguage(globalData.lenguage, 'patient')
-  const documents = globalData.patient.documentos
+  const documents = patientData.patient.documentos
 
   const openPdf = (e) => {
     window.open('/app/pdf/docs/' + e.target.getAttribute('name'), '_blank', 'noopener,noreferrer')

@@ -1,8 +1,8 @@
-import { React, useState } from 'react'
+import { React, useState, useEffect } from 'react'
 import { useGlobalContext } from '../../hooks/useGlobalContext'
-import { updateLenguage } from '../../services/worker'
 import { getLenguage } from '../../services/lenguage'
 import { Select, Option } from './Select'
+import usePost from '../../hooks/usePost'
 
 const ProfileSettings = () => {
   const lenguages = ['Español', 'Catalán']
@@ -37,24 +37,19 @@ const ProfileSettings = () => {
     })
   }
 
-  const [correct, setCorrect] = useState(null)
-  const [loading, setLoading] = useState(null)
-  const [message, setMessage] = useState(null)
+  const { postData: postLenguage, data: dataLenguage, loading, error } = usePost()
+
+  useEffect(() => {
+    if (dataLenguage) {
+      if (dataLenguage.status === 200) {
+        updateData({ worker: globalData.worker, token: globalData.token, center: currentData.currentCenter, lenguage: currentData.currentLenguage === 'Español' ? 'es' : 'ca', role: currentData.currentRole })
+        leng = getLenguage(currentData.currentLenguage === 'Español' ? 'es' : 'ca', 'settings')
+      }
+    }
+  }, [dataLenguage])
 
   const handleSubmit = async () => {
-    setLoading(true)
-    const res = await updateLenguage({ id: globalData.worker._id, token: globalData.token, lenguage: currentData.currentLenguage === 'Español' ? 'es' : 'ca' })
-    if (res.status === 200) {
-      updateData({ worker: globalData.worker, token: globalData.token, center: currentData.currentCenter, lenguage: currentData.currentLenguage === 'Español' ? 'es' : 'ca', role: currentData.currentRole })
-      leng = getLenguage(currentData.currentLenguage === 'Español' ? 'es' : 'ca', 'settings')
-      setMessage(leng.cambios_exito)
-      setCorrect(true)
-      setLoading(false)
-    } else {
-      setMessage(leng.cambios_error)
-      setCorrect(false)
-      setLoading(false)
-    }
+    postLenguage('/trabajadores/' + globalData.worker._id + '/updateLenguage', currentData.currentLenguage === 'Español' ? 'es' : 'ca')
   }
 
   return (
@@ -126,14 +121,14 @@ const ProfileSettings = () => {
                     <p>Esta cargando</p>
                     </div>
                   : null}
-                { correct && message
+                { !error && dataLenguage
                   ? <div className="correct">
-                    <p className='correct_message'>{message}</p>
+                    <p className='correct_message'>{leng.cambios_exito}</p>
                   </div>
                   : null}
-                { !correct && message
+                { error
                   ? <div className="error">
-                    <p className='error_message'>{message}</p>
+                    <p className='error_message'>{leng.cambios_error}</p>
                   </div>
                   : null}
               <button className='settings_submit_button' onClick={handleSubmit}><p className='settings_submit_button_message'>{leng.aplicar}</p></button>

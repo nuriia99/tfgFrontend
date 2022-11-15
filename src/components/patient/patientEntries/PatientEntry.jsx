@@ -4,7 +4,7 @@ import { useGlobalContext } from '../../../hooks/useGlobalContext'
 import { getLenguage } from '../../../services/lenguage'
 import _ from 'lodash'
 import PatientNote from './PatientNote'
-import { translateNotes } from '../../../services/entries'
+import usePost from '../../../hooks/usePost'
 
 const PatientEntries = ({ entry }) => {
   const { globalData } = useGlobalContext()
@@ -15,13 +15,18 @@ const PatientEntries = ({ entry }) => {
   const [notes, setNotes] = useState(entry.notas)
   const [visibility, setVisibility] = useState('')
 
+  const { postData: postDataTranslation, data: dataTranslation } = usePost()
+
+  useEffect(() => {
+    if (dataTranslation) setNotes(dataTranslation)
+  }, [dataTranslation])
+
   useEffect(() => {
     if (lengWorker !== entry.lenguaje) setVisibility(' visible')
   }, [])
 
   const handleTraduction = async () => {
-    const newNotes = await translateNotes({ notes, lengWorker })
-    setNotes(newNotes)
+    await postDataTranslation('/entries/translateEntry', { notes, lengWorker })
   }
   return (
     <>

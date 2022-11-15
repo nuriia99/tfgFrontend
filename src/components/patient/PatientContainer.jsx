@@ -2,7 +2,6 @@ import { React, useEffect, useState } from 'react'
 import { useGlobalContext } from '../../hooks/useGlobalContext'
 import { getLenguage } from '../../services/lenguage'
 import { useNavigate, useParams } from 'react-router-dom'
-import { getPatient } from '../../services/patient'
 import PatientInfo from './patientInfo/PatientInfo'
 import PatientEntries from './patientEntries/PatientEntries'
 import PatientActiveIntelligenceCard from './patientInfo/PatientActiveIntelligenceCard'
@@ -11,18 +10,16 @@ import PrescriptionCard from './patientInfo/PrescriptionCard'
 import PrescriptionList from './patientInfo/PrescriptionList'
 import DocumentsCard from './patientInfo/DocumentsCard'
 import VisitsCard from './patientInfo/VisitsCard'
-import { getAi } from '../../services/activeIntelligence'
 import DocumentsList from './patientInfo/DocumentList'
 import { usePatientContext } from '../../hooks/usePatientContext'
-import { getEntries } from '../../services/entries'
+import useFetch from '../../hooks/useFetch'
 
 const PatientContainer = () => {
   const { globalData } = useGlobalContext()
-  const { patientData, updatePatient, updateEntries } = usePatientContext()
+  const { updatePatient, updateEntries } = usePatientContext()
   const leng = getLenguage(globalData.lenguage, 'patient')
   const { worker } = globalData
   const [aiPanel, setAiPanel] = useState(false)
-  const [aiInfo, setAiInfo] = useState()
   const [extraFeatures, setExtraFeatures] = useState('prescripciones')
   const [extraFeaturesActive, setextraFeaturesActive] = useState({
     prescriptions: 'active',
@@ -72,35 +69,34 @@ const PatientContainer = () => {
   useEffect(() => {
     if (!worker) navigate('/app/login')
   }, [])
-
-  const token = globalData.token
   const { id: patientId } = useParams()
+
+  const { fetchData: fetchDataPatient, data: dataPatient } = useFetch()
+  const { fetchData: fetchDataEntries, data: dataEntries } = useFetch()
+  const { fetchData: fetchDataAi, data: dataAi } = useFetch()
 
   useEffect(() => {
     const fetchData = async () => {
-      const patient = await getPatient({ id: patientId, token: globalData.token })
-      const entries = await getEntries({ id: patientId, token: globalData.token })
-      if (patient.request.status === 200 && entries.request.status === 200) {
-        updatePatient(patient.data)
-        updateEntries(entries.data)
-        setAiInfo(await getAi({ id: patientId, token }))
-        setExtraFeatures(<PrescriptionCard handleClickPrincipalComponent={ handleClickPrincipalComponent }/>)
-      } else {
-        console.log('El usuario no existe')
-        if (patient.request.status === 403) navigate('/app/login')
-      }
+      await fetchDataPatient('/patients/' + patientId)
+      await fetchDataEntries('/entries/patient/' + patientId)
+      await fetchDataAi('/patients/' + patientId + '/activeIntelligence')
     }
     fetchData()
   }, [])
 
+  useEffect(() => {
+    updatePatient(dataPatient)
+    updateEntries(dataEntries)
+  }, [dataPatient, dataEntries])
+
   return (
     <>
       <div className='patient'>
-          {patientData
+          {dataPatient && dataEntries && dataAi
             ? <>
               {
                 aiPanel
-                  ? <PatientActiveIntelligence ai={aiInfo} handleClick={handleClickAiPanel}/>
+                  ? <PatientActiveIntelligence ai={dataAi} handleClick={handleClickAiPanel}/>
                   : <div className='patient_container'>
                       <div className='patient_container_left'>
                         <div className='patient_container_left_info'>
@@ -130,7 +126,6 @@ const PatientContainer = () => {
                             entries: <PatientEntries/>
                           }[principalComponent]
                         }
-                        {console.log(principalComponent)}
                       </div>
                     </div>
               }
