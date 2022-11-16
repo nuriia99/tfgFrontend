@@ -19,22 +19,24 @@ const PatientInfo = ({ handleClickPrincipalComponent }) => {
   }
 
   return (
-      <div className="patient_info">
-        <p name='entries' onClick={handleClickPrincipalComponent} className='patient_info_name'><FontAwesomeIcon className='icon' icon={faHospitalUser}/>{getName(info.nombre, info.apellido1, info.apellido2)}</p>
-        <div className='patient_info_line'>
-          <p className='title'>{leng.edad}: {info.edad} {leng.años} - {leng.sexo}: {info.sexo} - {leng.genero}: {info.genero}</p>
-          <button className={'patient_info_line_button ' + active} onClick={handleClick}><FontAwesomeIcon className='icon' icon={faAnglesDown}/></button>
+    info
+      ? <div className="patient_info">
+          <p name='entries' onClick={handleClickPrincipalComponent} className='patient_info_name'><FontAwesomeIcon className='icon' icon={faHospitalUser}/>{getName(info.nombre, info.apellido1, info.apellido2)}</p>
+          <div className='patient_info_line'>
+            <p className='title'>{leng.edad}: {info.edad} {leng.años} - {leng.sexo}: {info.sexo} - {leng.genero}: {info.genero}</p>
+            <button className={'patient_info_line_button ' + active} onClick={handleClick}><FontAwesomeIcon className='icon' icon={faAnglesDown}/></button>
+          </div>
+          <div className={'patient_info_extra ' + active}>
+            <PatientInfoItem title='CIP: ' value={info.cip}/>
+            <PatientInfoItem title='dni: ' value={info.dni}/>
+            <PatientInfoItem title={leng.nacimiento} value={getDate(info.fechaNacimiento)}/>
+            <PatientInfoItem title={leng.telefono} value={info.telefono}/>
+            <PatientInfoItem title={leng.correo} value={info.correo}/>
+            <PatientInfoItem title={leng.pais} value={info.paisOrigen}/>
+            <PatientInfoItem title={leng.direccion} value={info.direccion}/>
+          </div>
         </div>
-        <div className={'patient_info_extra ' + active}>
-          <PatientInfoItem title='CIP: ' value={info.cip}/>
-          <PatientInfoItem title='dni: ' value={info.dni}/>
-          <PatientInfoItem title={leng.nacimiento} value={getDate(info.fechaNacimiento)}/>
-          <PatientInfoItem title={leng.telefono} value={info.telefono}/>
-          <PatientInfoItem title={leng.correo} value={info.correo}/>
-          <PatientInfoItem title={leng.pais} value={info.paisOrigen}/>
-          <PatientInfoItem title={leng.direccion} value={info.direccion}/>
-        </div>
-      </div>
+      : null
   )
 }
 

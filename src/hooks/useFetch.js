@@ -11,13 +11,14 @@ const useFetch = (url) => {
   const fetchData = async (url) => {
     setLoading(true)
     try {
-      await axios.get(url, {
+      const res = await axios.get(url, {
         headers: {
           Authorization: `Bearer ${globalData.token}`
         }
       }).then((response) => {
         setData(response.data)
       })
+      return res
     } catch (error) {
       console.log(error)
       setError(error)

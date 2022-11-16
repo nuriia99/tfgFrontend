@@ -16,7 +16,7 @@ import useFetch from '../../hooks/useFetch'
 
 const PatientContainer = () => {
   const { globalData } = useGlobalContext()
-  const { updatePatient, updateEntries } = usePatientContext()
+  const { updatePatientAndAi, updateEntries } = usePatientContext()
   const leng = getLenguage(globalData.lenguage, 'patient')
   const { worker } = globalData
   const [aiPanel, setAiPanel] = useState(false)
@@ -76,18 +76,18 @@ const PatientContainer = () => {
   const { fetchData: fetchDataAi, data: dataAi } = useFetch()
 
   useEffect(() => {
-    const fetchData = async () => {
-      await fetchDataPatient('/patients/' + patientId)
-      await fetchDataEntries('/entries/patient/' + patientId)
-      await fetchDataAi('/patients/' + patientId + '/activeIntelligence')
-    }
-    fetchData()
+    fetchDataPatient('/patients/' + patientId)
+    fetchDataAi('/patients/' + patientId + '/activeIntelligence')
+    fetchDataEntries('/entries/patient/' + patientId)
   }, [])
 
   useEffect(() => {
-    updatePatient(dataPatient)
+    if (dataPatient && dataAi) updatePatientAndAi({ dataPatient, dataAi })
+  }, [dataPatient, dataAi])
+
+  useEffect(() => {
     updateEntries(dataEntries)
-  }, [dataPatient, dataEntries])
+  }, [dataEntries])
 
   return (
     <>
@@ -96,7 +96,7 @@ const PatientContainer = () => {
             ? <>
               {
                 aiPanel
-                  ? <PatientActiveIntelligence ai={dataAi} handleClick={handleClickAiPanel}/>
+                  ? <PatientActiveIntelligence handleClick={handleClickAiPanel}/>
                   : <div className='patient_container'>
                       <div className='patient_container_left'>
                         <div className='patient_container_left_info'>

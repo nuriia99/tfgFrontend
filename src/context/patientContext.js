@@ -1,14 +1,21 @@
 import { React, createContext, useReducer } from 'react'
 
-const patientContext = createContext({
-  patient: '',
-  entradas: ''
-})
+const INITIAL_STATE = {
+  patient: null,
+  entradas: null
+}
+
+const patientContext = createContext(INITIAL_STATE)
 
 export const patientReducer = (state, action) => {
+  let patient = null
   switch (action.type) {
     case 'UPDATEPATIENT':
       return { ...state, patient: action.payload }
+    case 'UPDATEPATIENTANDAI':
+      patient = action.payload.dataPatient
+      patient.inteligenciaActiva = action.payload.dataAi
+      return { ...state, patient }
     case 'UPDATEENTRIES':
       return { ...state, entradas: action.payload }
     default:
@@ -17,7 +24,7 @@ export const patientReducer = (state, action) => {
 }
 
 export const PatientContextProvider = ({ children }) => {
-  const [patientData, dispatch] = useReducer(patientReducer)
+  const [patientData, dispatch] = useReducer(patientReducer, INITIAL_STATE)
 
   return (
     <patientContext.Provider value={{ patientData, dispatch }}>

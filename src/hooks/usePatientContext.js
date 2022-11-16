@@ -8,9 +8,13 @@ export const usePatientContext = () => {
     dispatch({ type: 'UPDATEPATIENT', payload: data })
   }
 
+  const updatePatientAndAi = (data) => {
+    dispatch({ type: 'UPDATEPATIENTANDAI', payload: data })
+  }
+
   const updateEntries = (data) => {
     dispatch({ type: 'UPDATEENTRIES', payload: data })
   }
 
-  return { patientData, updatePatient, updateEntries }
+  return { patientData, updatePatient, updateEntries, updatePatientAndAi }
 }

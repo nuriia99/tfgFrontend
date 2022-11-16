@@ -17,7 +17,7 @@ export const globalReducer = (state, action) => {
       return { ...state, worker: action.payload.workerData, token: action.payload.token }
     case 'UPDATELENGUAGE':
       newWorker.lenguaje = action.payload
-      return { ...state, worker: newWorker, lenguage: action.payload }
+      return { ...state, worker: newWorker }
     case 'UPDATECENTER':
       return { ...state, center: action.payload }
     case 'UPDATEROLE':

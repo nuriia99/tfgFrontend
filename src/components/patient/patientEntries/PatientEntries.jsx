@@ -9,7 +9,6 @@ const PatientEntries = ({ info }) => {
   const { globalData } = useGlobalContext()
   const { patientData } = usePatientContext()
   const leng = getLenguage(globalData.lenguage, 'patient')
-  const [loading, setLoading] = useState(true)
   const [allEntries, setAllEntries] = useState([])
   const [entries, setEntries] = useState([])
   const [diagnosisComponent, setDiagnosisComponent] = useState()
@@ -53,8 +52,7 @@ const PatientEntries = ({ info }) => {
     })
   }
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true)
+    if (patientData.entradas) {
       setAllEntries(patientData.entradas)
       setEntries(patientData.entradas)
       patientData.entradas.map((entry) => {
@@ -62,44 +60,36 @@ const PatientEntries = ({ info }) => {
           return nota.estado === 'activo' ? setActiveDiagnosis(prev => [...prev, { nombre: nota.diagnostico, severidad: nota.severidad }]) : setInactiveDiagnosis(prev => [...prev, { nombre: nota.diagnostico, severidad: nota.severidad }])
         })
       })
-      setLoading(false)
     }
-    fetchData()
-  }, [])
+  }, [patientData])
   useEffect(() => {
     setDiagnosisComponent(<DiagnosisList diagnosis={activeDiagnosis} filterDiagnosis={filterDiagnosis}/>)
   }, [activeDiagnosis])
 
   return (
-    !loading
-      ? <>
-      {
-        entries
-          ? <div className="patient_entries">
-            <div className="patient_entries_container">
-              <div className="patient_entries_container_list">
-                {
-                  entries.map((e) => {
-                    return (
-                      <PatientEntry key={e._id} entry={e}></PatientEntry>
-                    )
-                  })
-                }
-              </div>
-              <div className="patient_entries_container_diagnosis">
-                <div className="patient_entries_container_diagnosis_options">
-                  <button id='active_section' name="active" onClick={handleActive} className={'button_tag ' + status.active}>{leng.activo}</button>
-                  <button id='inactive_section' name="inactive" onClick={handleActive} className={'button_tag ' + status.inactive}>{leng.inactivo}</button>
-                </div>
-                <div className="patient_entries_container_diagnosis_list">
-                  {diagnosisComponent}
-                </div>
-              </div>
+    entries
+      ? <div className="patient_entries">
+        <div className="patient_entries_container">
+          <div className="patient_entries_container_list">
+            {
+              entries.map((e) => {
+                return (
+                  <PatientEntry key={e._id} entry={e}></PatientEntry>
+                )
+              })
+            }
+          </div>
+          <div className="patient_entries_container_diagnosis">
+            <div className="patient_entries_container_diagnosis_options">
+              <button id='active_section' name="active" onClick={handleActive} className={'button_tag ' + status.active}>{leng.activo}</button>
+              <button id='inactive_section' name="inactive" onClick={handleActive} className={'button_tag ' + status.inactive}>{leng.inactivo}</button>
+            </div>
+            <div className="patient_entries_container_diagnosis_list">
+              {diagnosisComponent}
             </div>
           </div>
-          : null
-      }
-      </>
+        </div>
+      </div>
       : null
   )
 }

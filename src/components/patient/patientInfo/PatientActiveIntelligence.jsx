@@ -1,15 +1,22 @@
-import { React } from 'react'
+import { React, useEffect, useState } from 'react'
 import { useGlobalContext } from '../../../hooks/useGlobalContext'
 import { getLenguage } from '../../../services/lenguage'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { getCurrentDate } from '../../../utils/utils'
+import { usePatientContext } from '../../../hooks/usePatientContext'
 
-const PatientActiveIntelligence = ({ ai, handleClick }) => {
+const PatientActiveIntelligence = ({ handleClick }) => {
   const { globalData } = useGlobalContext()
+  const { patientData } = usePatientContext()
   const leng = getLenguage(globalData.lenguage, 'patient')
   const actualDate = getCurrentDate()
-  console.log(ai)
+  const [ai, setAi] = useState()
+
+  useEffect(() => {
+    setAi(patientData.patient.inteligenciaActiva)
+  }, [patientData])
+
   const names = {
     Tabaquismo: leng.tabaquismo,
     ActividadFisica: leng.actividadFisica,
@@ -22,56 +29,58 @@ const PatientActiveIntelligence = ({ ai, handleClick }) => {
     Alcohol: leng.alcohol,
     Drogas: leng.drogas
   }
-
+  console.log(ai)
   return (
-    <div className='patient_ai_panel'>
-      <div className='patient_ai_panel_container'>
-        <button className='patient_ai_panel_container_button' onClick={handleClick}><FontAwesomeIcon className='icon' icon={faArrowLeft}/></button>
-        <div className='patient_ai_table'>
-          {
-            ai.map((row, index) => {
-              if (index === 0) {
-                // primera fila
-                return (
-                  <div className='patient_ai_table_row' key={index}>
-                    {row.map((column, index) => {
-                      if (index === 0) {
-                        if (column === '-') return <div key={index} className='fixed title'>{leng.inteligenciaActiva}</div>
-                        return <div key={index} className='fixed title'>{column}</div>
-                      }
-                      return <div key={index} className='dates'>{column}</div>
-                    })}
-                    <div className='currentDate'>{actualDate}</div>
-                  </div>
-                )
-              } else {
-                let lastValue = ''
-                return (
-                  <div className='patient_ai_table_row' key={index}>
-                    {row.map((column, index) => {
-                      if (index === 0) {
-                        return (
-                          <div key={index} className='fixed_names'>{names[column.replace(/\s+/g, '')]}</div>
-                        )
-                      } else {
-                        if (column !== '-') {
-                          lastValue = column
-                          return (
-                            <div key={index} className='values'>{column}</div>
-                          )
+    ai
+      ? <div className='patient_ai_panel'>
+        <div className='patient_ai_panel_container'>
+          <button className='patient_ai_panel_container_button' onClick={handleClick}><FontAwesomeIcon className='icon' icon={faArrowLeft}/></button>
+          <div className='patient_ai_table'>
+            {
+              ai.map((row, index) => {
+                if (index === 0) {
+                  // primera fila
+                  return (
+                    <div className='patient_ai_table_row' key={index}>
+                      {row.map((column, index) => {
+                        if (index === 0) {
+                          if (column === '-') return <div key={index} className='fixed title'>{leng.inteligenciaActiva}</div>
+                          return <div key={index} className='fixed title'>{column}</div>
+                        } else if (index === row.length - 1) {
+                          return <div key={index} className='currentDate'>{actualDate}</div>
                         }
-                        return <div key={index} className='values'></div>
-                      }
-                    })}
-                    <div key={index} className='fixed_values'>{lastValue}</div>
-                  </div>
-                )
-              }
-            })
-          }
+                        return <div key={index} className='dates'>{column}</div>
+                      })}
+                    </div>
+                  )
+                } else {
+                  return (
+                    <div className='patient_ai_table_row' key={index}>
+                      {row.map((column, index) => {
+                        if (index === 0) {
+                          return (
+                            <div key={index} className='fixed_names'>{names[column.replace(/\s+/g, '')]}</div>
+                          )
+                        } else if (index === row.length - 1) {
+                          return <div key={index} className='fixed_values'>{column !== '-' ? column : ''}</div>
+                        } else {
+                          if (column !== '-') {
+                            return (
+                              <div key={index} className='values'>{column}</div>
+                            )
+                          }
+                          return <div key={index} className='values'></div>
+                        }
+                      })}
+                    </div>
+                  )
+                }
+              })
+            }
+          </div>
         </div>
       </div>
-    </div>
+      : null
   )
 }
 
