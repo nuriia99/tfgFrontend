@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from 'react'
 import { useGlobalContext } from '../../hooks/useGlobalContext'
-import { getLenguage } from '../../services/lenguage'
+import { getLenguage } from '../../utils/lenguage'
 import { Select, Option } from './Select'
 import usePost from '../../hooks/usePost'
 

@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from 'react'
 import PatientEntry from './PatientEntry'
 import { useGlobalContext } from '../../../hooks/useGlobalContext'
-import { getLenguage } from '../../../services/lenguage'
+import { getLenguage } from '../../../utils/lenguage'
 import DiagnosisList from './DiagnosisList'
 import { usePatientContext } from '../../../hooks/usePatientContext'
 

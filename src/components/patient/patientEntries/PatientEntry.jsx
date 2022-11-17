@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from 'react'
 import { getDate, getHour } from '../../../utils/utils'
 import { useGlobalContext } from '../../../hooks/useGlobalContext'
-import { getLenguage } from '../../../services/lenguage'
+import { getLenguage } from '../../../utils/lenguage'
 import _ from 'lodash'
 import PatientNote from './PatientNote'
 import usePost from '../../../hooks/usePost'

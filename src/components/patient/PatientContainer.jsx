@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from 'react'
 import { useGlobalContext } from '../../hooks/useGlobalContext'
-import { getLenguage } from '../../services/lenguage'
+import { getLenguage } from '../../utils/lenguage'
 import { useNavigate, useParams } from 'react-router-dom'
 import PatientInfo from './patientInfo/PatientInfo'
 import PatientEntries from './patientEntries/PatientEntries'

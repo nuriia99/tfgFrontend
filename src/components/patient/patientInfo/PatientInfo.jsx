@@ -1,7 +1,7 @@
 import { React, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHospitalUser, faAnglesDown } from '@fortawesome/free-solid-svg-icons'
-import { getLenguage } from '../../../services/lenguage'
+import { getLenguage } from '../../../utils/lenguage'
 import { useGlobalContext } from '../../../hooks/useGlobalContext'
 import PatientInfoItem from './PatientInfoItem'
 import { usePatientContext } from '../../../hooks/usePatientContext'

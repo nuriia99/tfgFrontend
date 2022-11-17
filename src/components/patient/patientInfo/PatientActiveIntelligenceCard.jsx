@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faWeightScale, faSkullCrossbones, faPersonDotsFromLine } from '@fortawesome/free-solid-svg-icons'
-import { getLenguage } from '../../../services/lenguage'
+import { getLenguage } from '../../../utils/lenguage'
 import { useGlobalContext } from '../../../hooks/useGlobalContext'
 import { usePatientContext } from '../../../hooks/usePatientContext'
 

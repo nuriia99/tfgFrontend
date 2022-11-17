@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from 'react'
 import useFetch from '../../hooks/useFetch'
 import { useGlobalContext } from '../../hooks/useGlobalContext'
-import { getLenguage } from '../../services/lenguage'
+import { getLenguage } from '../../utils/lenguage'
 
 const SearchForm = ({ handleSearch }) => {
   const { globalData } = useGlobalContext()

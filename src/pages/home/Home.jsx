@@ -3,7 +3,7 @@ import Navbar from '../../components/navbar/Navbar'
 import { useGlobalContext } from '../../hooks/useGlobalContext'
 import { useNavigate } from 'react-router-dom'
 import SearchForm from '../../components/home/SearchForm'
-import { getLenguage } from '../../services/lenguage'
+import { getLenguage } from '../../utils/lenguage'
 
 const Home = () => {
   const { globalData } = useGlobalContext()
