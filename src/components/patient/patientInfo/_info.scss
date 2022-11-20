@@ -112,7 +112,6 @@
   height: 100%;
   width: 100%;
   padding: 10px;
-  box-sizing: border-box;
   &_container {
     height: 100%;
     width: 100%;
@@ -123,6 +122,8 @@
     align-items: center;
     justify-content: center;
     position: relative;
+    padding: 0 20px;
+    box-sizing: border-box;
 
     &_button{
       position: absolute;

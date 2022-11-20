@@ -1,8 +1,6 @@
 import { React, useEffect, useState } from 'react'
 import { useGlobalContext } from '../../../hooks/useGlobalContext'
 import { getLenguage } from '../../../utils/lenguage'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { getCurrentDate } from '../../../utils/utils'
 import { usePatientContext } from '../../../hooks/usePatientContext'
 
@@ -29,12 +27,9 @@ const PatientActiveIntelligence = ({ handleClick }) => {
     Alcohol: leng.alcohol,
     Drogas: leng.drogas
   }
-  console.log(ai)
   return (
     ai
-      ? <div className='patient_ai_panel'>
-        <div className='patient_ai_panel_container'>
-          <button className='patient_ai_panel_container_button' onClick={handleClick}><FontAwesomeIcon className='icon' icon={faArrowLeft}/></button>
+      ? <div className='patient_ai_panel_container'>
           <div className='patient_ai_table'>
             {
               ai.map((row, index) => {
@@ -79,7 +74,6 @@ const PatientActiveIntelligence = ({ handleClick }) => {
             }
           </div>
         </div>
-      </div>
       : null
   )
 }

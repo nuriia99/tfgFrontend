@@ -12,6 +12,7 @@ const PatientEntries = ({ info }) => {
   const [allEntries, setAllEntries] = useState([])
   const [entries, setEntries] = useState([])
   const [diagnosisComponent, setDiagnosisComponent] = useState()
+  const [principalComponent, setPrincipalComponent] = useState('entries')
   const [status, setStatus] = useState({
     active: 'active',
     inactive: 'inactive'
@@ -70,24 +71,36 @@ const PatientEntries = ({ info }) => {
     entries
       ? <div className="patient_entries">
         <div className="patient_entries_container">
-          <div className="patient_entries_container_list">
-            {
-              entries.map((entry) => {
-                return (
-                  <PatientEntry key={entry._id} entry={entry}></PatientEntry>
-                )
-              })
-            }
+          <div className="navbar_entries">
+            <button onClick={() => setPrincipalComponent('entries')} className='button_tag active'>Notas previas</button>
+            <button onClick={() => setPrincipalComponent('newEntry')} className='button_tag inactive'>Añadir nota</button>
           </div>
-          <div className="patient_entries_container_diagnosis">
-            <div className="patient_entries_container_diagnosis_options">
-              <button id='active_section' name="active" onClick={handleActive} className={'button_tag ' + status.active}>{leng.activo}</button>
-              <button id='inactive_section' name="inactive" onClick={handleActive} className={'button_tag ' + status.inactive}>{leng.inactivo}</button>
-            </div>
-            <div className="patient_entries_container_diagnosis_list">
-              {diagnosisComponent}
-            </div>
-          </div>
+          {
+            principalComponent === 'entries'
+              ? <>
+              <div className="patient_entries_container_list">
+              {
+                entries.map((entry) => {
+                  return (
+                    <PatientEntry key={entry._id} entry={entry}></PatientEntry>
+                  )
+                })
+              }
+              </div>
+              <div className="patient_entries_container_diagnosis">
+                <div className="patient_entries_container_diagnosis_options">
+                  <button id='active_section' name="active" onClick={handleActive} className={'button_tag ' + status.active}>{leng.activo}</button>
+                  <button id='inactive_section' name="inactive" onClick={handleActive} className={'button_tag ' + status.inactive}>{leng.inactivo}</button>
+                </div>
+                <div className="patient_entries_container_diagnosis_list">
+                  {diagnosisComponent}
+                </div>
+              </div>
+            </>
+              : <>
+              a
+              </>
+          }
         </div>
       </div>
       : null

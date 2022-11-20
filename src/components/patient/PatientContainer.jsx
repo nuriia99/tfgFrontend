@@ -56,10 +56,12 @@ const PatientContainer = () => {
   const handleClickPrincipalComponent = (e) => {
     const name = e.target.getAttribute('name')
     setPrincipalComponent(() => {
-      if (name === 'prescription_button') {
+      if (name === 'prescriptions_button') {
         return 'prescriptions'
       } else if (name === 'documents_button') {
         return 'documents'
+      } else if (name === 'active_intelligence_button') {
+        return 'activeIntelligence'
       }
       return 'entries'
     })
@@ -113,10 +115,17 @@ const PatientContainer = () => {
                         </div>
                       </div>
                       <div className="patient_container_right">
+                        <div className="patient_navbar">
+                          <button onClick={handleClickPrincipalComponent} name='entries_button' className={principalComponent === 'entries' ? 'button_tag active' : 'button_tag inactive'}>Entradas</button>
+                          <button onClick={handleClickPrincipalComponent} name='active_intelligence_button' className={principalComponent === 'activeIntelligence' ? 'button_tag active' : 'button_tag inactive'}>IA</button>
+                          <button onClick={handleClickPrincipalComponent} name='prescriptions_button' className={principalComponent === 'prescriptions' ? 'button_tag active' : 'button_tag inactive'}>Prescripciones</button>
+                          <button onClick={handleClickPrincipalComponent} name='documents_button' className={principalComponent === 'documents' ? 'button_tag active' : 'button_tag inactive'}>Documentos</button>
+                        </div>
                         {
                           {
                             prescriptions: <PrescriptionList/>,
                             documents: <DocumentsList/>,
+                            activeIntelligence: <PatientActiveIntelligence/>,
                             entries: <PatientEntries/>
                           }[principalComponent]
                         }

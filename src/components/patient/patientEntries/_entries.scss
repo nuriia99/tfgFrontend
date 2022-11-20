@@ -5,11 +5,31 @@
   align-items: center;
   justify-content: center;
   padding: 20px;
+  padding-top: 40px;
   box-sizing: border-box;
   &_container{
     height: 100%;
     width: 100%;
     display: flex;
+    position: relative;
+
+    .navbar_entries{
+      position: absolute;
+      display: flex;
+      top: -30px;
+      left: 0;
+      .button_tag{
+        border: 1px solid white;
+        
+      }
+      .inactive{
+        &:not(:first-child){
+          border-left: 0;
+        }
+        margin-top: 5px;
+      }
+    }
+
     &_list{
       height: 100%;
       overflow-y: scroll;
