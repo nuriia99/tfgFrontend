@@ -2,7 +2,7 @@ import { React, useState, useEffect } from 'react'
 import { useGlobalContext } from '../../hooks/useGlobalContext'
 import { getLenguage } from '../../utils/lenguage'
 import { Select, Option } from './Select'
-import usePost from '../../hooks/usePost'
+import usePatch from '../../hooks/usePatch'
 
 const ProfileSettings = () => {
   const lenguages = ['Español', 'Catalán']
@@ -37,19 +37,21 @@ const ProfileSettings = () => {
     })
   }
 
-  const { postData: postLenguage, data: dataLenguage, loading, error } = usePost()
-
+  const { patchData: postLenguage, data: dataLenguage, loading, error } = usePatch()
+  console.log(globalData)
   useEffect(() => {
     if (dataLenguage) {
-      if (dataLenguage.status === 200) {
+      if (dataLenguage.request.status === 200) {
         updateData({ worker: globalData.worker, token: globalData.token, center: currentData.currentCenter, lenguage: currentData.currentLenguage === 'Español' ? 'es' : 'ca', role: currentData.currentRole })
         leng = getLenguage(currentData.currentLenguage === 'Español' ? 'es' : 'ca', 'settings')
+        console.log(leng)
       }
     }
   }, [dataLenguage])
 
   const handleSubmit = async () => {
-    postLenguage('/trabajadores/' + globalData.worker._id + '/updateLenguage', currentData.currentLenguage === 'Español' ? 'es' : 'ca')
+    const newLenguage = currentData.currentLenguage === 'Español' ? 'es' : 'ca'
+    postLenguage('/trabajadores/' + globalData.worker._id + '/updateLenguage', { newLenguage })
   }
 
   return (

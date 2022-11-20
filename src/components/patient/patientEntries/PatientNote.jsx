@@ -5,7 +5,7 @@ const PatientNote = ({ note }) => {
   return (
     <>
       <div className="note">
-        <div className="note_diagnosis">{_.toUpper(note.diagnostico)}</div>
+        <div className="note_diagnosis">{_.toUpper(note.diagnostico.nombre)}</div>
         <div className="note_row">
           <div className="note_row_letter">A</div>
           <div className="note_row_content">{note.asunto}</div>

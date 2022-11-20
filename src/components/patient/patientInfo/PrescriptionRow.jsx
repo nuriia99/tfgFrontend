@@ -1,10 +1,10 @@
 import { React } from 'react'
-import { useGlobalContext } from '../../../hooks/useGlobalContext'
 import _ from 'lodash'
+import { usePatientContext } from '../../../hooks/usePatientContext'
 
 const PrescriptionRow = ({ prescription }) => {
-  const { globalData } = useGlobalContext()
-  const alergias = _.toUpper(globalData.patient.inteligenciaActiva.alergias.at(-1).value)
+  const { patientData } = usePatientContext()
+  const alergias = _.toUpper(patientData.patient.inteligenciaActiva.at(-1))
   const alert = alergias.includes(prescription.principioActivo)
   return (
     <>

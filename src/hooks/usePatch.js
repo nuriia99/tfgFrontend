@@ -2,18 +2,18 @@ import { useState } from 'react'
 import { useGlobalContext } from './useGlobalContext'
 import axios from 'axios'
 
-const usePost = (url) => {
+const usePatch = (url) => {
   const [data, setData] = useState()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
   const { globalData } = useGlobalContext()
 
-  const postData = async (url, params) => {
+  const patchData = async (url, params) => {
     setLoading(true)
     setError(false)
     setData()
     try {
-      await axios.post(url, params, {
+      await axios.patch(url, params, {
         headers: {
           Authorization: `Bearer ${globalData.token}`
         }
@@ -26,7 +26,7 @@ const usePost = (url) => {
     setLoading(false)
   }
 
-  return { postData, data, loading, error }
+  return { patchData, data, loading, error }
 }
 
-export default usePost
+export default usePatch

@@ -24,6 +24,7 @@
       padding: 10px;
       box-sizing: border-box;
       row-gap: 10px;
+      overflow-y: auto;
       
       &_info{
         height: fit-content;

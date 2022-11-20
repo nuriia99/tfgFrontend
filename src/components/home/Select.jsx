@@ -1,13 +1,7 @@
 import { React, useState, useContext, createContext } from 'react'
 
 const useSelectContext = () => {
-  const context = useContext(SelectContext)
-
-  if (!context) {
-    throw new Error('Child components of Selector cannot be rendered outside the Card component!')
-  }
-
-  return context
+  return useContext(SelectContext)
 }
 
 const SelectContext = createContext()
@@ -26,8 +20,10 @@ export const Select = ({ currentSelect, handleChange, children }) => {
   const [showDropdown, setShowDropdown] = useState('inactive')
 
   const showDropdownHandler = () => setShowDropdown((prev) => {
-    if (prev === 'active') return 'inactive'
-    return 'active'
+    if (children.length > 0) {
+      if (prev === 'active') return 'inactive'
+      return 'active'
+    }
   })
 
   const updateCurrentOption = (option) => {
@@ -43,7 +39,11 @@ export const Select = ({ currentSelect, handleChange, children }) => {
     <SelectContext.Provider value={{ currentSelect, changeSelectedOption: updateCurrentOption }}>
       <div className='select'>
       <div className='select_title' onClick={showDropdownHandler}>{currentOption}
-        <div className={'select_title_arrow ' + showDropdown}></div>
+        {
+          children.length > 0
+            ? <div className={'select_title_arrow ' + showDropdown}></div>
+            : null
+        }
       </div>
       <div className={'select_container ' + showDropdown}>
         {children}

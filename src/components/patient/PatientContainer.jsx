@@ -16,7 +16,7 @@ import useFetch from '../../hooks/useFetch'
 
 const PatientContainer = () => {
   const { globalData } = useGlobalContext()
-  const { updatePatientAndAi, updateEntries } = usePatientContext()
+  const { updatePatientAndAi } = usePatientContext()
   const leng = getLenguage(globalData.lenguage, 'patient')
   const { worker } = globalData
   const [aiPanel, setAiPanel] = useState(false)
@@ -72,27 +72,21 @@ const PatientContainer = () => {
   const { id: patientId } = useParams()
 
   const { fetchData: fetchDataPatient, data: dataPatient } = useFetch()
-  const { fetchData: fetchDataEntries, data: dataEntries } = useFetch()
   const { fetchData: fetchDataAi, data: dataAi } = useFetch()
 
   useEffect(() => {
     fetchDataPatient('/patients/' + patientId)
     fetchDataAi('/patients/' + patientId + '/activeIntelligence')
-    fetchDataEntries('/entries/patient/' + patientId)
   }, [])
 
   useEffect(() => {
     if (dataPatient && dataAi) updatePatientAndAi({ dataPatient, dataAi })
   }, [dataPatient, dataAi])
 
-  useEffect(() => {
-    updateEntries(dataEntries)
-  }, [dataEntries])
-
   return (
     <>
       <div className='patient'>
-          {dataPatient && dataEntries && dataAi
+          {dataPatient && dataAi
             ? <>
               {
                 aiPanel

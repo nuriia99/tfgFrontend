@@ -395,6 +395,7 @@ body, html {
   padding: 10px;
   box-sizing: border-box;
   row-gap: 10px;
+  overflow-y: auto;
 }
 .patient_container_left_info {
   height: -webkit-fit-content;

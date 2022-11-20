@@ -1,15 +1,17 @@
 import { React } from 'react'
 import { useGlobalContext } from '../../../hooks/useGlobalContext'
+import { usePatientContext } from '../../../hooks/usePatientContext'
 import { getLenguage } from '../../../utils/lenguage'
 import PrescriptionRow from './PrescriptionRow'
 
 // patient={{ allergy: globalData.patient.inteligenciaActiva.alergias, prescriptions: globalData.patient.prescripciones }}
 const PrescriptionList = () => {
   const { globalData } = useGlobalContext()
+  const { patientData } = usePatientContext()
   const leng = getLenguage(globalData.lenguage, 'patient')
-  const allergy = globalData.patient.inteligenciaActiva.alergias
+  const allergy = patientData.patient.inteligenciaActiva.at(-1).at(-1)
   const currentDate = new Date()
-  const prescriptions = globalData.patient.prescripciones.filter((prescription) => {
+  const prescriptions = patientData.patient.prescripciones.filter((prescription) => {
     return new Date(prescription.fechaFinal).getTime() > currentDate.getTime()
   })
   return (
@@ -20,7 +22,7 @@ const PrescriptionList = () => {
             <div className="prescriptions_container_info_title">
               {leng.alergias + ': '}
             </div>
-            {allergy.at(-1).value}
+            {allergy}
           </div>
           <div className="prescriptions_container_table">
             <div className="table">

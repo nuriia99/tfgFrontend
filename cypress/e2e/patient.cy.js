@@ -1,8 +1,15 @@
 /* global cy */
 /* eslint-disable no-undef */
 
-const patientId = '63663957fff537e2cca3f844'
+const patientId = '6378be9738938f2984193dbe'
 const username = 'FBU578MN'
+
+describe('redirects works correctly', () => {
+  it('patient redirect to login if the user is not autheticated', () => {
+    cy.visit('http://localhost:3001/app/patients/' + patientId)
+    cy.contains('Iniciar sesión')
+  })
+})
 
 describe('tests related to entries', () => {
   beforeEach(() => {
@@ -22,7 +29,7 @@ describe('tests related to entries', () => {
     cy.get('#inactive_section').click()
     cy.get('.diagnosis_item_name').eq(0).click()
     cy.get('.diagnosis_item').eq(0).should('have.css', 'background-color', 'rgb(255, 234, 0)')
-    cy.get('.note_diagnosis').contains('URTICÀRIA AL·LÈRGICA')
+    cy.get('.note_diagnosis').contains('URTICARIA ALÉRGICA')
   })
 })
 
@@ -70,7 +77,7 @@ describe('tests related to documents', () => {
   })
   it('we can open correctly the documents list', () => {
     cy.get('.table_row').contains('Informe CUAP 1')
-    cy.get('.table_row').contains('25/02/2018')
+    cy.get('.table_row').contains('26/07/1999')
   })
   it('the documents are ordered by time', () => {
     cy.get('#table_row_0').invoke('text').then((text1) => {
@@ -79,7 +86,7 @@ describe('tests related to documents', () => {
         const date1 = new Date(+dateParts1[2], dateParts1[1] - 1, +dateParts1[0])
         const dateParts2 = text2.split('/')
         const date2 = new Date(+dateParts2[2], dateParts2[1] - 1, +dateParts2[0])
-        expect(date1).to.be.gte(date2)
+        expect(date1).to.be.lte(date2)
       })
     })
   })
@@ -91,13 +98,6 @@ describe('tests related to documents', () => {
   })
 })
 
-describe('redirects works correctly', () => {
-  it('patient redirect to login if the user is not autheticated', () => {
-    cy.visit('http://localhost:3001/app/patients/' + patientId)
-    cy.contains('Iniciar sesión')
-  })
-})
-
 describe('tests related to active intelligence', () => {
   it('it is shown the active intelligence resume on the patient panel', () => {
     cy.visit('http://localhost:3001/app/login')
@@ -106,7 +106,7 @@ describe('tests related to active intelligence', () => {
     cy.get('#button_submit_login').click()
     cy.get('#navbar')
     cy.visit('http://localhost:3001/app/patients/' + patientId)
-    cy.get('.patient_ai_container').contains('IMC: 17.30 kg/m²')
+    cy.get('.patient_ai_container').contains('IMC: 17.14 kg/m²')
     cy.get('.patient_ai_container').contains('Hàbits tòxics: Sí')
     cy.get('.patient_ai_container').contains('Al·lèrgies: Sí')
   })
@@ -114,6 +114,6 @@ describe('tests related to active intelligence', () => {
   it('if we press the button we acces to the ai panel and view correctly the information', () => {
     cy.get('#ai_button').click()
     cy.get('.patient_ai_table_row').eq(0).contains('25/02/2009')
-    cy.get('.patient_ai_table_row').eq(5).contains('55')
+    cy.get('.patient_ai_table_row').eq(5).contains('leve')
   })
 })

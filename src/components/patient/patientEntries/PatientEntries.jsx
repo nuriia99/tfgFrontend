@@ -28,7 +28,7 @@ const PatientEntries = ({ info }) => {
       const newEntries = []
       allEntries.forEach((entry) => {
         entry.notas.forEach(nota => {
-          if (nota.diagnostico === diagnosis) newEntries.push(entry)
+          if (nota.diagnostico.nombre === diagnosis) newEntries.push(entry)
         })
       })
       setEntries(newEntries)
@@ -52,12 +52,12 @@ const PatientEntries = ({ info }) => {
     })
   }
   useEffect(() => {
-    if (patientData.entradas) {
-      setAllEntries(patientData.entradas)
-      setEntries(patientData.entradas)
-      patientData.entradas.map((entry) => {
+    if (patientData.patient) {
+      setAllEntries(patientData.patient.entradas)
+      setEntries(patientData.patient.entradas)
+      patientData.patient.entradas.map((entry) => {
         return entry.notas.map(nota => {
-          return nota.estado === 'activo' ? setActiveDiagnosis(prev => [...prev, { nombre: nota.diagnostico, severidad: nota.severidad }]) : setInactiveDiagnosis(prev => [...prev, { nombre: nota.diagnostico, severidad: nota.severidad }])
+          return nota.estado === 'activo' ? setActiveDiagnosis(prev => [...prev, { nombre: nota.diagnostico.nombre, severidad: nota.diagnostico.severidad }]) : setInactiveDiagnosis(prev => [...prev, { nombre: nota.diagnostico.nombre, severidad: nota.diagnostico.severidad }])
         })
       })
     }
@@ -72,9 +72,9 @@ const PatientEntries = ({ info }) => {
         <div className="patient_entries_container">
           <div className="patient_entries_container_list">
             {
-              entries.map((e) => {
+              entries.map((entry) => {
                 return (
-                  <PatientEntry key={e._id} entry={e}></PatientEntry>
+                  <PatientEntry key={entry._id} entry={entry}></PatientEntry>
                 )
               })
             }

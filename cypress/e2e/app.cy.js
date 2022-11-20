@@ -21,7 +21,6 @@ describe('settings works correctly', () => {
     cy.get('.select_container').should('not.have.class', 'active')
     cy.get('.select_title').eq(1).click()
     cy.get('.select_container').should('not.have.class', 'active')
-    cy.get('.select_title_arrow').should('have.class', 'no_options')
   })
 
   it('the current selections is not between the options after change values', () => {

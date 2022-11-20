@@ -1,8 +1,7 @@
 import { React, createContext, useReducer } from 'react'
 
 const INITIAL_STATE = {
-  patient: null,
-  entradas: null
+  patient: null
 }
 
 const patientContext = createContext(INITIAL_STATE)
@@ -16,8 +15,6 @@ export const patientReducer = (state, action) => {
       patient = action.payload.dataPatient
       patient.inteligenciaActiva = action.payload.dataAi
       return { ...state, patient }
-    case 'UPDATEENTRIES':
-      return { ...state, entradas: action.payload }
     default:
       return null
   }
