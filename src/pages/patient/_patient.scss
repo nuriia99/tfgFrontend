@@ -27,6 +27,15 @@
       box-sizing: border-box;
       row-gap: 10px;
       overflow-y: auto;
+      &::-webkit-scrollbar{
+        width: 8px;
+        background: $BlackLight2;
+        border-radius: 0 8px 8px 0;
+      }
+      &::-webkit-scrollbar-thumb{
+        background: $navyBlue;
+        border-radius: 0 8px 8px 0;
+      }
       
       &_info{
         height: fit-content;
@@ -68,6 +77,7 @@
             padding: 10px;
             display: flex;
             align-items: center;
+            justify-content: center;
             border: 1px solid $navyBlueLight;
           }
         }

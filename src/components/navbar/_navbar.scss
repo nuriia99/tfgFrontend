@@ -32,6 +32,9 @@
       color: white;
       height: 1.5625rem;
       width: 1.5625rem;
+      &:hover{
+        color: $BlueIcsLight2;
+      }
     }
   }
   

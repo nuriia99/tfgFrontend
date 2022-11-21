@@ -21,11 +21,6 @@ const PatientContainer = () => {
   const { worker } = globalData
   const [aiPanel, setAiPanel] = useState(false)
   const [extraFeatures, setExtraFeatures] = useState('prescripciones')
-  const [extraFeaturesActive, setextraFeaturesActive] = useState({
-    prescriptions: 'active',
-    documents: 'inactive',
-    visits: 'inactive'
-  })
   const [principalComponent, setPrincipalComponent] = useState('entries')
 
   const handleClickAiPanel = () => {
@@ -34,27 +29,11 @@ const PatientContainer = () => {
 
   const handleExtraFeatures = (e) => {
     const name = e.target.name
-    setExtraFeatures(() => {
-      if (name === 'prescripciones') {
-        setextraFeaturesActive((prev) => {
-          return { prescriptions: 'active', documents: 'inactive', visits: 'inactive' }
-        })
-        return <PrescriptionCard handleClickPrincipalComponent={ handleClickPrincipalComponent }/>
-      } else if (name === 'documentos') {
-        setextraFeaturesActive((prev) => {
-          return { prescriptions: 'inactive', documents: 'active', visits: 'inactive' }
-        })
-        return <DocumentsCard handleClickPrincipalComponent={ handleClickPrincipalComponent }/>
-      }
-      setextraFeaturesActive((prev) => {
-        return { prescriptions: 'inactive', documents: 'inactive', visits: 'active' }
-      })
-      return <VisitsCard/>
-    })
+    setExtraFeatures(name)
   }
 
-  const handleClickPrincipalComponent = (e) => {
-    const name = e.target.getAttribute('name')
+  const handleClickPrincipalComponent = (name) => {
+    console.log(name)
     setPrincipalComponent(() => {
       if (name === 'prescriptions_button') {
         return 'prescriptions'
@@ -99,17 +78,23 @@ const PatientContainer = () => {
                           <PatientInfo handleClickPrincipalComponent={ handleClickPrincipalComponent }/>
                         </div>
                         <div className='patient_container_left_ai'>
-                          <PatientActiveIntelligenceCard handleClick={handleClickAiPanel}/>
+                          <PatientActiveIntelligenceCard handleClickPrincipalComponent={ handleClickPrincipalComponent }/>
                         </div>
                         <div className='patient_container_left_extra_features'>
                           <div className="extra_features">
                             <div className="extra_features_options">
-                              <button id='prescription_section' name="prescripciones" onClick={handleExtraFeatures} className={'button_tag ' + extraFeaturesActive.prescriptions}>{leng.prescripciones}</button>
-                              <button id='documents_section' name="documentos" onClick={handleExtraFeatures} className={'button_tag ' + extraFeaturesActive.documents}>{leng.documentos}</button>
-                              <button id='visits_section' name="visitas" onClick={handleExtraFeatures} className={'button_tag ' + extraFeaturesActive.visits}>{leng.visitas}</button>
+                              <button id='prescription_section' name="prescripciones" onClick={handleExtraFeatures} className={extraFeatures === 'prescripciones' ? 'button_tag active' : 'button_tag inactive'}>{leng.prescripciones}</button>
+                              <button id='documents_section' name="documentos" onClick={handleExtraFeatures} className={extraFeatures === 'documentos' ? 'button_tag active' : 'button_tag inactive'}>{leng.documentos}</button>
+                              <button id='visits_section' name="visitas" onClick={handleExtraFeatures} className={extraFeatures === 'visitas' ? 'button_tag active' : 'button_tag inactive'}>{leng.visitas}</button>
                             </div>
                             <div className="extra_features_container">
-                              {extraFeatures}
+                              {
+                                {
+                                  prescripciones: <PrescriptionCard handleClickPrincipalComponent={ handleClickPrincipalComponent }/>,
+                                  documentos: <DocumentsCard handleClickPrincipalComponent={ handleClickPrincipalComponent }/>,
+                                  visitas: <VisitsCard/>
+                                }[extraFeatures]
+                              }
                             </div>
                           </div>
                         </div>

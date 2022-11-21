@@ -25,6 +25,10 @@
     gap: 10px;
     font-weight: 500;
     cursor: pointer;
+
+    &:hover{
+      color: $BlueIcs;
+    }
   }
 
   &_line{
@@ -85,6 +89,17 @@
     margin: 0;
     padding: 10px 20px;
     font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    button{
+      &:hover{
+        background-color: $BlueIcsLight;
+      }
+    }
+    p{
+      margin: 0;
+    }
   }
   &_container{
     padding: 10px 20px;
@@ -125,20 +140,7 @@
     padding: 0 20px;
     box-sizing: border-box;
 
-    &_button{
-      position: absolute;
-      top: 0;
-      left: 0;
-      background-color: white;
-      border: 0;
-      padding: 20px;
-      border-radius: 10px;
-      cursor: pointer;
-      .icon{
-        height: 30px;
-        width: 30px;
-      }
-    }
+    
     .patient_ai_table{
       margin: 20px;
       display: grid;
@@ -166,7 +168,7 @@
         display: flex;
         align-items: center;
         background-color: $navyBlue;
-        width: 300px;
+        width: 260px;
         color: white;
         left: 0;
         z-index: 1;
@@ -182,7 +184,7 @@
         align-items: center;
         background-color: $BlueIcs;
         position: sticky; 
-        width: 300px;
+        width: 260px;
         left: 0;
         z-index: 1;
         border-radius: 10px;
@@ -317,6 +319,51 @@
     }
     
 
+  }
+}
+
+.panel{
+  width: 90%;
+  overflow-y: auto;
+
+  &_row_header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: $navyBlueLight;
+    border: 1px solid $navyBlueLight;
+    padding: 5px 10px;
+    color: white;
+    p{
+      margin: 0;
+    }
+    button{
+      &:hover{
+        background-color: $BlueIcsLight;
+      }
+    }
+  }
+  &_row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: $BlueIcsLight2;
+    padding: 5px 10px;
+    border-radius: 10p;
+    border: 1px solid $BlueIcs;
+    &:not(:last-child){
+      border-bottom: 0;
+    }
+    p{
+      margin: 0;
+    }
+
+    &.activable{
+      cursor: pointer;
+      &:hover{
+        background-color: $BlueIcsLight;
+      }
+    }
   }
 }
 

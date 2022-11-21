@@ -97,6 +97,9 @@
             width: 80%;
             #button_submit_search{
               background-color: $BlueIcs;
+              &:hover{
+                background-color: $BlueIcsLight;
+              }
             }
           }
           

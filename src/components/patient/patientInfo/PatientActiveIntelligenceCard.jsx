@@ -1,11 +1,11 @@
 import { React, useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faWeightScale, faSkullCrossbones, faPersonDotsFromLine } from '@fortawesome/free-solid-svg-icons'
+import { faWeightScale, faSkullCrossbones, faPersonDotsFromLine, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { getLenguage } from '../../../utils/lenguage'
 import { useGlobalContext } from '../../../hooks/useGlobalContext'
 import { usePatientContext } from '../../../hooks/usePatientContext'
 
-const PatientActiveIntelligenceCard = ({ handleClick }) => {
+const PatientActiveIntelligenceCard = ({ handleClickPrincipalComponent }) => {
   const { globalData } = useGlobalContext()
   const { patientData } = usePatientContext()
   const leng = getLenguage(globalData.lenguage, 'patient')
@@ -41,24 +41,27 @@ const PatientActiveIntelligenceCard = ({ handleClick }) => {
   return (
     ai
       ? <div className="patient_ai">
-          <p className="patient_ai_title">{leng.inteligenciaActiva}</p>
-            <div className="patient_ai_container">
-              <div className="patient_ai_container_item">
-                <FontAwesomeIcon className='icon' icon={faWeightScale}/>
-                <p className='title'>IMC: </p>
-                <p className='value'>{(ai.peso / (ai.estatura * 2 / 100)).toFixed(2) } kg/m²</p>
-              </div>
-              <div className="patient_ai_container_item">
-                <FontAwesomeIcon className='icon' icon={faSkullCrossbones}/>
-                <p className='title'>{leng.habitos}: </p>
-                <p className='value'>{ai.alcohol !== '-' || ai.tabaquismo !== '-' || ai.drogas !== '-' ? 'Sí' : 'No'}</p>
-              </div>
-              <div className="patient_ai_container_item">
-                <FontAwesomeIcon className='icon' icon={faPersonDotsFromLine}/>
-                <p className='title'>{leng.alergias}: </p>
-                <p className='value'>{ai.alergias !== '-' ? 'Sí' : 'No'}</p>
-              </div>
+          <div className="patient_ai_title">
+            <p>{leng.inteligenciaActiva}</p>
+            <button onClick={() => handleClickPrincipalComponent('active_intelligence_button')} className='button_plus'><FontAwesomeIcon className='icon' icon={faPlus}/></button>
+          </div>
+          <div className="patient_ai_container">
+            <div className="patient_ai_container_item">
+              <FontAwesomeIcon className='icon' icon={faWeightScale}/>
+              <p className='title'>IMC: </p>
+              <p className='value'>{(ai.peso / (ai.estatura * 2 / 100)).toFixed(2) } kg/m²</p>
             </div>
+            <div className="patient_ai_container_item">
+              <FontAwesomeIcon className='icon' icon={faSkullCrossbones}/>
+              <p className='title'>{leng.habitos}: </p>
+              <p className='value'>{ai.alcohol !== '-' || ai.tabaquismo !== '-' || ai.drogas !== '-' ? 'Sí' : 'No'}</p>
+            </div>
+            <div className="patient_ai_container_item">
+              <FontAwesomeIcon className='icon' icon={faPersonDotsFromLine}/>
+              <p className='title'>{leng.alergias}: </p>
+              <p className='value'>{ai.alergias !== '-' ? 'Sí' : 'No'}</p>
+            </div>
+          </div>
         </div>
       : null
   )

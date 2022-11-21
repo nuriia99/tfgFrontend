@@ -34,6 +34,8 @@ export const patientEs = {
   nombreDoc: 'Nombre del documento',
   fechaSubida: 'Fecha de subida',
   prescripciones: 'Prescripciones',
+  prescripcionesActuales: 'Prescripciones actuales',
+  documentosActuales: 'Documentos actuales',
   documentos: 'Documentos'
 }
 
@@ -64,6 +66,8 @@ export const patientCa = {
   activo: 'Actiu',
   inactivo: 'Inactiu',
   prescripciones: 'Prescripcions',
+  prescripcionesActuales: 'Prescripcions actuals',
+  documentosActuales: 'Documents actuals',
   documentos: 'Documents',
   visitas: 'Visites',
   traducir: 'Traduir',
