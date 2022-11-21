@@ -72,8 +72,8 @@ const PatientEntries = ({ info }) => {
       ? <div className="patient_entries">
         <div className="patient_entries_container">
           <div className="navbar_entries">
-            <button onClick={() => setPrincipalComponent('entries')} className='button_tag active'>Notas previas</button>
-            <button onClick={() => setPrincipalComponent('newEntry')} className='button_tag inactive'>Añadir nota</button>
+            <button onClick={() => setPrincipalComponent('entries')} className={principalComponent === 'entries' ? 'button_tag active' : 'button_tag inactive'}>Notas previas</button>
+            <button onClick={() => setPrincipalComponent('newEntry')} className={principalComponent === 'newEntry' ? 'button_tag active' : 'button_tag inactive'}>Añadir nota</button>
           </div>
           {
             principalComponent === 'entries'
@@ -98,7 +98,18 @@ const PatientEntries = ({ info }) => {
               </div>
             </>
               : <>
-              a
+              <div className="patient_entries_container_addEntry">
+                <form action="">
+                  <div className="entryForm">
+                    <label>Motivo de la visita</label>
+                    <textarea name="motivo" id="" cols="30" rows="10"></textarea>
+                    <label>Exploración</label>
+                    <textarea name="exploracion" id="" cols="30" rows="10"></textarea>
+                    <label>Tratatamiento</label>
+                    <textarea name="tratamiento" id="" cols="30" rows="10"></textarea>
+                  </div>
+                </form>
+              </div>
               </>
           }
         </div>
