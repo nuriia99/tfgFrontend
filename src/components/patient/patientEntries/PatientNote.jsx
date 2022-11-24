@@ -1,10 +1,10 @@
 import { React } from 'react'
 import _ from 'lodash'
 
-const PatientNote = ({ note }) => {
+const PatientNote = ({ note, clickNote }) => {
   return (
     <>
-      <div className="note">
+      <div onClick={clickNote} className="note">
         <div className="note_diagnosis">{_.toUpper(note.diagnostico.nombre)}</div>
         <div className="note_row">
           <div className="note_row_letter">A</div>

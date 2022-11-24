@@ -3,19 +3,19 @@ import { useGlobalContext } from './useGlobalContext'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
-const usePatch = (url) => {
+const useDelete = (url) => {
   const [data, setData] = useState()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
   const { globalData } = useGlobalContext()
   const navigate = useNavigate()
 
-  const patchData = async (url, params) => {
+  const deleteData = async (url) => {
     setLoading(true)
     setError(false)
     setData()
     try {
-      await axios.patch(url, params, {
+      await axios.delete(url, {
         headers: {
           Authorization: `Bearer ${globalData.token}`
         }
@@ -29,7 +29,7 @@ const usePatch = (url) => {
     setLoading(false)
   }
 
-  return { patchData, data, loading, error }
+  return { deleteData, data, loading, error }
 }
 
-export default usePatch
+export default useDelete

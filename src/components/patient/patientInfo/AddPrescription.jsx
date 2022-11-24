@@ -1,0 +1,184 @@
+import { React, useState, useEffect } from 'react'
+import { useGlobalContext } from '../../../hooks/useGlobalContext'
+import { usePatientContext } from '../../../hooks/usePatientContext'
+// import { getLenguage } from '../../../utils/lenguage'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRightFromBracket, faFileImport, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import Search from './Search'
+import usePost from '../../../hooks/usePost'
+
+const AddPrescription = ({ quitAddPrescription, addPrescription }) => {
+  const { globalData } = useGlobalContext()
+  const { patientData, updatePatient } = usePatientContext()
+  const [search, setSearch] = useState(false)
+  const [prescription, setPrescription] = useState({
+    patient: patientData.patient._id,
+    fechaInicio: new Date(),
+    fechaFinal: '',
+    trabajador: globalData.worker._id,
+    instruccionesPaciente: '',
+    instruccionesFarmacia: '',
+    nombreMedicamento: '',
+    principioActivo: '',
+    unidad: '',
+    frecuencia: '',
+    frecuenciaRadio: 'hours',
+    duracion: '',
+    duracionRadio: 'days'
+  })
+  const [insPac, setInsPac] = useState('')
+  const [insFar, setInsFar] = useState('')
+
+  useEffect(() => {
+    setInsFar('')
+    setInsPac('')
+  }, [prescription.nombreMedicamento])
+
+  const submitMed = (med) => {
+    setSearch(false)
+
+    setPrescription((prev) => {
+      return {
+        ...prev,
+        instruccionesPaciente: med.insPaciente,
+        instruccionesFarmacia: med.insFarmacia,
+        nombreMedicamento: med.nombre,
+        principioActivo: med.principioActivo
+      }
+    })
+  }
+
+  const importInsPac = () => {
+    setInsPac(prescription.instruccionesPaciente)
+  }
+
+  const importInsFar = () => {
+    setInsFar(prescription.instruccionesFarmacia)
+  }
+
+  const { postData: postPres, data: dataPres } = usePost()
+
+  const abr = {
+    hours: 'h.',
+    days: 'd.',
+    weeks: 'w.',
+    months: 'm.'
+  }
+
+  const submitPres = () => {
+    const newPres = { ...prescription }
+    const d = new Date()
+    d.setDate(d.getDate() + parseInt(prescription.duracion))
+    newPres.fechaFinal = d
+    newPres.frecuencia = newPres.unidad + ' x ' + newPres.frecuencia + abr[newPres.frecuenciaRadio]
+    if (newPres.duracionRadio === 'ind') newPres.duracion = 'Ind.'
+    newPres.duracion = newPres.duracion + abr[newPres.duracionRadio]
+    delete newPres.frecuenciaRadio
+    delete newPres.duracionRadio
+    delete newPres.unidad
+    postPres('/prescriptions/createPrescription', newPres)
+    const newPatient = { ...patientData.patient }
+    newPatient.prescripciones.push(newPres)
+    updatePatient(newPatient)
+    addPrescription(newPres)
+  }
+
+  useEffect(() => {
+    if (dataPres) console.log(dataPres)
+  }, [dataPres])
+
+  return (
+    <>
+      <div className="addPrescription">
+        <div className="addPrescription_container">
+          {search ? <Search type='med' submit={submitMed}/> : null}
+          <div className="addPrescription_container_left">
+            <div className="seccion">
+              <div className="float_title">Búsqueda del medicamento</div>
+              <label>Elección del medicamento</label>
+              <div className="search">
+                <div className="med">{prescription.nombreMedicamento}</div>
+                <button type='button' onClick={() => { setSearch(true) }} className='search_button'><FontAwesomeIcon icon={faMagnifyingGlass}/></button>
+              </div>
+              <label>Instrucciones para el paciente</label>
+              <div className="instruccions">
+                <textarea name="desc_diagnostico" id="" rows="2" onChange={({ target }) => setInsPac(target.value)} value={insPac}></textarea>
+                <button type='button' onClick={importInsPac}><FontAwesomeIcon className='icon' icon={faFileImport}/></button>
+              </div>
+              <label>Instrucciones para la farmacia</label>
+              <div className="instruccions">
+                <textarea name="desc_diagnostico" id="" rows="2" onChange={({ target }) => setInsFar(target.value)} value={insFar}></textarea>
+                <button type='button' onClick={importInsFar}><FontAwesomeIcon className='icon' icon={faFileImport}/></button>
+              </div>
+            </div>
+            <button onClick={submitPres} className='button_classic'>Añadir prescripción</button>
+          </div>
+          <div className="addPrescription_container_right">
+            <div className="seccions">
+              <div className="seccion">
+                <div className="float_title">Posología</div>
+                <div className="seccion_info">
+                  <input min={0} type="number" value={prescription.unidad} name="inputName" onChange={({ target }) => setPrescription((prev) => { return { ...prev, unidad: target.value } })} required="required"/>
+                  <p>unidades/toma</p>
+                </div>
+                <p>Cada:</p>
+                <div className="seccion_info">
+                  <input min={0} type="number" value={prescription.frecuencia} name="inputName" onChange={({ target }) => setPrescription((prev) => { return { ...prev, frecuencia: target.value } })} required="required"/>
+                  <div className="seccion_info_radio">
+                    <div className="seccion_info_radio_hours">
+                      <input type="radio" checked={prescription.frecuenciaRadio === 'hours' ? 1 : 0} onChange={() => setPrescription((prev) => { return { ...prev, frecuenciaRadio: 'hours' } })} required="required"/>
+                      <p>horas</p>
+                    </div>
+                    <div className="seccion_info_radio_weeks">
+                      <input type="radio" checked={prescription.frecuenciaRadio === 'weeks' ? 1 : 0} onChange={() => setPrescription((prev) => { return { ...prev, frecuenciaRadio: 'weeks' } })} required="required"/>
+                      <p>semanas</p>
+                    </div>
+                    <div className="seccion_info_radio_days">
+                      <input type="radio" checked={prescription.frecuenciaRadio === 'days' ? 1 : 0} onChange={() => setPrescription((prev) => { return { ...prev, frecuenciaRadio: 'days' } })} required="required"/>
+                      <p>dias</p>
+                    </div>
+                    <div className="seccion_info_radio_months">
+                      <input type="radio" checked={prescription.frecuenciaRadio === 'months' ? 1 : 0} onChange={() => setPrescription((prev) => { return { ...prev, frecuenciaRadio: 'months' } })} required="required"/>
+                      <p>mesos</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="seccion">
+                <div className="float_title">Duración del tratamiento</div>
+                <p>Durante:</p>
+                <div className="seccion_info">
+                  <input min={0} type="number" value={prescription.duracion} name="inputName" onChange={({ target }) => setPrescription((prev) => { return { ...prev, duracion: target.value } })} required="required"/>
+                  <div className="seccion_info_radio">
+                    <div className="seccion_info_radio_hours">
+                      <input type="radio" checked={prescription.duracionRadio === 'days' ? 1 : 0} onChange={() => setPrescription((prev) => { return { ...prev, duracionRadio: 'days' } })} required="required"/>
+                      <p>dias</p>
+                    </div>
+                    <div className="seccion_info_radio_weeks">
+                      <input type="radio" checked={prescription.duracionRadio === 'months' ? 1 : 0} onChange={() => setPrescription((prev) => { return { ...prev, duracionRadio: 'months' } })} required="required"/>
+                      <p>meses</p>
+                    </div>
+                    <div className="seccion_info_radio_days">
+                      <input type="radio" checked={prescription.duracionRadio === 'weeks' ? 1 : 0} onChange={() => setPrescription((prev) => { return { ...prev, duracionRadio: 'weeks' } })} required="required"/>
+                      <p>semanas</p>
+                    </div>
+                    <div className="seccion_info_radio_months">
+                      <input type="radio" checked={prescription.duracionRadio === 'ind' ? 1 : 0} onChange={() => setPrescription((prev) => { return { ...prev, duracionRadio: 'ind' } })} required="required"/>
+                      <p>indefinido</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="exit">
+              <button onClick={quitAddPrescription} className='button_classic'><FontAwesomeIcon className='icon' icon={faArrowRightFromBracket}/></button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  )
+}
+
+export default AddPrescription

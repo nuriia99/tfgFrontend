@@ -1,4 +1,4 @@
-import { React } from 'react'
+import { React, useState, useEffect } from 'react'
 import { useGlobalContext } from '../../../hooks/useGlobalContext'
 import { usePatientContext } from '../../../hooks/usePatientContext'
 import { getLenguage } from '../../../utils/lenguage'
@@ -10,12 +10,31 @@ const PrescriptionCard = ({ handleClickPrincipalComponent }) => {
   const { patientData } = usePatientContext()
   const leng = getLenguage(globalData.lenguage, 'patient')
 
-  const uniquePrescription = new Set()
-  if (patientData.patient) {
-    patientData.patient.prescripciones.forEach((prescription) => {
-      uniquePrescription.add(prescription.principioActivo)
+  const [uniquePrescription, setUniquePrescription] = useState()
+
+  useEffect(() => {
+    setUniquePrescription(() => {
+      const uniquePrescription = new Set()
+      if (patientData.patient) {
+        patientData.patient.prescripciones.forEach((prescription) => {
+          uniquePrescription.add(prescription.principioActivo)
+        })
+      }
+      return uniquePrescription
     })
-  }
+  }, [])
+
+  useEffect(() => {
+    setUniquePrescription(() => {
+      const uniquePrescription = new Set()
+      if (patientData.patient) {
+        patientData.patient.prescripciones.forEach((prescription) => {
+          uniquePrescription.add(prescription.principioActivo)
+        })
+      }
+      return uniquePrescription
+    })
+  }, [patientData])
 
   return (
     <>
@@ -25,7 +44,7 @@ const PrescriptionCard = ({ handleClickPrincipalComponent }) => {
         <button id='prescriptions_button' name='prescriptions_button' onClick={() => handleClickPrincipalComponent('prescriptions_button')} className='button_plus'><FontAwesomeIcon id='prescriptions_button' name='prescriptions_button' className='icon' icon={faPlus}/></button>
       </div>
       {
-        patientData.patient
+        uniquePrescription
           ? <>
             {
               [...uniquePrescription].map((prescription, index) => {

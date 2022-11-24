@@ -137,8 +137,8 @@ body, html {
   width: 100%;
   height: 40px;
   border-radius: 0.3125rem;
-  border: rgb(126, 199, 255) solid 1px;
-  background-color: #d8eefe;
+  border: #0979b0 solid 1px;
+  background-color: rgb(126, 199, 255);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -201,6 +201,16 @@ body, html {
 }
 .button_tag.inactive:hover {
   background-color: rgb(126, 199, 255);
+}
+
+.crossbar::-webkit-scrollbar {
+  width: 8px;
+  background: rgb(175, 175, 175);
+  border-radius: 0 8px 8px 0;
+}
+.crossbar::-webkit-scrollbar-thumb {
+  background: #004173;
+  border-radius: 0 8px 8px 0;
 }
 
 .home {
@@ -1061,6 +1071,7 @@ body, html {
   padding: 30px;
   border-bottom: 1px solid #004173;
   height: 10%;
+  box-sizing: border-box;
 }
 .prescriptions_container_info_title {
   font-weight: 700;
@@ -1069,26 +1080,27 @@ body, html {
 }
 .prescriptions_container_table {
   padding: 20px;
+  overflow-y: auto;
+  height: 90%;
+  box-sizing: border-box;
 }
 .prescriptions_container_table .table {
   display: grid;
   padding: 30px;
-  row-gap: 3px;
-  overflow-y: auto;
   overflow-x: auto;
+  box-sizing: border-box;
 }
 .prescriptions_container_table .table .table_row {
   display: flex;
-  width: 100%;
   justify-content: center;
-  -moz-column-gap: 3px;
-       column-gap: 3px;
 }
 .prescriptions_container_table .table .table_row_title {
   padding: 10px;
-  background-color: rgb(126, 199, 255);
-  border-radius: 10px;
-  font-weight: 700;
+  background-color: #0979b0;
+  color: white;
+  border: 1px solid #0979b0;
+  display: flex;
+  align-items: center;
 }
 .prescriptions_container_table .table .table_row_title.name {
   width: 400px;
@@ -1102,12 +1114,20 @@ body, html {
 .prescriptions_container_table .table .table_row_title.duracion {
   width: 100px;
 }
+.prescriptions_container_table .table .table_row_title.delete {
+  width: 20px;
+}
 .prescriptions_container_table .table .table_row_values {
   display: flex;
   align-items: center;
   padding: 10px;
   background-color: #d8eefe;
-  border-radius: 10px;
+  border: 1px solid rgb(126, 199, 255);
+  border-top: 0;
+  font-size: 12px;
+}
+.prescriptions_container_table .table .table_row_values:not(:last-child) {
+  border-right: 1px solid #d8eefe;
 }
 .prescriptions_container_table .table .table_row_values.name {
   width: 400px;
@@ -1123,6 +1143,320 @@ body, html {
 }
 .prescriptions_container_table .table .table_row_values.alert {
   color: rgb(182, 0, 0);
+}
+.prescriptions_container_table .table .table_row_values.delete {
+  width: 20px;
+}
+.prescriptions_container_table .table .table_row_values.delete button {
+  background-color: #d8eefe;
+  border: 0;
+}
+.prescriptions_container_table .table .table_row_values.delete button:hover {
+  color: rgb(182, 0, 0);
+}
+
+.addPrescription {
+  height: calc(100% + 20px);
+  width: 100%;
+  margin-top: -25px;
+  border: 1px solid #0979b0;
+  border-radius: 10px;
+  background-color: #d8eefe;
+}
+.addPrescription_container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  position: relative;
+}
+.addPrescription_container_left {
+  height: 100%;
+  flex: 1;
+  border-right: 1px solid #0979b0;
+  padding-top: 30px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+.addPrescription_container_left .seccion {
+  margin: 10px;
+  min-width: 200px;
+  border: 1px solid rgb(126, 199, 255);
+  position: relative;
+  padding: 20px 0;
+}
+.addPrescription_container_left .seccion .instruccions {
+  display: flex;
+  align-items: center;
+}
+.addPrescription_container_left .seccion .instruccions textarea {
+  height: 30px;
+  margin-right: 0;
+  padding: 5px;
+}
+.addPrescription_container_left .seccion .instruccions button {
+  height: 25px;
+  margin: 0 5px;
+  color: rgb(68, 68, 68);
+  background-color: rgb(166, 217, 255);
+  border: 1px solid #0979b0;
+  border-radius: 3px;
+}
+.addPrescription_container_left .seccion .instruccions button .icon {
+  height: 15px;
+  width: 15px;
+}
+.addPrescription_container_left .seccion .instruccions button .icon:hover {
+  color: #004173;
+}
+.addPrescription_container_left .seccion .search {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  min-height: 25px;
+  width: 90%;
+  background-color: white;
+  margin: 5px 20px;
+  border: 1px solid rgb(175, 175, 175);
+  padding-left: 10px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.addPrescription_container_left .seccion .search .search_button, .addPrescription_container_left .seccion .search .delete_prescription_button {
+  background-color: white;
+  border: 0;
+  cursor: pointer;
+}
+.addPrescription_container_left .seccion .search .med {
+  font-size: 13px;
+}
+.addPrescription_container_left .seccion .prescription {
+  margin-bottom: 6px;
+}
+.addPrescription_container_left .seccion .float_title {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  color: black;
+  font-weight: 600;
+  text-transform: uppercase;
+  transform: translateX(10px) translateY(-13px);
+  font-size: 12px;
+  padding: 5px 10px;
+  border-left: 1px solid rgb(126, 199, 255);
+  border-right: 1px solid rgb(126, 199, 255);
+  background-color: #d8eefe;
+  letter-spacing: 0.0688rem;
+}
+.addPrescription_container_left .seccion label {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 20px;
+  padding-bottom: 0;
+}
+.addPrescription_container_left .seccion textArea {
+  margin: 5px 20px;
+  padding: 0;
+  width: 90%;
+  resize: none;
+  border: 1px solid rgb(175, 175, 175);
+}
+.addPrescription_container_left .button_classic {
+  margin-right: 10px;
+  width: 180px;
+  align-self: flex-end;
+}
+.addPrescription_container_right {
+  height: 100%;
+  width: 30%;
+  padding: 10px;
+  min-width: 280px;
+  padding-top: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+.addPrescription_container_right .exit {
+  width: 30px;
+  align-self: flex-end;
+}
+.addPrescription_container_right .exit .button_classic:hover {
+  color: rgb(182, 0, 0);
+}
+.addPrescription_container_right .seccion {
+  margin-top: 10px;
+  width: 100%;
+  min-width: 260px;
+  border: 1px solid rgb(126, 199, 255);
+  position: relative;
+  padding: 20px 5px;
+  box-sizing: border-box;
+}
+.addPrescription_container_right .seccion:not(:first-child) {
+  margin-top: 25px;
+}
+.addPrescription_container_right .seccion .float_title {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  color: black;
+  font-weight: 600;
+  text-transform: uppercase;
+  transform: translateX(10px) translateY(-13px);
+  font-size: 12px;
+  padding: 5px 10px;
+  border-left: 1px solid rgb(126, 199, 255);
+  border-right: 1px solid rgb(126, 199, 255);
+  background-color: #d8eefe;
+  letter-spacing: 0.0688rem;
+}
+.addPrescription_container_right .seccion label {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 20px;
+  padding-bottom: 0;
+}
+.addPrescription_container_right .seccion textArea {
+  margin: 5px 20px;
+  padding: 0;
+  width: 90%;
+  resize: none;
+  border: 1px solid rgb(175, 175, 175);
+}
+.addPrescription_container_right .seccion p {
+  padding: 0 5px;
+  margin: 0;
+}
+.addPrescription_container_right .seccion input {
+  width: 40px;
+  height: 15px;
+}
+.addPrescription_container_right .seccion_info {
+  padding: 10px;
+  display: flex;
+  width: 100%;
+}
+.addPrescription_container_right .seccion_info_radio {
+  display: grid;
+  grid-template-areas: "hours weeks" "days months";
+  -moz-column-gap: 4px;
+       column-gap: 4px;
+}
+.addPrescription_container_right .seccion_info_radio_hours {
+  display: flex;
+  align-items: center;
+  grid-area: hours;
+}
+.addPrescription_container_right .seccion_info_radio_weeks {
+  display: flex;
+  align-items: center;
+  grid-area: weeks;
+}
+.addPrescription_container_right .seccion_info_radio_days {
+  display: flex;
+  align-items: center;
+  grid-area: days;
+}
+.addPrescription_container_right .seccion_info_radio_months {
+  display: flex;
+  align-items: center;
+  grid-area: months;
+}
+.addPrescription_container_right .seccion_info_radio input {
+  width: 11px;
+}
+
+.search_component {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.search_component_container {
+  height: 70%;
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background-color: white;
+  padding-top: 20px;
+}
+.search_component_container .exit {
+  margin-right: 20px;
+  width: 30px;
+  align-self: flex-end;
+}
+.search_component_container .exit .button_classic:hover {
+  color: rgb(182, 0, 0);
+}
+.search_component_container_info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.search_component_container_info input {
+  height: 25px;
+  width: calc(90% - 5px);
+  background-color: white;
+  border: 1px solid rgb(175, 175, 175);
+  margin: 10px;
+  padding: 0 0 0 5px;
+}
+.search_component_container_info .row_header {
+  background-color: #0979b0;
+  border: 1px solid #0979b0;
+  padding: 5px 10px;
+  color: white;
+  width: 90%;
+  box-sizing: border-box;
+}
+.search_component_container_info .row_header p {
+  margin: 0;
+}
+.search_component_container_info .rows {
+  width: 90%;
+  height: 100px;
+  overflow-y: auto;
+}
+.search_component_container_info .rows .row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #d8eefe;
+  padding: 5px 10px;
+  border-radius: 10p;
+  font-size: 13px;
+  border: 1px solid rgb(126, 199, 255);
+  cursor: pointer;
+}
+.search_component_container_info .rows .row:not(:last-child) {
+  border-bottom: 0;
+}
+.search_component_container_info .rows .row p {
+  margin: 0;
+}
+.search_component_container_info .rows .row:hover {
+  background-color: rgb(166, 217, 255);
+}
+.search_component_container_info .rows .row.active {
+  background-color: rgb(126, 199, 255);
+}
+.search_component_container_info .button_classic {
+  margin-top: 20px;
+  width: 90%;
 }
 
 .patient_entries {
@@ -1157,13 +1491,127 @@ body, html {
 .patient_entries_container_addEntry {
   height: 100%;
   width: 100%;
-  overflow-y: auto;
-  border: 1px solid #004173;
+  border: 1px solid #0979b0;
   background-color: #d8eefe;
+  display: flex;
+  justify-content: space-between;
 }
 .patient_entries_container_addEntry .entryForm {
+  flex: 1;
   display: flex;
   flex-direction: column;
+  row-gap: 10px;
+  overflow-y: auto;
+  padding: 10px 0;
+  padding-top: 20px;
+}
+.patient_entries_container_addEntry .entryForm .button_classic {
+  width: 30%;
+  margin-right: 10px;
+  background-color: rgb(126, 199, 255);
+  height: 30px;
+}
+.patient_entries_container_addEntry .entryForm .button_classic:hover {
+  background-color: rgb(166, 217, 255);
+}
+.patient_entries_container_addEntry .entryForm_anamsesio {
+  margin: 10px;
+  min-width: 200px;
+  border: 1px solid rgb(126, 199, 255);
+  position: relative;
+  padding-top: 20px;
+}
+.patient_entries_container_addEntry .entryForm_exploracion {
+  margin: 10px;
+  min-width: 200px;
+  border: 1px solid rgb(126, 199, 255);
+  position: relative;
+  padding-top: 20px;
+}
+.patient_entries_container_addEntry .entryForm_diagnostico {
+  margin: 10px;
+  min-width: 200px;
+  border: 1px solid rgb(126, 199, 255);
+  position: relative;
+  padding-top: 20px;
+}
+.patient_entries_container_addEntry .entryForm_plan_terapeutico {
+  margin: 10px;
+  min-width: 200px;
+  border: 1px solid rgb(126, 199, 255);
+  position: relative;
+  padding-top: 20px;
+}
+.patient_entries_container_addEntry .entryForm_plan_terapeutico .no_prescriptions {
+  padding: 20px;
+  padding-top: 5px;
+}
+.patient_entries_container_addEntry .entryForm_plan_terapeutico .plan_options {
+  display: flex;
+  width: 90%;
+  margin-left: 20px;
+  padding-bottom: 10px;
+  justify-content: end;
+}
+.patient_entries_container_addEntry .entryForm_plan_terapeutico .plan_options .capsules_button {
+  color: green;
+  background-color: rgb(126, 199, 255);
+  border: 1px solid #0979b0;
+  border-radius: 3px;
+}
+.patient_entries_container_addEntry .entryForm_plan_terapeutico .plan_options .capsules_button .icon {
+  height: 25px;
+  width: 25px;
+}
+.patient_entries_container_addEntry .entryForm_plan_terapeutico .plan_options .capsules_button .icon:hover {
+  color: rgb(182, 0, 0);
+}
+.patient_entries_container_addEntry .entryForm_save {
+  display: flex;
+  justify-content: end;
+  margin-left: 10px;
+}
+.patient_entries_container_addEntry .entryForm .search, .patient_entries_container_addEntry .entryForm .prescription {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  min-height: 25px;
+  width: 90%;
+  background-color: white;
+  margin: 5px 20px;
+  border: 1px solid rgb(175, 175, 175);
+  padding-left: 10px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+}
+.patient_entries_container_addEntry .entryForm .search .search_button, .patient_entries_container_addEntry .entryForm .search .delete_prescription_button, .patient_entries_container_addEntry .entryForm .prescription .search_button, .patient_entries_container_addEntry .entryForm .prescription .delete_prescription_button {
+  background-color: white;
+  border: 0;
+  cursor: pointer;
+}
+.patient_entries_container_addEntry .entryForm .prescription {
+  margin-bottom: 6px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  font-size: 12px;
+}
+.patient_entries_container_addEntry .entryForm .float_title {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  color: black;
+  font-weight: 600;
+  text-transform: uppercase;
+  transform: translateX(10px) translateY(-13px);
+  font-size: 13px;
+  padding: 5px 10px;
+  border-left: 1px solid rgb(126, 199, 255);
+  border-right: 1px solid rgb(126, 199, 255);
+  background-color: #d8eefe;
+  letter-spacing: 0.0688rem;
 }
 .patient_entries_container_addEntry .entryForm label {
   font-weight: 600;
@@ -1171,8 +1619,14 @@ body, html {
   padding-bottom: 0;
 }
 .patient_entries_container_addEntry .entryForm textArea {
-  margin: 20px;
-  width: 80%;
+  margin: 5px 20px;
+  padding: 0;
+  width: 90%;
+  resize: none;
+  border: 1px solid rgb(175, 175, 175);
+}
+.patient_entries_container_addEntry .patient_entries_container_diagnosis {
+  border: 0;
 }
 .patient_entries_container_list {
   height: 100%;
@@ -1214,6 +1668,10 @@ body, html {
 }
 .patient_entries_container_list .entry .note {
   padding: 5px 20px;
+  border: 1px solid rgb(126, 199, 255);
+}
+.patient_entries_container_list .entry .note:not(:first-child) {
+  border-top: 0;
 }
 .patient_entries_container_list .entry .note_diagnosis {
   padding: 3px;
@@ -1255,6 +1713,7 @@ body, html {
   border: 1px solid #0979b0;
   min-width: 120px;
   overflow-y: auto;
+  background-color: white;
 }
 .patient_entries_container_diagnosis_list .diagnosis_item {
   display: flex;

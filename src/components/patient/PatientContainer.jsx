@@ -33,7 +33,6 @@ const PatientContainer = () => {
   }
 
   const handleClickPrincipalComponent = (name) => {
-    console.log(name)
     setPrincipalComponent(() => {
       if (name === 'prescriptions_button') {
         return 'prescriptions'

@@ -6,7 +6,7 @@ import _ from 'lodash'
 import PatientNote from './PatientNote'
 import usePost from '../../../hooks/usePost'
 
-const PatientEntries = ({ entry }) => {
+const PatientEntries = ({ entry, clickNote }) => {
   const { globalData } = useGlobalContext()
   const leng = getLenguage(globalData.lenguage, 'patient')
   const lengWorker = globalData.lenguage
@@ -39,7 +39,7 @@ const PatientEntries = ({ entry }) => {
             </div>
             <div className="entry_content">
               {notes.map((note, index) => {
-                return <PatientNote key={index} note={note}/>
+                return <PatientNote clickNote={() => { clickNote(index) }} key={index} note={note}/>
               })}
             </div>
           </div>

@@ -387,6 +387,9 @@
       padding: 30px;
       border-bottom: 1px solid $navyBlue;
       height: 10%;
+      box-sizing: border-box;
+      
+      
 
       &_title{
         font-weight: 700;
@@ -397,28 +400,32 @@
 
     &_table{
       padding: 20px;
+      overflow-y: auto;
+      height: 90%;
+      box-sizing: border-box;
       .table{
         display: grid;
         padding: 30px;
-        row-gap: 3px;
-        overflow-y: auto;
         overflow-x: auto;
+        box-sizing: border-box;
+        
   
         .table_row{
           display: flex;
-          width: 100%;
           justify-content: center;
-          column-gap: 3px;
+          
   
           &_title{
             padding: 10px;
-            background-color: $BlueIcs;
-            border-radius: 10px;
-            font-weight: 700;
-  
-  
+            background-color: $navyBlueLight;
+            color: white;
+            border: 1px solid $navyBlueLight;
+            display: flex;
+            align-items: center;
+
             &.name{
               width: 400px;
+              
             }
   
             &.component{
@@ -432,13 +439,24 @@
             &.duracion{
               width: 100px;
             }
+
+            &.delete{
+              width: 20px;
+            }
           }
           &_values{
             display: flex;
             align-items: center;
             padding: 10px;
             background-color: $BlueIcsLight2;
-            border-radius: 10px;
+            border: 1px solid $BlueIcs;
+            border-top: 0;
+            font-size: 12px;
+
+            &:not(:last-child){
+              border-right: 1px solid $BlueIcsLight2;
+            }
+
             
   
             &.name{
@@ -460,11 +478,360 @@
             &.alert{
               color: $RedError;
             }
+
+            &.delete{
+              width: 20px;
+              button{
+                background-color: $BlueIcsLight2;
+                border: 0;
+                &:hover{
+                  color: $RedError;
+                }
+              }
+            }
           }
         }
       }
     }
     
 
+  }
+}
+
+.addPrescription{
+  height: calc(100% + 20px);
+  width: 100%;
+  margin-top: -25px;
+  border: 1px solid $navyBlueLight;
+  border-radius: 10px;
+  background-color: $BlueIcsLight2;
+  &_container{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    position: relative;
+    
+
+    &_left{
+      height: 100%;
+      flex: 1;
+      border-right: 1px solid $navyBlueLight;
+      padding-top: 30px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+
+
+      .seccion{
+        margin: 10px;
+        min-width: 200px;
+        border: 1px solid $BlueIcs;
+        position: relative;
+        padding: 20px 0;
+
+        .instruccions{
+          display: flex;
+          align-items: center;
+
+          textarea{
+            height: 30px;
+            margin-right: 0;
+            padding: 5px;
+          }
+
+          button{
+            height: 25px;
+            margin: 0 5px;
+            color: $LightBlack;
+            background-color: $BlueIcsLight;
+            border: 1px solid $navyBlueLight;
+            border-radius: 3px;
+            .icon{
+              height: 15px;
+              width: 15px;
+              &:hover{
+                color: $navyBlue;
+              }
+            }
+          }
+        }
+
+        .search{
+          height: fit-content;
+          min-height: 25px;
+          width: 90%;
+          background-color: white;
+          margin: 5px 20px;
+          border: 1px solid $BlackLight2;
+          padding-left: 10px;
+          box-sizing: border-box;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          
+          .search_button, .delete_prescription_button{
+            background-color: white;
+            border: 0;
+            cursor: pointer;
+          }
+          .med{
+            font-size: 13px;
+          }
+        }
+
+        .prescription{
+          margin-bottom: 6px;
+        }
+
+
+        .float_title{
+            position: absolute;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            color: black;
+            font-weight: 600;
+            text-transform: uppercase;
+            transform: translateX(10px) translateY(-13px);
+            font-size: 12px;
+            padding: 5px 10px;
+            border-left: 1px solid $BlueIcs;
+            border-right: 1px solid $BlueIcs;
+            background-color: $BlueIcsLight2;
+            letter-spacing: 0.0688rem;
+        }
+
+        label{
+          font-size: 13px;
+          font-weight: 600;
+          padding: 20px;
+          padding-bottom: 0;
+        }
+
+        textArea{
+          margin: 5px 20px;
+          padding: 0;
+          width: 90%;
+          resize: none;
+          border: 1px solid $BlackLight2;
+        }
+      }
+
+      .button_classic{
+        margin-right: 10px;
+        width: 180px;
+        align-self: flex-end;
+      }
+    }
+
+    &_right{
+      height: 100%;
+      width: 30%;
+      padding: 10px;
+      min-width: 280px;
+      padding-top: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-sizing: border-box;
+
+      .exit{
+        width: 30px;
+        align-self: flex-end;
+        .button_classic{
+          &:hover{
+            color: $RedError;
+          }
+        }
+      }
+
+      .seccion{
+        margin-top: 10px;
+        width: 100%;
+        min-width: 260px;
+        border: 1px solid $BlueIcs;
+        position: relative;
+        padding: 20px 5px;
+        box-sizing: border-box;
+
+        &:not(:first-child){
+          margin-top: 25px;
+        }
+
+        .float_title{
+            position: absolute;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            color: black;
+            font-weight: 600;
+            text-transform: uppercase;
+            transform: translateX(10px) translateY(-13px);
+            font-size: 12px;
+            padding: 5px 10px;
+            border-left: 1px solid $BlueIcs;
+            border-right: 1px solid $BlueIcs;
+            background-color: $BlueIcsLight2;
+            letter-spacing: 0.0688rem;
+        }
+
+        label{
+          font-size: 13px;
+          font-weight: 600;
+          padding: 20px;
+          padding-bottom: 0;
+        }
+
+        textArea{
+          margin: 5px 20px;
+          padding: 0;
+          width: 90%;
+          resize: none;
+          border: 1px solid $BlackLight2;
+        }
+        p{
+          padding: 0 5px;
+          margin: 0;
+        }
+        input{
+          width: 40px;
+          height: 15px;
+        }
+
+        &_info{
+          padding: 10px;
+          display: flex;
+          width: 100%;
+          &_radio{
+            display: grid;
+            grid-template-areas: 
+            "hours weeks"
+            "days months";
+            column-gap: 4px;         
+            &_hours{
+              display: flex;
+              align-items: center;
+              grid-area: hours;
+            }
+            &_weeks{
+              display: flex;
+              align-items: center;
+              grid-area: weeks;
+            }
+            &_days{
+              display: flex;
+              align-items: center;
+              grid-area: days;
+            }
+            &_months{
+              display: flex;
+              align-items: center;
+              grid-area: months;
+            }
+
+            input{
+              width: 11px;
+            }
+          }
+        }
+
+      }
+    }
+    
+  }
+}
+
+.search_component{
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &_container{
+    height: 70%;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: white;
+    
+    padding-top: 20px;
+    .exit{
+      margin-right: 20px;
+      width: 30px;
+      align-self: flex-end;
+      .button_classic{
+        &:hover{
+          color: $RedError;
+        }
+      }
+    }
+    &_info{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      input{
+        height: 25px;
+        width: calc(90% - 5px);
+        background-color: white;
+        border: 1px solid $BlackLight2;
+        margin: 10px;
+        padding: 0 0 0 5px;
+      }
+      .row_header{
+        background-color: $navyBlueLight;
+        border: 1px solid $navyBlueLight;
+        padding: 5px 10px;
+        color: white;
+        width: 90%;
+        box-sizing: border-box;
+        p{
+          margin: 0;
+        }
+      }
+      .rows{
+        width: 90%;
+        height: 100px;
+        overflow-y: auto;
+        .row{
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          background-color: $BlueIcsLight2;
+          padding: 5px 10px;
+          border-radius: 10p;
+          font-size: 13px;
+          border: 1px solid $BlueIcs;
+          &:not(:last-child){
+            border-bottom: 0;
+          }
+          p{
+            margin: 0;
+          }
+      
+          cursor: pointer;
+          &:hover{
+            background-color: $BlueIcsLight;
+          }
+  
+          &.active{
+            background-color: $BlueIcs;
+          }
+        }
+      }
+  
+      .button_classic{
+        margin-top: 20px;
+        width: 90%;
+      }
+    }
   }
 }
