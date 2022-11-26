@@ -9,10 +9,10 @@ const DiagnosisList = ({ diagnosis, filterDiagnosis, updateSelectedDiagnosis }) 
   }, [updateSelectedDiagnosis])
 
   const handleClick = (index) => {
-    const name = diagnosis[index].nombre
+    const name = JSON.parse([...uniqueDiagnosis][index]).nombre
     if (selectedDiagnosis === name) setSelectedDiagnosis('')
     else setSelectedDiagnosis(name)
-    filterDiagnosis(diagnosis[index])
+    filterDiagnosis(JSON.parse([...uniqueDiagnosis][index]))
   }
 
   const uniqueDiagnosis = new Set()

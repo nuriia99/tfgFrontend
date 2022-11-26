@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from 'react'
-import { getDate, getHour } from '../../../utils/utils'
+import { getDate, getFormalName, getHour } from '../../../utils/utils'
 import { useGlobalContext } from '../../../hooks/useGlobalContext'
 import { getLenguage } from '../../../utils/lenguage'
 import _ from 'lodash'
@@ -34,7 +34,7 @@ const PatientEntries = ({ entry, clickNote }) => {
       notes
         ? <div className="entry">
             <div className="entry_info">
-              <div>{date + ' ' + hour + ' ' + _.toUpper(entry.trabajador.name) + ' - ' + _.toUpper(entry.trabajador.role)}</div>
+              <div>{date + ' ' + hour + ' ' + _.toUpper(getFormalName(entry.trabajador.id.nombre, entry.trabajador.id.apellido1, entry.trabajador.id.apellido2)) + ' - ' + _.toUpper(entry.trabajador.role)}</div>
               <button onClick={handleTraduction} className={'button_classic' + visibility}>{leng.traducir}</button>
             </div>
             <div className="entry_content">

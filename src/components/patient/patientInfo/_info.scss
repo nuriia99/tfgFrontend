@@ -521,6 +521,12 @@
       display: flex;
       flex-direction: column;
 
+      .error{
+        align-self: center;
+        width: calc(100% - 20px);
+        box-sizing: border-box;
+      }
+
 
       .seccion{
         margin: 10px;

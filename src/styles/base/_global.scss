@@ -235,3 +235,25 @@ body, html{
   }
   
 }
+
+// recs
+
+.recs{
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  row-gap: 5px;
+  flex-direction: column;
+  padding: 10px 20px;
+  column-gap: 5px;
+
+  .rec{
+    padding: 7px;
+    padding-left: 10px;
+    background-color: rgb(255, 212, 148);
+    border: 1px rgb(255, 177, 60) solid;
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+  }
+}

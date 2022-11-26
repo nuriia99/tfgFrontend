@@ -10,7 +10,7 @@ const useDelete = (url) => {
   const { globalData } = useGlobalContext()
   const navigate = useNavigate()
 
-  const deleteData = async (url) => {
+  const deleteData = async (url, params) => {
     setLoading(true)
     setError(false)
     setData()
@@ -18,7 +18,8 @@ const useDelete = (url) => {
       await axios.delete(url, {
         headers: {
           Authorization: `Bearer ${globalData.token}`
-        }
+        },
+        data: params
       }).then((response) => {
         setData(response)
       })

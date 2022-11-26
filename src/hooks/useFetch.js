@@ -9,13 +9,14 @@ const useFetch = (url) => {
   const [error, setError] = useState(false)
   const { globalData } = useGlobalContext()
   const navigate = useNavigate()
-  const fetchData = async (url) => {
+  const fetchData = async (url, params) => {
     setLoading(true)
     try {
       const res = await axios.get(url, {
         headers: {
           Authorization: `Bearer ${globalData.token}`
-        }
+        },
+        params
       }).then((response) => {
         setData(response.data)
       })

@@ -6,12 +6,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRightFromBracket, faFileImport, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import Search from './Search'
 import usePost from '../../../hooks/usePost'
+import useFetch from '../../../hooks/useFetch'
 
-const AddPrescription = ({ quitAddPrescription, addPrescription }) => {
+const AddPrescription = ({ diagnosis, quitAddPrescription, addPrescription }) => {
   const { globalData } = useGlobalContext()
   const { patientData, updatePatient } = usePatientContext()
   const [search, setSearch] = useState(false)
+  const [error, setError] = useState(null)
   const [prescription, setPrescription] = useState({
+    diagnostico: diagnosis,
     patient: patientData.patient._id,
     fechaInicio: new Date(),
     fechaFinal: '',
@@ -20,14 +23,25 @@ const AddPrescription = ({ quitAddPrescription, addPrescription }) => {
     instruccionesFarmacia: '',
     nombreMedicamento: '',
     principioActivo: '',
-    unidad: '',
-    frecuencia: '',
+    unidad: '1',
+    frecuencia: '12',
     frecuenciaRadio: 'hours',
-    duracion: '',
+    duracion: '7',
     duracionRadio: 'days'
   })
   const [insPac, setInsPac] = useState('')
   const [insFar, setInsFar] = useState('')
+  // const [rec, setRecs] = useState()
+
+  const { fetchData: getRecs, data: dataRecs } = useFetch()
+
+  useEffect(() => {
+    if (diagnosis) getRecs('/trabajadores/' + globalData.worker._id + '/getRecs/' + diagnosis._id)
+  }, [])
+
+  useEffect(() => {
+    if (dataRecs) console.log(dataRecs)
+  }, [dataRecs])
 
   useEffect(() => {
     setInsFar('')
@@ -43,7 +57,11 @@ const AddPrescription = ({ quitAddPrescription, addPrescription }) => {
         instruccionesPaciente: med.insPaciente,
         instruccionesFarmacia: med.insFarmacia,
         nombreMedicamento: med.nombre,
-        principioActivo: med.principioActivo
+        principioActivo: med.principioActivo,
+        idMed: med._id,
+        unidad: med.unidad,
+        frecuencia: med.frecuencia,
+        duracion: med.duracion
       }
     })
   }
@@ -65,27 +83,61 @@ const AddPrescription = ({ quitAddPrescription, addPrescription }) => {
     months: 'm.'
   }
 
+  const [newPres, setNewPres] = useState()
+
   const submitPres = () => {
-    const newPres = { ...prescription }
-    const d = new Date()
-    d.setDate(d.getDate() + parseInt(prescription.duracion))
-    newPres.fechaFinal = d
-    newPres.frecuencia = newPres.unidad + ' x ' + newPres.frecuencia + abr[newPres.frecuenciaRadio]
-    if (newPres.duracionRadio === 'ind') newPres.duracion = 'Ind.'
-    newPres.duracion = newPres.duracion + abr[newPres.duracionRadio]
-    delete newPres.frecuenciaRadio
-    delete newPres.duracionRadio
-    delete newPres.unidad
-    postPres('/prescriptions/createPrescription', newPres)
-    const newPatient = { ...patientData.patient }
-    newPatient.prescripciones.push(newPres)
-    updatePatient(newPatient)
-    addPrescription(newPres)
+    if (prescription.nombreMedicamento === '') setError('Por favor, seleccione un medicamento.')
+    else {
+      setError(null)
+      const d = new Date()
+      d.setDate(d.getDate() + parseInt(prescription.duracion))
+      let duration = prescription.duracion + abr[prescription.duracionRadio]
+      if (prescription.duracionRadio === 'ind') duration = 'Ind.'
+      console.log(prescription)
+      const newPrescription = {
+        duracion: duration,
+        fechaFinal: d,
+        fechaInicio: prescription.fechaInicio,
+        frecuencia: prescription.unidad + ' x ' + prescription.frecuencia + abr[prescription.frecuenciaRadio],
+        instruccionesPaciente: prescription.instruccionesPaciente,
+        instruccionesFarmacia: prescription.instruccionesFarmacia,
+        nombreMedicamento: prescription.nombreMedicamento,
+        patient: prescription.patient,
+        principioActivo: prescription.principioActivo,
+        trabajador: prescription.trabajador,
+        idMed: prescription.idMed
+      }
+      setNewPres(newPrescription)
+      console.log(newPres)
+      postPres('/prescriptions/createPrescription', { newPrescription, diagnostico: prescription.diagnostico })
+    }
   }
 
   useEffect(() => {
-    if (dataPres) console.log(dataPres)
+    if (dataPres) {
+      const newPrescription = { ...newPres, _id: dataPres.data._id }
+      const newPatient = { ...patientData.patient }
+      newPatient.prescripciones.push(newPres)
+      updatePatient(newPatient)
+      addPrescription(newPrescription)
+    }
   }, [dataPres])
+
+  const handleClickRec = (med) => {
+    setPrescription((prev) => {
+      return {
+        ...prev,
+        instruccionesPaciente: med.insPaciente,
+        instruccionesFarmacia: med.insFarmacia,
+        nombreMedicamento: med.nombre,
+        principioActivo: med.principioActivo,
+        idMed: med._id,
+        unidad: med.unidad,
+        frecuencia: med.frecuencia,
+        duracion: med.duracion
+      }
+    })
+  }
 
   return (
     <>
@@ -100,6 +152,18 @@ const AddPrescription = ({ quitAddPrescription, addPrescription }) => {
                 <div className="med">{prescription.nombreMedicamento}</div>
                 <button type='button' onClick={() => { setSearch(true) }} className='search_button'><FontAwesomeIcon icon={faMagnifyingGlass}/></button>
               </div>
+              <label>Recomendaciones: </label>
+              {
+                dataRecs
+                  ? <div className="recs">
+                    {
+                      dataRecs.map((rec, index) => {
+                        return <div onClick={() => handleClickRec(rec.medicamento)} key={index} className="rec">{rec.medicamento.nombre}</div>
+                      })
+                    }
+                  </div>
+                  : null
+              }
               <label>Instrucciones para el paciente</label>
               <div className="instruccions">
                 <textarea name="desc_diagnostico" id="" rows="2" onChange={({ target }) => setInsPac(target.value)} value={insPac}></textarea>
@@ -111,6 +175,11 @@ const AddPrescription = ({ quitAddPrescription, addPrescription }) => {
                 <button type='button' onClick={importInsFar}><FontAwesomeIcon className='icon' icon={faFileImport}/></button>
               </div>
             </div>
+            {
+              error
+                ? <div className="error"><p className="error_message">{error}</p></div>
+                : null
+            }
             <button onClick={submitPres} className='button_classic'>Añadir prescripción</button>
           </div>
           <div className="addPrescription_container_right">
