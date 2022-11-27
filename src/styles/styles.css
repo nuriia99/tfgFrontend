@@ -976,57 +976,61 @@ body, html {
 .documents_container_table .table {
   display: grid;
   padding: 30px;
-  row-gap: 3px;
-  overflow-y: auto;
   overflow-x: auto;
+  box-sizing: border-box;
 }
 .documents_container_table .table .table_row {
   display: flex;
   width: 100%;
   justify-content: left;
-  -moz-column-gap: 3px;
-       column-gap: 3px;
 }
 .documents_container_table .table .table_row:not(:first-child) {
   cursor: pointer;
 }
-.documents_container_table .table .table_row .name {
+.documents_container_table .table .table_row_title {
+  padding: 10px;
+  background-color: #0979b0;
+  color: white;
+  border: 1px solid #0979b0;
   display: flex;
   align-items: center;
-  background-color: rgb(126, 199, 255);
-  padding-left: 15px;
-  font-weight: 700;
-  border-radius: 10px;
-  height: 40px;
-  width: 100%;
 }
-.documents_container_table .table .table_row .date {
-  display: flex;
-  align-items: center;
-  padding-left: 15px;
-  font-weight: 700;
-  background-color: rgb(126, 199, 255);
-  border-radius: 10px;
-  height: 40px;
-  width: 100%;
+.documents_container_table .table .table_row_title.name {
+  width: 500px;
 }
-.documents_container_table .table .table_row .nameValue {
+.documents_container_table .table .table_row_title.date {
+  width: 200px;
+}
+.documents_container_table .table .table_row_title.delete {
+  width: 20px;
+}
+.documents_container_table .table .table_row_values {
   display: flex;
   align-items: center;
-  padding-left: 15px;
+  padding: 10px;
   background-color: #d8eefe;
-  border-radius: 10px;
-  height: 40px;
-  width: 100%;
+  border: 1px solid rgb(126, 199, 255);
+  border-top: 0;
+  font-size: 12px;
 }
-.documents_container_table .table .table_row .dateValue {
-  display: flex;
-  align-items: center;
-  padding-left: 15px;
+.documents_container_table .table .table_row_values:not(:last-child) {
+  border-right: 1px solid #d8eefe;
+}
+.documents_container_table .table .table_row_values.nameValue {
+  width: 500px;
+}
+.documents_container_table .table .table_row_values.dateValue {
+  width: 200px;
+}
+.documents_container_table .table .table_row_values.delete {
+  width: 20px;
+}
+.documents_container_table .table .table_row_values.delete button {
   background-color: #d8eefe;
-  border-radius: 10px;
-  height: 40px;
-  width: 100%;
+  border: 0;
+}
+.documents_container_table .table .table_row_values.delete button:hover {
+  color: rgb(182, 0, 0);
 }
 
 .panel {

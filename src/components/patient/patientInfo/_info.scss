@@ -262,57 +262,69 @@
       .table{
         display: grid;
         padding: 30px;
-        row-gap: 3px;
-        overflow-y: auto;
         overflow-x: auto;
+        box-sizing: border-box;
 
         .table_row{
           display: flex;
           width: 100%;
           justify-content: left;
-          column-gap: 3px;
           &:not(:first-child){
             cursor: pointer;  
-          }  
+          }
 
-    
-          .name{
+          &_title{
+            padding: 10px;
+            background-color: $navyBlueLight;
+            color: white;
+            border: 1px solid $navyBlueLight;
             display: flex;
             align-items: center;
-            background-color: $BlueIcs;
-            padding-left: 15px;
-            font-weight: 700;
-            border-radius: 10px;
-            height: 40px;
-            width: 100%;
+
+            &.name{
+              width: 500px;
+            }
+            &.date{
+              width: 200px;
+            }
+            &.delete{
+              width: 20px;
+            }
           }
-          .date{
+
+          &_values{
             display: flex;
             align-items: center;
-            padding-left: 15px;
-            font-weight: 700;
-            background-color: $BlueIcs;
-            border-radius: 10px;
-            height: 40px;
-            width: 100%;
-          }
-          .nameValue{
-            display: flex;
-            align-items: center;
-            padding-left: 15px;
+            padding: 10px;
             background-color: $BlueIcsLight2;
-            border-radius: 10px;
-            height: 40px;
-            width: 100%;
-          }
-          .dateValue{
-            display: flex;
-            align-items: center;
-            padding-left: 15px;
-            background-color: $BlueIcsLight2;
-            border-radius: 10px;
-            height: 40px;
-            width: 100%;
+            border: 1px solid $BlueIcs;
+            border-top: 0;
+            font-size: 12px;
+
+            &:not(:last-child){
+              border-right: 1px solid $BlueIcsLight2;
+            }
+
+            
+  
+            &.nameValue{
+              width: 500px;
+            }
+
+            &.dateValue{
+              width: 200px;
+            }
+
+            &.delete{
+              width: 20px;
+              button{
+                background-color: $BlueIcsLight2;
+                border: 0;
+                &:hover{
+                  color: $RedError;
+                }
+              }
+            }
           }
         }
       }

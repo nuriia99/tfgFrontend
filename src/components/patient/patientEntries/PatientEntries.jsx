@@ -5,7 +5,7 @@ import { getLenguage } from '../../../utils/lenguage'
 import DiagnosisList from './DiagnosisList'
 import { usePatientContext } from '../../../hooks/usePatientContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCapsules, faMagnifyingGlass, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faCapsules, faEraser, faMagnifyingGlass, faTrash } from '@fortawesome/free-solid-svg-icons'
 import AddPrescription from '../patientInfo/AddPrescription'
 import Search from '../patientInfo/Search'
 import usePost from '../../../hooks/usePost'
@@ -153,6 +153,7 @@ const PatientEntries = () => {
   const { patchData: updateNote, error: errorUpdate, data: dataUpdate } = usePatch()
   const { deleteData: deleteNote, error: errorDelete, data: dataDelete } = useDelete()
   const { fetchData: fetchRec, data: dataRec } = useFetch()
+  const [recs, setRecs] = useState()
   const newPatient = { ...patientData.patient }
   const [errormessage, setErrorMessage] = useState('')
 
@@ -191,16 +192,36 @@ const PatientEntries = () => {
   const [newPatient2, setNewPatient2] = useState({ ...patientData.patient })
 
   const handleDeleteNote = () => {
-    const arr = [...newPatient.entradas[modifyingNote.entry].notas]
-    arr.splice(modifyingNote.note, 1)
-    if (arr.length === 0) {
-      const newEntries = [...newPatient.entradas]
-      newEntries.splice(modifyingNote.entry, 1)
-      newPatient.entradas = newEntries
-    } else newPatient.entradas[modifyingNote.entry].notas = arr
-    deleteNote('/entries/deleteNote/' + patientData.patient.entradas[modifyingNote.entry]._id, { newNotes: arr, patient: patientData.patient._id })
-    setNewPatient2(newPatient)
+    if (modifyingNote.entry === '') {
+      setNewEntryData({
+        motivo: '',
+        antecedentes: '',
+        clinica: '',
+        exploracion: '',
+        pruebasComplementarias: '',
+        diagnostico: null,
+        estado: 'activo',
+        descDiagnostico: '',
+        planTerapeutico: '',
+        prescripciones: []
+      })
+      setRecs()
+    } else {
+      const arr = [...newPatient.entradas[modifyingNote.entry].notas]
+      arr.splice(modifyingNote.note, 1)
+      if (arr.length === 0) {
+        const newEntries = [...newPatient.entradas]
+        newEntries.splice(modifyingNote.entry, 1)
+        newPatient.entradas = newEntries
+      } else newPatient.entradas[modifyingNote.entry].notas = arr
+      deleteNote('/entries/deleteNote/' + patientData.patient.entradas[modifyingNote.entry]._id, { newNotes: arr, patient: patientData.patient._id })
+      setNewPatient2(newPatient)
+    }
   }
+
+  useEffect(() => {
+    if (dataRec) setRecs(dataRec)
+  }, [dataRec])
 
   useEffect(() => {
     if (error) console.log(error.response.data)
@@ -309,6 +330,7 @@ const PatientEntries = () => {
   useEffect(() => {
     if (newEntryData.clinica) fetchRec('/entries/getDiagnosisRec', { clinica: newEntryData.clinica })
   }, [newEntryData.clinica])
+  console.log(recs)
 
   return (
     entries
@@ -348,7 +370,11 @@ const PatientEntries = () => {
                       {search ? <Search type='diagnosis' submit={submitDiagnosis}/> : null}
                       <form className='entryForm crossbar' action="">
                         <div className="entryForm_save">
-                        <button type='button' onClick={handleDeleteNote} className='button_classic trash'><FontAwesomeIcon icon={faTrash}/></button>
+                        {
+                          modifyingNote.entry === ''
+                            ? <button type='button' onClick={handleDeleteNote} className='button_classic trash'><FontAwesomeIcon icon={faEraser}/></button>
+                            : <button type='button' onClick={handleDeleteNote} className='button_classic trash'><FontAwesomeIcon icon={faTrash}/></button>
+                        }
                         </div>
                         <div className="entryForm_anamsesio">
                           <div className="float_title">Amnanesi</div>
@@ -373,16 +399,18 @@ const PatientEntries = () => {
                             <div className="diagnosis">{newEntryData.diagnostico ? newEntryData.diagnostico.nombre : '' }</div>
                             <button type='button' onClick={() => { setSearch(true) }} className='search_button'><FontAwesomeIcon icon={faMagnifyingGlass}/></button>
                           </div>
-                          <label>Recomendaciones: </label>
                           {
-                            dataRec
-                              ? <div className="recs">
-                                {
-                                  dataRec.map((rec, index) => {
-                                    return <div onClick={() => { submitDiagnosis(rec) }} key={index} className="rec">{rec.nombre}</div>
-                                  })
-                                }
-                              </div>
+                            recs && recs.length > 0
+                              ? <>
+                                <label>Recomendaciones: </label>
+                                <div className="recs">
+                                  {
+                                    recs.map((rec, index) => {
+                                      return <div onClick={() => { submitDiagnosis(rec) }} key={index} className="rec">{rec.nombre}</div>
+                                    })
+                                  }
+                                </div>
+                              </>
                               : null
                           }
                           <label>Descripción</label>
