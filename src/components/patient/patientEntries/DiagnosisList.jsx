@@ -4,6 +4,7 @@ import _ from 'lodash'
 const DiagnosisList = ({ diagnosis, filterDiagnosis, updateSelectedDiagnosis }) => {
   const [selectedDiagnosis, setSelectedDiagnosis] = useState()
 
+  console.log(updateSelectedDiagnosis)
   useEffect(() => {
     setSelectedDiagnosis(updateSelectedDiagnosis)
   }, [updateSelectedDiagnosis])

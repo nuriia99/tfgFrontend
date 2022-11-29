@@ -537,12 +537,72 @@ body, html {
   font-size: 0.9375rem;
   color: white;
 }
+.navbar_container_links {
+  display: flex;
+  align-items: center;
+}
+.navbar_container_links .goals {
+  position: relative;
+  margin-left: 50px;
+  padding: 0 10px;
+}
+.navbar_container_links .goals ul {
+  display: none;
+  position: absolute;
+  top: 52px;
+  left: 0px;
+  padding: 0;
+  background-color: #0979b0;
+  z-index: 5;
+  list-style: none;
+  margin: 0;
+  text-align: center;
+}
+.navbar_container_links .goals ul li {
+  padding: 5px 10px;
+  margin: 0;
+  width: 116px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.navbar_container_links .goals ul a {
+  color: white;
+  text-decoration: none;
+}
+.navbar_container_links .goals ul:hover li {
+  background-color: #1d8dc5;
+}
+.navbar_container_links .goals:hover {
+  background-color: #1d8dc5;
+}
+.navbar_container_links .goals:hover ul {
+  display: block;
+}
+.navbar_container_links .goals_button {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+}
+.navbar_container_links .goals_button .button_chart {
+  padding: 0 0.625rem;
+  margin: 0;
+  color: white;
+  height: 15px;
+  width: 15px;
+  align-self: center;
+}
+.navbar_container_links .goals_button .button_chart:hover {
+  color: #d8eefe;
+}
 .navbar_container .button {
   padding: 0 0.625rem;
   margin: 0;
   color: white;
-  height: 1.5625rem;
-  width: 1.5625rem;
+  height: 25px;
+  width: 25px;
 }
 .navbar_container .button:hover {
   color: #d8eefe;
@@ -1787,4 +1847,15 @@ body, html {
 }
 .patient_entries_container_diagnosis_list .diagnosis_item_color.grave {
   background-color: purple;
+}
+
+.goals {
+  display: flex;
+  justify-content: center;
+  padding: 100px 0;
+}
+.goals_goal {
+  width: 70%;
+  height: 80px;
+  background-color: white;
 }/*# sourceMappingURL=styles.css.map */

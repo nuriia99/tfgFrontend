@@ -28,7 +28,7 @@ const PatientEntries = () => {
   })
   const [activeDiagnosis, setActiveDiagnosis] = useState([])
   const [inactiveDiagnosis, setInactiveDiagnosis] = useState([])
-  let lastDiagnosis = ''
+  const [lastDiagnosis, setLastDiagnosis] = useState('')
   const [search, setSearch] = useState(false)
   const [newEntryData, setNewEntryData] = useState({
     motivo: '',
@@ -53,7 +53,7 @@ const PatientEntries = () => {
       if (prev === 'entries') {
         if (diagnosis.nombre === lastDiagnosis) {
           setEntries(allEntries)
-          lastDiagnosis = ''
+          setLastDiagnosis('')
         } else {
           const newEntries = []
           allEntries.forEach((entry) => {
@@ -62,7 +62,7 @@ const PatientEntries = () => {
             })
           })
           setEntries(newEntries)
-          lastDiagnosis = diagnosis.nombre
+          setLastDiagnosis(diagnosis.nombre)
         }
       } else {
         setNewEntryData((prev) => {
@@ -330,7 +330,38 @@ const PatientEntries = () => {
   useEffect(() => {
     if (newEntryData.clinica) fetchRec('/entries/getDiagnosisRec', { clinica: newEntryData.clinica })
   }, [newEntryData.clinica])
-  console.log(recs)
+
+  const openNewEntry = () => {
+    if (modifyingNote.entry !== '') {
+      setNewEntryData({
+        motivo: '',
+        antecedentes: '',
+        clinica: '',
+        exploracion: '',
+        pruebasComplementarias: '',
+        diagnostico: null,
+        estado: 'activo',
+        descDiagnostico: '',
+        planTerapeutico: '',
+        prescripciones: []
+      })
+    }
+    setModifyingNote({ entry: '', note: '' })
+    changePrincipalComponent('newEntry')
+  }
+
+  const openEntries = () => {
+    setStatus((prev) => {
+      setDiagnosisComponent(() => {
+        if (prev.active === 'active') {
+          return <DiagnosisList updateSelectedDiagnosis={lastDiagnosis} diagnosis={activeDiagnosis} filterDiagnosis={handleClickDiagnosis}/>
+        }
+        return <DiagnosisList updateSelectedDiagnosis={lastDiagnosis} diagnosis={inactiveDiagnosis} filterDiagnosis={handleClickDiagnosis}/>
+      })
+      return prev
+    })
+    changePrincipalComponent('entries')
+  }
 
   return (
     entries
@@ -340,8 +371,8 @@ const PatientEntries = () => {
             ? <>
               <div className="patient_entries_container">
                 <div className="navbar_entries">
-                  <button onClick={() => changePrincipalComponent('entries')} className={principalComponent === 'entries' ? 'button_tag active' : 'button_tag inactive'}>Notas previas</button>
-                  <button onClick={() => { changePrincipalComponent('newEntry'); setModifyingNote({ entry: '', note: '' }) }} className={principalComponent === 'newEntry' ? 'button_tag active' : 'button_tag inactive'}>Añadir/modificar nota</button>
+                  <button onClick={openEntries} className={principalComponent === 'entries' ? 'button_tag active' : 'button_tag inactive'}>Notas previas</button>
+                  <button onClick={openNewEntry} className={principalComponent === 'newEntry' ? 'button_tag active' : 'button_tag inactive'}>Añadir/modificar nota</button>
                 </div>
                 {
                   principalComponent === 'entries'

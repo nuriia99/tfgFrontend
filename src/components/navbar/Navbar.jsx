@@ -1,6 +1,6 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGear, faHouseChimney } from '@fortawesome/free-solid-svg-icons'
+import { faChartLine, faGear, faHouseChimney } from '@fortawesome/free-solid-svg-icons'
 import { useGlobalContext } from '../../hooks/useGlobalContext'
 
 const Navbar = () => {
@@ -8,7 +8,15 @@ const Navbar = () => {
   return (
       <div id="navbar" className='navbar'>
         <div className="navbar_container">
-        <a href='/app/home'><FontAwesomeIcon icon={faHouseChimney} className='button'/></a>
+          <div className="navbar_container_links">
+            <a href='/app/home'><FontAwesomeIcon icon={faHouseChimney} className='button'/></a>
+            <div className="goals">
+              <a href='/app/goals' className='goals_button'><FontAwesomeIcon icon={faChartLine} className='button_chart'/><p>Estadisticas</p></a>
+              <ul className='drowdown'>
+                <a href="/app/goals"><li>Objetivos</li></a>
+              </ul>
+            </div>
+          </div>
           <span className="navbar_container_items">
             <p className='navbar_container_item'>{globalData.worker.nombre}</p>
             <p className='navbar_container_item'> - </p>

@@ -1,0 +1,10 @@
+.goals{
+  display: flex;
+  justify-content: center;
+  padding: 100px 0;
+  &_goal{
+    width: 70%;
+    height: 80px;
+    background-color: white;
+  }
+}
