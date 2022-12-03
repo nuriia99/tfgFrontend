@@ -392,6 +392,8 @@
     width: 100%;
     border: 1px solid $navyBlue;
     border-radius: 10px;
+    box-sizing: border-box;
+    
 
     &_info{
       display: flex;
@@ -410,17 +412,33 @@
       }
     }
 
-    &_table{
+    &_button{
+      display: flex;
+      justify-content: flex-end;
       padding: 20px;
+      .capsules_button{
+        color: green;
+        background-color: $BlueIcs;
+        border: 1px solid $navyBlueLight;
+        border-radius: 3px;
+        .icon{
+          height: 25px;
+          width: 25px;
+          &:hover{
+            color: $RedError;
+          }
+        }
+      }
+    }
+
+    &_table{
+      margin: 0 20px;
+      max-height: calc(100% - 200px);
       overflow-y: auto;
-      height: 90%;
-      box-sizing: border-box;
+      overflow-x: auto;
       .table{
         display: grid;
-        padding: 30px;
-        overflow-x: auto;
-        box-sizing: border-box;
-        
+        grid-auto-rows: min-content;
   
         .table_row{
           display: flex;
@@ -436,20 +454,19 @@
             align-items: center;
 
             &.name{
-              width: 400px;
-              
+              width: 300px;
             }
   
             &.component{
-              width: 150px;
+              width: 110px;
             }
   
             &.frecuencia{
-              width: 100px;
+              width: 80px;
             }
   
             &.duracion{
-              width: 100px;
+              width: 70px;
             }
 
             &.delete{
@@ -472,19 +489,19 @@
             
   
             &.name{
-              width: 400px;
+              width: 300px;
             }
   
             &.component{
-              width: 150px;
+              width: 110px;
             }
   
             &.frecuencia{
-              width: 100px;
+              width: 80px;
             }
   
             &.duracion{
-              width: 100px;
+              width: 70px;
             }
 
             &.alert{
@@ -511,9 +528,11 @@
 }
 
 .addPrescription{
-  height: calc(100% + 20px);
+  height: calc(100%);
   width: 100%;
-  margin-top: -25px;
+  margin-top: -1px;
+  margin-left: -1px;
+
   border: 1px solid $navyBlueLight;
   border-radius: 10px;
   background-color: $BlueIcsLight2;
@@ -756,6 +775,13 @@
       }
     }
     
+  }
+}
+
+.patient_entries{
+  .addPrescription{
+    height: calc(100% + 20px);
+    margin-top: -21px;
   }
 }
 

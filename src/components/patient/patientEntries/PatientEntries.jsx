@@ -47,23 +47,25 @@ const PatientEntries = () => {
     entry: '',
     note: ''
   })
-
+  const [removedDiagnosis, setRemovedDiagnosis] = useState('')
   const handleClickDiagnosis = (diagnosis) => {
     setPrincipalComponent((prev) => {
       if (prev === 'entries') {
-        if (diagnosis.nombre === lastDiagnosis) {
-          setEntries(allEntries)
-          setLastDiagnosis('')
-        } else {
-          const newEntries = []
-          allEntries.forEach((entry) => {
-            entry.notas.forEach(nota => {
-              if (nota.diagnostico.nombre === diagnosis.nombre) newEntries.push(entry)
+        setLastDiagnosis(prev => {
+          if (diagnosis.nombre === prev) {
+            setEntries(allEntries)
+            setLastDiagnosis('')
+          } else {
+            const newEntries = []
+            allEntries.forEach((entry) => {
+              entry.notas.forEach(nota => {
+                if (nota.diagnostico.nombre === diagnosis.nombre) newEntries.push(entry)
+              })
             })
-          })
-          setEntries(newEntries)
-          setLastDiagnosis(diagnosis.nombre)
-        }
+            setEntries(newEntries)
+            setLastDiagnosis(diagnosis.nombre)
+          }
+        })
       } else {
         setNewEntryData((prev) => {
           if (prev.diagnostico) {
@@ -86,14 +88,19 @@ const PatientEntries = () => {
     })
   }
 
+  const { deleteData: delPres, data: dataDeletePres } = useDelete()
+
   const deletePrescription = (index) => {
     setNewEntryData((prev) => {
-      console.log(prev.prescripciones)
+      delPres('/prescriptions/deletePrescription/' + prev.prescripciones[index]._id, { worker: globalData.worker._id, centre: globalData.center, removedPrincipioActivo: prev.prescripciones[index].principioActivo, patient: prev.prescripciones[index].paciente })
       const arr = [...prev.prescripciones]
       arr.splice(index, 1)
       return { ...prev, prescripciones: arr }
     })
   }
+  useEffect(() => {
+    if (dataDeletePres) console.log(dataDeletePres)
+  }, [dataDeletePres])
 
   const submitDiagnosis = (diagnosis) => {
     setSearch(false)
@@ -164,12 +171,15 @@ const PatientEntries = () => {
       setErrorMessage(null)
       let newNote = { ...newEntryData }
       if (modifyingNote.entry === '') {
-        const lastEntryDate = getDate(patientData.patient.entradas[0].fecha)
+        let lastEntryDate = 0
+        if (patientData.patient.entradas.length > 0) {
+          lastEntryDate = getDate(patientData.patient.entradas[0].fecha)
+        }
         if (getCurrentDate() === lastEntryDate) {
           newNote = { ...newNote, entryId: patientData.patient.entradas[0]._id }
           newPatient.entradas[0].notas.push(newNote)
           updatePatient(newPatient)
-          await postData('/entries/createNote', newNote)
+          await postData('/entries/createNote', { newNote, centre: globalData.center, worker: globalData.worker._id, patient: patientData.patient._id })
         } else {
           const newEntry = {
             paciente: patientData.patient._id,
@@ -179,12 +189,18 @@ const PatientEntries = () => {
             notas: [newNote]
           }
           newPatient.entradas.unshift(newEntry)
-          await postData('/entries/createEntry', newEntry)
+          await postData('/entries/createEntry', { newEntry, centre: globalData.center })
         }
       } else {
         const newNotes = newPatient.entradas[modifyingNote.entry].notas
         newNotes[modifyingNote.note] = newNote
-        updateNote('/entries/updateNote/' + patientData.patient.entradas[modifyingNote.entry]._id, { newNotes })
+        setRemovedDiagnosis((prev) => {
+          if (prev === newNote.diagnostico._id) {
+            return ''
+          }
+          updateNote('/entries/updateNote/' + patientData.patient.entradas[modifyingNote.entry]._id, { newNotes, centre: globalData.center, worker: globalData.worker._id, patient: patientData.patient._id, removedDiagnosis: prev })
+          return prev
+        })
       }
     }
   }
@@ -214,7 +230,7 @@ const PatientEntries = () => {
         newEntries.splice(modifyingNote.entry, 1)
         newPatient.entradas = newEntries
       } else newPatient.entradas[modifyingNote.entry].notas = arr
-      deleteNote('/entries/deleteNote/' + patientData.patient.entradas[modifyingNote.entry]._id, { newNotes: arr, patient: patientData.patient._id })
+      deleteNote('/entries/deleteNote/' + patientData.patient.entradas[modifyingNote.entry]._id, { newNotes: arr, patient: patientData.patient._id, centre: globalData.center, worker: globalData.worker._id, removedDiagnosis })
       setNewPatient2(newPatient)
     }
   }
@@ -293,7 +309,7 @@ const PatientEntries = () => {
   const clickNote = (entry, note) => {
     setErrorMessage(null)
     setModifyingNote({ entry, note })
-    const modNote = patientData.patient.entradas[entry].notas[note]
+    const modNote = entries[entry].notas[note]
     setNewEntryData(() => {
       return {
         motivo: modNote.motivo,
@@ -308,6 +324,8 @@ const PatientEntries = () => {
         prescripciones: modNote.prescripciones
       }
     })
+    console.log(modNote)
+    setRemovedDiagnosis(modNote.diagnostico._id)
     setDiagnosisComponent(() => {
       if (status.active === 'active') {
         return <DiagnosisList updateSelectedDiagnosis={modNote.diagnostico.nombre} diagnosis={activeDiagnosis} filterDiagnosis={handleClickDiagnosis}/>
@@ -317,20 +335,9 @@ const PatientEntries = () => {
     setPrincipalComponent('newEntry')
   }
 
-  const changePrincipalComponent = (component) => {
-    setDiagnosisComponent(() => {
-      if (status.active === 'active') {
-        return <DiagnosisList updateSelectedDiagnosis={newEntryData.diagnostico ? newEntryData.diagnostico.nombre : ''} diagnosis={activeDiagnosis} filterDiagnosis={handleClickDiagnosis}/>
-      }
-      return <DiagnosisList updateSelectedDiagnosis={newEntryData.diagnostico ? newEntryData.diagnostico.nombre : ''} diagnosis={inactiveDiagnosis} filterDiagnosis={handleClickDiagnosis}/>
-    })
-    setPrincipalComponent(component)
-  }
-
   useEffect(() => {
     if (newEntryData.clinica) fetchRec('/entries/getDiagnosisRec', { clinica: newEntryData.clinica })
   }, [newEntryData.clinica])
-
   const openNewEntry = () => {
     if (modifyingNote.entry !== '') {
       setNewEntryData({
@@ -345,9 +352,23 @@ const PatientEntries = () => {
         planTerapeutico: '',
         prescripciones: []
       })
+      setDiagnosisComponent(() => {
+        if (status.active === 'active') {
+          return <DiagnosisList updateSelectedDiagnosis={''} diagnosis={activeDiagnosis} filterDiagnosis={handleClickDiagnosis}/>
+        }
+        return <DiagnosisList updateSelectedDiagnosis={''} diagnosis={inactiveDiagnosis} filterDiagnosis={handleClickDiagnosis}/>
+      })
+      setRecs()
+    } else {
+      setDiagnosisComponent(() => {
+        if (status.active === 'active') {
+          return <DiagnosisList updateSelectedDiagnosis={newEntryData.diagnostico ? newEntryData.diagnostico.nombre : ''} diagnosis={activeDiagnosis} filterDiagnosis={handleClickDiagnosis}/>
+        }
+        return <DiagnosisList updateSelectedDiagnosis={newEntryData.diagnostico ? newEntryData.diagnostico.nombre : ''} diagnosis={inactiveDiagnosis} filterDiagnosis={handleClickDiagnosis}/>
+      })
     }
     setModifyingNote({ entry: '', note: '' })
-    changePrincipalComponent('newEntry')
+    setPrincipalComponent('newEntry')
   }
 
   const openEntries = () => {
@@ -358,9 +379,9 @@ const PatientEntries = () => {
         }
         return <DiagnosisList updateSelectedDiagnosis={lastDiagnosis} diagnosis={inactiveDiagnosis} filterDiagnosis={handleClickDiagnosis}/>
       })
+      setPrincipalComponent('entries')
       return prev
     })
-    changePrincipalComponent('entries')
   }
 
   return (
@@ -408,32 +429,32 @@ const PatientEntries = () => {
                         }
                         </div>
                         <div className="entryForm_anamsesio">
-                          <div className="float_title">Amnanesi</div>
-                          <label>Motivo de la visita</label>
+                          <div className="float_title">{leng.amnanesi}</div>
+                          <label>{leng.motivo}</label>
                           <textarea name="motivo" id="" rows="2" onChange={({ target }) => setNewEntryData((prev) => { return { ...prev, motivo: target.value } })} value={newEntryData.motivo}></textarea>
-                          <label>Antecedentes</label>
+                          <label>{leng.antecedentes}</label>
                           <textarea name="antecedentes" id="" rows="4" onChange={({ target }) => setNewEntryData((prev) => { return { ...prev, antecedentes: target.value } })} value={newEntryData.antecedentes}></textarea>
-                          <label>Clínica</label>
+                          <label>{leng.clinica}</label>
                           <textarea name="clinica" id="" rows="4" onChange={({ target }) => setNewEntryData((prev) => { return { ...prev, clinica: target.value } })} value={newEntryData.clinica}></textarea>
                         </div>
                         <div className="entryForm_exploracion">
-                          <div className="float_title">Exploración</div>
-                          <label>Descripción</label>
+                          <div className="float_title">{leng.exploracion}</div>
+                          <label>{leng.descripcion}</label>
                           <textarea name="exploracion" id="" rows="4" onChange={({ target }) => setNewEntryData((prev) => { return { ...prev, exploracion: target.value } })} value={newEntryData.exploracion}></textarea>
-                          <label>Pruebas Complementarias</label>
+                          <label>{leng.pruebas}</label>
                           <textarea name="exploracion" id="" rows="4" onChange={({ target }) => setNewEntryData((prev) => { return { ...prev, pruebasComplementarias: target.value } })} value={newEntryData.pruebasComplementarias}></textarea>
                         </div>
                         <div className="entryForm_diagnostico">
-                          <div className="float_title">Orientación diagnostica</div>
-                          <label>Diagnostico Principal</label>
+                          <div className="float_title">{leng.orientacion}</div>
+                          <label>{leng.diagnostico}</label>
                           <div className="search">
                             <div className="diagnosis">{newEntryData.diagnostico ? newEntryData.diagnostico.nombre : '' }</div>
                             <button type='button' onClick={() => { setSearch(true) }} className='search_button'><FontAwesomeIcon icon={faMagnifyingGlass}/></button>
                           </div>
                           {
-                            recs && recs.length > 0
+                            recs && recs.length > 0 && modifyingNote.entry === ''
                               ? <>
-                                <label>Recomendaciones: </label>
+                                <label>{leng.rec}</label>
                                 <div className="recs">
                                   {
                                     recs.map((rec, index) => {
@@ -444,34 +465,40 @@ const PatientEntries = () => {
                               </>
                               : null
                           }
-                          <label>Descripción</label>
+                          <label>{leng.descripcion}</label>
                           <textarea name="desc_diagnostico" id="" rows="4" onChange={({ target }) => setNewEntryData((prev) => { return { ...prev, descDiagnostico: target.value } })} value={newEntryData.descDiagnostico}></textarea>
                         </div>
                         <div className="entryForm_plan_terapeutico">
-                          <div className="float_title">Plan terapeutico</div>
-                          <label>Descripción</label>
+                          <div className="float_title">{leng.plan}</div>
+                          <label>{leng.descripcion}</label>
                           <textarea name="desc_diagnostico" id="" rows="4" onChange={({ target }) => setNewEntryData((prev) => { return { ...prev, planTerapeutico: target.value } })} value={newEntryData.planTerapeutico}></textarea>
-                          <label>Prescripciones:</label>
                           {
-                            newEntryData.prescripciones.length > 0
+                            modifyingNote.entry === ''
                               ? <>
-                              {
-                                newEntryData.prescripciones.map((prescription, index) => {
-                                  return (
-                                    <div key={index} className="prescription">
-                                      <div className="prescription_name">{prescription.nombreMedicamento}</div>
-                                      <button type='button' onClick={() => { deletePrescription(index) }} className='delete_prescription_button'><FontAwesomeIcon icon={faTrash}/></button>
-                                    </div>
-                                  )
-                                })
-                              }
+                              <label>{leng.prescripciones}</label>
+                                {
+                                  newEntryData.prescripciones.length > 0
+                                    ? <>
+                                    {
+                                      newEntryData.prescripciones.map((prescription, index) => {
+                                        return (
+                                          <div key={index} className="prescription">
+                                            <div className="prescription_name">{prescription.nombreMedicamento}</div>
+                                            <button type='button' onClick={() => { deletePrescription(index) }} className='delete_prescription_button'><FontAwesomeIcon icon={faTrash}/></button>
+                                          </div>
+                                        )
+                                      })
+                                    }
+                                    </>
+                                    : <>
+                                      <div className='no_prescriptions'>{leng.noPres}</div>
+                                  </>
+                                }
                               </>
-                              : <>
-                                <div className='no_prescriptions'>No hay ninguna prescripción hecha.</div>
-                              </>
+                              : null
                           }
                           <div className="plan_options">
-                            <button className='button_classic' onClick={() => {}}>Derivar</button>
+                            <button className='button_classic' onClick={() => {}}>{leng.derivar}</button>
                             <button className='capsules_button' onClick={() => { setShowAddPrescription(true) }}><FontAwesomeIcon className='icon' icon={faCapsules}/></button>
                           </div>
                         </div>
@@ -481,7 +508,7 @@ const PatientEntries = () => {
                               ? <div className="error"><p className="error_message">{errormessage}</p></div>
                               : null
                           }
-                          <button type='button' className='button_classic' onClick={addNote}>Guardar nota</button>
+                          <button type='button' className='button_classic' onClick={addNote}>{leng.guardar}</button>
                         </div>
                       </form>
                       <div className="patient_entries_container_diagnosis">

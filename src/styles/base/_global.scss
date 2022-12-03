@@ -226,12 +226,13 @@ body, html{
 .crossbar{
   &::-webkit-scrollbar{
     width: 8px;
+    height: 8px;
     background: $BlackLight2;
-    border-radius: 0 8px 8px 0;
+    border-radius: 8px;
   }
   &::-webkit-scrollbar-thumb{
     background: $navyBlue;
-    border-radius: 0 8px 8px 0;
+    border-radius: 8px;
   }
   
 }

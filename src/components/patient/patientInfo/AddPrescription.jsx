@@ -7,9 +7,12 @@ import { faArrowRightFromBracket, faFileImport, faMagnifyingGlass } from '@forta
 import Search from './Search'
 import usePost from '../../../hooks/usePost'
 import useFetch from '../../../hooks/useFetch'
+import usePatch from '../../../hooks/usePatch'
+import { getLenguage } from '../../../utils/lenguage'
 
-const AddPrescription = ({ diagnosis, quitAddPrescription, addPrescription }) => {
+const AddPrescription = ({ diagnosis, quitAddPrescription, addPrescription, modifying }) => {
   const { globalData } = useGlobalContext()
+  const leng = getLenguage(globalData.lenguage, 'prescription')
   const { patientData, updatePatient } = usePatientContext()
   const [search, setSearch] = useState(false)
   const [error, setError] = useState(null)
@@ -31,11 +34,25 @@ const AddPrescription = ({ diagnosis, quitAddPrescription, addPrescription }) =>
   })
   const [insPac, setInsPac] = useState('')
   const [insFar, setInsFar] = useState('')
-  // const [rec, setRecs] = useState()
 
   const { fetchData: getRecs, data: dataRecs } = useFetch()
 
   useEffect(() => {
+    if (modifying) {
+      setPrescription(prev => {
+        return (
+          {
+            ...prev,
+            fechaInicio: modifying.fechaInicio,
+            fechaFinal: modifying.fechaFinal,
+            instruccionesPaciente: modifying.instruccionesPaciente,
+            instruccionesFarmacia: modifying.instruccionesFarmacia,
+            nombreMedicamento: modifying.nombreMedicamento,
+            principioActivo: modifying.principioActivo
+          }
+        )
+      })
+    }
     if (diagnosis) getRecs('/trabajadores/' + globalData.worker._id + '/getRecs/' + diagnosis._id)
   }, [])
 
@@ -75,6 +92,7 @@ const AddPrescription = ({ diagnosis, quitAddPrescription, addPrescription }) =>
   }
 
   const { postData: postPres, data: dataPres } = usePost()
+  const { patchData, data: dataPatch } = usePatch()
 
   const abr = {
     hours: 'h.',
@@ -93,7 +111,6 @@ const AddPrescription = ({ diagnosis, quitAddPrescription, addPrescription }) =>
       d.setDate(d.getDate() + parseInt(prescription.duracion))
       let duration = prescription.duracion + abr[prescription.duracionRadio]
       if (prescription.duracionRadio === 'ind') duration = 'Ind.'
-      console.log(prescription)
       const newPrescription = {
         duracion: duration,
         fechaFinal: d,
@@ -102,14 +119,14 @@ const AddPrescription = ({ diagnosis, quitAddPrescription, addPrescription }) =>
         instruccionesPaciente: prescription.instruccionesPaciente,
         instruccionesFarmacia: prescription.instruccionesFarmacia,
         nombreMedicamento: prescription.nombreMedicamento,
-        patient: prescription.patient,
+        paciente: prescription.patient,
         principioActivo: prescription.principioActivo,
         trabajador: prescription.trabajador,
         idMed: prescription.idMed
       }
       setNewPres(newPrescription)
-      console.log(newPres)
-      postPres('/prescriptions/createPrescription', { newPrescription, diagnostico: prescription.diagnostico })
+      if (!modifying) postPres('/prescriptions/createPrescription', { newPrescription, diagnostico: prescription.diagnostico, centre: globalData.center })
+      else patchData('/prescriptions/updatePrescription/' + modifying._id, { newPrescription, centre: globalData.center, removedPrincipioActivo: modifying.principioActivo })
     }
   }
 
@@ -117,11 +134,28 @@ const AddPrescription = ({ diagnosis, quitAddPrescription, addPrescription }) =>
     if (dataPres) {
       const newPrescription = { ...newPres, _id: dataPres.data._id }
       const newPatient = { ...patientData.patient }
-      newPatient.prescripciones.push(newPres)
+      newPatient.prescripciones.push(newPrescription)
       updatePatient(newPatient)
-      addPrescription(newPrescription)
+      if (addPrescription) addPrescription(newPrescription)
+      else quitAddPrescription()
     }
   }, [dataPres])
+
+  useEffect(() => {
+    if (dataPatch) {
+      const newPrescription = { ...newPres, _id: dataPatch.data._id }
+      const newPatient = { ...patientData.patient }
+      const newPrescriptions = newPatient.prescripciones.map((pres) => {
+        if (pres._id === dataPatch.data._id) {
+          pres = newPrescription
+        }
+        return pres
+      })
+      newPatient.prescripciones = newPrescriptions
+      updatePatient(newPatient)
+      quitAddPrescription()
+    }
+  }, [dataPatch])
 
   const handleClickRec = (med) => {
     setPrescription((prev) => {
@@ -146,30 +180,32 @@ const AddPrescription = ({ diagnosis, quitAddPrescription, addPrescription }) =>
           {search ? <Search type='med' submit={submitMed}/> : null}
           <div className="addPrescription_container_left">
             <div className="seccion">
-              <div className="float_title">Búsqueda del medicamento</div>
-              <label>Elección del medicamento</label>
+              <div className="float_title">{leng.busqueda}</div>
+              <label>{leng.elecMed}</label>
               <div className="search">
                 <div className="med">{prescription.nombreMedicamento}</div>
                 <button type='button' onClick={() => { setSearch(true) }} className='search_button'><FontAwesomeIcon icon={faMagnifyingGlass}/></button>
               </div>
-              <label>Recomendaciones: </label>
               {
                 dataRecs
-                  ? <div className="recs">
-                    {
-                      dataRecs.map((rec, index) => {
-                        return <div onClick={() => handleClickRec(rec.medicamento)} key={index} className="rec">{rec.medicamento.nombre}</div>
-                      })
-                    }
-                  </div>
+                  ? <>
+                    <label>{leng.rec}</label>
+                    <div className="recs">
+                      {
+                        dataRecs.map((rec, index) => {
+                          return <div onClick={() => handleClickRec(rec.medicamento)} key={index} className="rec">{rec.medicamento.nombre}</div>
+                        })
+                      }
+                    </div>
+                  </>
                   : null
               }
-              <label>Instrucciones para el paciente</label>
+              <label>{leng.insPac}</label>
               <div className="instruccions">
                 <textarea name="desc_diagnostico" id="" rows="2" onChange={({ target }) => setInsPac(target.value)} value={insPac}></textarea>
                 <button type='button' onClick={importInsPac}><FontAwesomeIcon className='icon' icon={faFileImport}/></button>
               </div>
-              <label>Instrucciones para la farmacia</label>
+              <label>{leng.insFar}</label>
               <div className="instruccions">
                 <textarea name="desc_diagnostico" id="" rows="2" onChange={({ target }) => setInsFar(target.value)} value={insFar}></textarea>
                 <button type='button' onClick={importInsFar}><FontAwesomeIcon className='icon' icon={faFileImport}/></button>
@@ -180,15 +216,15 @@ const AddPrescription = ({ diagnosis, quitAddPrescription, addPrescription }) =>
                 ? <div className="error"><p className="error_message">{error}</p></div>
                 : null
             }
-            <button onClick={submitPres} className='button_classic'>Añadir prescripción</button>
+            <button onClick={submitPres} className='button_classic'>{modifying ? leng.guardar : leng.añadir }</button>
           </div>
           <div className="addPrescription_container_right">
             <div className="seccions">
               <div className="seccion">
-                <div className="float_title">Posología</div>
+                <div className="float_title">{leng.posologia}</div>
                 <div className="seccion_info">
                   <input min={0} type="number" value={prescription.unidad} name="inputName" onChange={({ target }) => setPrescription((prev) => { return { ...prev, unidad: target.value } })} required="required"/>
-                  <p>unidades/toma</p>
+                  <p>{leng.unidades}</p>
                 </div>
                 <p>Cada:</p>
                 <div className="seccion_info">
@@ -196,44 +232,44 @@ const AddPrescription = ({ diagnosis, quitAddPrescription, addPrescription }) =>
                   <div className="seccion_info_radio">
                     <div className="seccion_info_radio_hours">
                       <input type="radio" checked={prescription.frecuenciaRadio === 'hours' ? 1 : 0} onChange={() => setPrescription((prev) => { return { ...prev, frecuenciaRadio: 'hours' } })} required="required"/>
-                      <p>horas</p>
+                      <p>{leng.horas}</p>
                     </div>
                     <div className="seccion_info_radio_weeks">
                       <input type="radio" checked={prescription.frecuenciaRadio === 'weeks' ? 1 : 0} onChange={() => setPrescription((prev) => { return { ...prev, frecuenciaRadio: 'weeks' } })} required="required"/>
-                      <p>semanas</p>
+                      <p>{leng.semanas}</p>
                     </div>
                     <div className="seccion_info_radio_days">
                       <input type="radio" checked={prescription.frecuenciaRadio === 'days' ? 1 : 0} onChange={() => setPrescription((prev) => { return { ...prev, frecuenciaRadio: 'days' } })} required="required"/>
-                      <p>dias</p>
+                      <p>{leng.dias}</p>
                     </div>
                     <div className="seccion_info_radio_months">
                       <input type="radio" checked={prescription.frecuenciaRadio === 'months' ? 1 : 0} onChange={() => setPrescription((prev) => { return { ...prev, frecuenciaRadio: 'months' } })} required="required"/>
-                      <p>mesos</p>
+                      <p>{leng.meses}</p>
                     </div>
                   </div>
                 </div>
               </div>
               <div className="seccion">
-                <div className="float_title">Duración del tratamiento</div>
-                <p>Durante:</p>
+                <div className="float_title">{leng.duracion}</div>
+                <p>{leng.durante}</p>
                 <div className="seccion_info">
                   <input min={0} type="number" value={prescription.duracion} name="inputName" onChange={({ target }) => setPrescription((prev) => { return { ...prev, duracion: target.value } })} required="required"/>
                   <div className="seccion_info_radio">
                     <div className="seccion_info_radio_hours">
                       <input type="radio" checked={prescription.duracionRadio === 'days' ? 1 : 0} onChange={() => setPrescription((prev) => { return { ...prev, duracionRadio: 'days' } })} required="required"/>
-                      <p>dias</p>
+                      <p>{leng.dias}</p>
                     </div>
                     <div className="seccion_info_radio_weeks">
                       <input type="radio" checked={prescription.duracionRadio === 'months' ? 1 : 0} onChange={() => setPrescription((prev) => { return { ...prev, duracionRadio: 'months' } })} required="required"/>
-                      <p>meses</p>
+                      <p>{leng.meses}</p>
                     </div>
                     <div className="seccion_info_radio_days">
                       <input type="radio" checked={prescription.duracionRadio === 'weeks' ? 1 : 0} onChange={() => setPrescription((prev) => { return { ...prev, duracionRadio: 'weeks' } })} required="required"/>
-                      <p>semanas</p>
+                      <p>{leng.semanas}</p>
                     </div>
                     <div className="seccion_info_radio_months">
                       <input type="radio" checked={prescription.duracionRadio === 'ind' ? 1 : 0} onChange={() => setPrescription((prev) => { return { ...prev, duracionRadio: 'ind' } })} required="required"/>
-                      <p>indefinido</p>
+                      <p>{leng.indefinido}</p>
                     </div>
                   </div>
                 </div>
@@ -241,7 +277,6 @@ const AddPrescription = ({ diagnosis, quitAddPrescription, addPrescription }) =>
             </div>
             <div className="exit">
               <button onClick={quitAddPrescription} className='button_classic'><FontAwesomeIcon className='icon' icon={faArrowRightFromBracket}/></button>
-
             </div>
           </div>
         </div>

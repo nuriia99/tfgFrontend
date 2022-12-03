@@ -1,10 +1,225 @@
 .goals{
   display: flex;
+  flex-direction: column;
   justify-content: center;
   padding: 100px 0;
-  &_goal{
-    width: 70%;
-    height: 80px;
+  width: 100%;
+  &_seccion{
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+    width: 100%;
+    height: 30px;
+    font-weight: 600;
     background-color: white;
+    border-bottom: 1px solid $BlackLight2;
+    border-top: 1px solid $BlackLight2;
+    box-sizing: border-box;
+  }
+  &_title{
+    background-color: $navyBlueLight;
+    color: white;
+    display: flex;
+    column-gap: 10px;
+    padding: 0 60px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    &_ind{
+      flex: 1;
+    }
+    &_res{
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      width: 80px;
+      height: 50px;
+    }
+    &_graf{
+      display: flex;
+      justify-content: center;
+      width: 80px;
+    }
+    &_pend{
+      display: flex;
+      justify-content: center;
+      width: 80px;
+    }
+    &_rest{
+      display: flex;
+      justify-content: center;
+      width: 80px;
+    }
+    &_puntos{
+      display: flex;
+      justify-content: center;
+      width: 80px;
+    }
+  }
+  &_goal{
+    display: flex;
+    align-items: center;
+    padding: 0 60px;
+    width: 100%;
+    height: fit-content;
+    min-height: 30px;
+    background-color: white;
+    border-bottom: 1px solid $BlackLight2;
+    column-gap: 10px;
+    box-sizing: border-box;
+    &_code{
+      width: 70px;
+      font-weight: 600;
+      cursor: pointer;
+      &:hover{
+        color: $navyBlueLight;
+      }
+    }
+    &_name{
+      flex: 1;
+      cursor: pointer;
+      color: $LightBlack;
+      &:hover{
+        color: $navyBlueLight;
+      }
+    }
+    &_resultado{
+      display: flex;
+      justify-content: center;
+      width: 80px;
+
+      &.red{
+        border-radius: 5px;
+        border: 1px solid $RedError;
+        background-color: $RedErrorLight;
+      }
+      &.yellow{
+        border-radius: 5px;
+        border: 1px solid $Yellow;
+        background-color: $YellowLight;
+      }
+      &.green{
+        border-radius: 5px;
+        border: 1px solid $GreenCorrect;
+        background-color: $GreenCorrectLight;
+      }
+    }
+    &_pac_pendientes{
+      display: flex;
+      justify-content: center;
+      width: 80px;
+    }
+    &_pac_restantes{
+      display: flex;
+      justify-content: center;
+      width: 80px;
+    }
+    &_puntos{
+      display: flex;
+      justify-content: center;
+      width: 80px;
+    }
+    &_grafica{
+      display: flex;
+      justify-content: center;
+      width: 80px;
+    }
+  }
+}
+
+.infoGoal{
+  display: flex;
+  flex-direction: column;
+  .exit{
+    width: 40px;
+    align-self: flex-end;
+    padding: 20px;
+  }
+
+  &_container{
+    padding: 20px 50px;
+  }
+}
+
+.goalListPatients{
+  display: flex;
+  flex-direction: column;
+  .exit{
+    width: 40px;
+    align-self: flex-end;
+    padding: 20px;
+  }
+
+  &_container{
+    padding: 20px 50px;
+
+    &_name{
+      padding-bottom: 10px;
+    }
+
+    &_row{
+      display: flex;
+      width: 400px;
+      height: 30px;
+      column-gap: 10px;
+      background-color: $navyBlueLight;
+      color: white;
+      justify-content: center;
+      align-items: center;
+      .res{
+        text-align: center;
+        width: 100px;
+      }
+      .no_res{
+        text-align: center;
+        width: 100px;
+      }
+      .total{
+        text-align: center;
+        width: 100px;
+      }
+
+      &.values{
+        color: black;
+        background-color: white;
+      }
+    }
+
+    &_row2{
+      padding: 0 10px;
+      display: flex;
+      width: 800px;
+      height: fit-content;
+      min-height: 30px;
+      column-gap: 10px;
+      background-color: $navyBlueLight;
+      color: white;
+      justify-content: center;
+      align-items: center;
+      box-sizing: border-box;
+      .cip{
+        text-align: center;
+        width: 200px;
+      }
+      .name{
+        flex: 1;
+        text-align: center;
+      }
+      .telephone{
+        text-align: center;
+        width: 200px;
+      }
+      .exc{
+        text-align: center;
+        width: 70px;
+      }
+
+      &.values{
+        color: black;
+        background-color: white;
+        cursor: pointer;
+      }
+    }
+    
   }
 }

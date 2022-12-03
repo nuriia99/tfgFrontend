@@ -99,7 +99,7 @@
             width: 90%;
             margin-left: 20px;
             padding-bottom: 10px;
-            justify-content: end;
+            justify-content: flex-end;
 
             .capsules_button{
               color: green;
@@ -121,7 +121,7 @@
         
         &_save{
           display: flex;
-          justify-content: end;
+          justify-content: flex-end;
           margin-left: 10px;
           align-items: center;
 
@@ -307,7 +307,6 @@
           padding: 3px;
           column-gap: 8px;
           &.active{
-            padding-left: 10px;
             background-color: rgb(255, 234, 0);
             border-radius: 10px;
           }
@@ -326,6 +325,9 @@
             &.grave{
               background-color: purple;
             }
+          }
+          &_name{
+            flex: 1;
           }
         }
       }

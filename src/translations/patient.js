@@ -36,7 +36,28 @@ export const patientEs = {
   prescripciones: 'Prescripciones',
   prescripcionesActuales: 'Prescripciones actuales',
   documentosActuales: 'Documentos actuales',
-  documentos: 'Documentos'
+  documentos: 'Documentos',
+
+  amnanesi: 'Amnanesi',
+  motivo: 'Motivo de la visita',
+  antecedentes: 'Antecedentes',
+  clinica: 'Clínica',
+  exploracion: 'Exploración',
+  descripcion: 'Descripción',
+  pruebas: 'Pruebas Complementarias',
+  orientacion: 'Orientación diagnostica',
+  diagnostico: 'Diagnóstico Principal',
+  rec: 'Recomendaciones',
+  plan: 'Plan terapeutico',
+  noPres: 'No hay ninguna prescripción hecha.',
+  guardar: 'Guardar nota',
+  derivar: 'Derivar',
+
+  searchMessageMed: 'Escriba el nombre del medicamento o del principio activo',
+  searchMessageDiagnosis: 'Escriba el nombre del diagnóstico',
+  medName: 'Nombre del medicamento',
+  diagnosisName: 'Nombre del diagnóstico',
+  escoger: 'Escoger'
 }
 
 export const patientCa = {
@@ -77,5 +98,26 @@ export const patientCa = {
   duracion: 'Durada',
   principioActivo: 'Principi actiu',
   nombreDoc: 'Nom del document',
-  fechaSubida: 'Data de pujada'
+  fechaSubida: 'Data de pujada',
+
+  amnanesi: 'Amnanesi',
+  motivo: 'Motiu de la visita',
+  antecedentes: 'Antecedents',
+  clinica: 'Clínica',
+  exploracion: 'Exploració',
+  descripcion: 'Descripció',
+  pruebas: 'Proves Complementàries',
+  orientacion: 'Orientació diagnostica',
+  diagnostico: 'Diagnòstic Principal',
+  rec: 'Recomanacions',
+  plan: 'Pla terapèutic',
+  noPres: 'No hi ha cap prescripció feta.',
+  guardar: 'Guardar nota',
+  derivar: 'Derivar',
+
+  searchMessageMed: 'Escriviu el nom del medicament o del principi actiu',
+  searchMessageDiagnosis: 'Escriviu el nom del diagnòstic',
+  medName: 'Nom del medicament',
+  diagnosisName: 'Nom del diagnòstic',
+  escoger: 'Escollir'
 }

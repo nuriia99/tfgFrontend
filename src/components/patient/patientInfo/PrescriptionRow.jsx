@@ -4,22 +4,23 @@ import { usePatientContext } from '../../../hooks/usePatientContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
-const PrescriptionRow = ({ prescription, deletePres }) => {
+const PrescriptionRow = ({ prescription, deletePres, modPres }) => {
   const { patientData } = usePatientContext()
   const alergias = _.toUpper(patientData.patient.inteligenciaActiva.at(-1))
   const alert = alergias.includes(prescription.principioActivo)
+
   return (
     <>
-      <div className={alert ? 'table_row_values name alert' : 'table_row_values name'}>
+      <div onClick={modPres} className={alert ? 'table_row_values name alert' : 'table_row_values name'}>
         {prescription.nombreMedicamento}
       </div>
-      <div className='table_row_values component'>
+      <div onClick={modPres} className='table_row_values component'>
         {prescription.principioActivo}
       </div>
-      <div className='table_row_values frecuencia'>
+      <div onClick={modPres} className='table_row_values frecuencia'>
         {prescription.frecuencia}
       </div>
-      <div className='table_row_values duracion'>
+      <div onClick={modPres} className='table_row_values duracion'>
         {prescription.duracion}
       </div>
       <div className='table_row_values delete'>

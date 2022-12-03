@@ -2,7 +2,7 @@ import { React, useEffect } from 'react'
 import Navbar from '../../components/navbar/Navbar'
 import { useGlobalContext } from '../../hooks/useGlobalContext'
 import { useNavigate } from 'react-router-dom'
-import GoalsList from '../../components/statistics/GoalsList'
+import GoalsContainer from '../../components/statistics/GoalsContainer'
 
 const Goals = () => {
   const { globalData } = useGlobalContext()
@@ -16,7 +16,7 @@ const Goals = () => {
     worker
       ? <div>
       <Navbar/>
-      <GoalsList/>
+      <GoalsContainer/>
     </div>
       : null
   )

@@ -205,12 +205,13 @@ body, html {
 
 .crossbar::-webkit-scrollbar {
   width: 8px;
+  height: 8px;
   background: rgb(175, 175, 175);
-  border-radius: 0 8px 8px 0;
+  border-radius: 8px;
 }
 .crossbar::-webkit-scrollbar-thumb {
   background: #004173;
-  border-radius: 0 8px 8px 0;
+  border-radius: 8px;
 }
 
 .recs {
@@ -561,7 +562,7 @@ body, html {
 .navbar_container_links .goals ul li {
   padding: 5px 10px;
   margin: 0;
-  width: 116px;
+  width: 115px;
   height: 36px;
   display: flex;
   justify-content: center;
@@ -1148,6 +1149,7 @@ body, html {
   width: 100%;
   border: 1px solid #004173;
   border-radius: 10px;
+  box-sizing: border-box;
 }
 .prescriptions_container_info {
   display: flex;
@@ -1162,17 +1164,34 @@ body, html {
   padding: 0 10px;
   font-size: 1.125em;
 }
-.prescriptions_container_table {
+.prescriptions_container_button {
+  display: flex;
+  justify-content: flex-end;
   padding: 20px;
+}
+.prescriptions_container_button .capsules_button {
+  color: green;
+  background-color: rgb(126, 199, 255);
+  border: 1px solid #0979b0;
+  border-radius: 3px;
+}
+.prescriptions_container_button .capsules_button .icon {
+  height: 25px;
+  width: 25px;
+}
+.prescriptions_container_button .capsules_button .icon:hover {
+  color: rgb(182, 0, 0);
+}
+.prescriptions_container_table {
+  margin: 0 20px;
+  max-height: calc(100% - 200px);
   overflow-y: auto;
-  height: 90%;
-  box-sizing: border-box;
+  overflow-x: auto;
 }
 .prescriptions_container_table .table {
   display: grid;
-  padding: 30px;
-  overflow-x: auto;
-  box-sizing: border-box;
+  grid-auto-rows: -webkit-min-content;
+  grid-auto-rows: min-content;
 }
 .prescriptions_container_table .table .table_row {
   display: flex;
@@ -1187,16 +1206,16 @@ body, html {
   align-items: center;
 }
 .prescriptions_container_table .table .table_row_title.name {
-  width: 400px;
+  width: 300px;
 }
 .prescriptions_container_table .table .table_row_title.component {
-  width: 150px;
+  width: 110px;
 }
 .prescriptions_container_table .table .table_row_title.frecuencia {
-  width: 100px;
+  width: 80px;
 }
 .prescriptions_container_table .table .table_row_title.duracion {
-  width: 100px;
+  width: 70px;
 }
 .prescriptions_container_table .table .table_row_title.delete {
   width: 20px;
@@ -1214,16 +1233,16 @@ body, html {
   border-right: 1px solid #d8eefe;
 }
 .prescriptions_container_table .table .table_row_values.name {
-  width: 400px;
+  width: 300px;
 }
 .prescriptions_container_table .table .table_row_values.component {
-  width: 150px;
+  width: 110px;
 }
 .prescriptions_container_table .table .table_row_values.frecuencia {
-  width: 100px;
+  width: 80px;
 }
 .prescriptions_container_table .table .table_row_values.duracion {
-  width: 100px;
+  width: 70px;
 }
 .prescriptions_container_table .table .table_row_values.alert {
   color: rgb(182, 0, 0);
@@ -1240,9 +1259,10 @@ body, html {
 }
 
 .addPrescription {
-  height: calc(100% + 20px);
+  height: 100%;
   width: 100%;
-  margin-top: -25px;
+  margin-top: -1px;
+  margin-left: -1px;
   border: 1px solid #0979b0;
   border-radius: 10px;
   background-color: #d8eefe;
@@ -1460,6 +1480,11 @@ body, html {
   width: 11px;
 }
 
+.patient_entries .addPrescription {
+  height: calc(100% + 20px);
+  margin-top: -21px;
+}
+
 .search_component {
   height: 100%;
   width: 100%;
@@ -1640,7 +1665,7 @@ body, html {
   width: 90%;
   margin-left: 20px;
   padding-bottom: 10px;
-  justify-content: end;
+  justify-content: flex-end;
 }
 .patient_entries_container_addEntry .entryForm_plan_terapeutico .plan_options .capsules_button {
   color: green;
@@ -1657,7 +1682,7 @@ body, html {
 }
 .patient_entries_container_addEntry .entryForm_save {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   margin-left: 10px;
   align-items: center;
 }
@@ -1830,7 +1855,6 @@ body, html {
   cursor: pointer;
 }
 .patient_entries_container_diagnosis_list .diagnosis_item.active {
-  padding-left: 10px;
   background-color: rgb(255, 234, 0);
   border-radius: 10px;
 }
@@ -1848,14 +1872,231 @@ body, html {
 .patient_entries_container_diagnosis_list .diagnosis_item_color.grave {
   background-color: purple;
 }
+.patient_entries_container_diagnosis_list .diagnosis_item_name {
+  flex: 1;
+}
 
 .goals {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   padding: 100px 0;
+  width: 100%;
+}
+.goals_seccion {
+  display: flex;
+  align-items: center;
+  padding: 0 30px;
+  width: 100%;
+  height: 30px;
+  font-weight: 600;
+  background-color: white;
+  border-bottom: 1px solid rgb(175, 175, 175);
+  border-top: 1px solid rgb(175, 175, 175);
+  box-sizing: border-box;
+}
+.goals_title {
+  background-color: #0979b0;
+  color: white;
+  display: flex;
+  -moz-column-gap: 10px;
+       column-gap: 10px;
+  padding: 0 60px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.goals_title_ind {
+  flex: 1;
+}
+.goals_title_res {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 80px;
+  height: 50px;
+}
+.goals_title_graf {
+  display: flex;
+  justify-content: center;
+  width: 80px;
+}
+.goals_title_pend {
+  display: flex;
+  justify-content: center;
+  width: 80px;
+}
+.goals_title_rest {
+  display: flex;
+  justify-content: center;
+  width: 80px;
+}
+.goals_title_puntos {
+  display: flex;
+  justify-content: center;
+  width: 80px;
 }
 .goals_goal {
-  width: 70%;
-  height: 80px;
+  display: flex;
+  align-items: center;
+  padding: 0 60px;
+  width: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  min-height: 30px;
   background-color: white;
+  border-bottom: 1px solid rgb(175, 175, 175);
+  -moz-column-gap: 10px;
+       column-gap: 10px;
+  box-sizing: border-box;
+}
+.goals_goal_code {
+  width: 70px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.goals_goal_code:hover {
+  color: #0979b0;
+}
+.goals_goal_name {
+  flex: 1;
+  cursor: pointer;
+  color: rgb(68, 68, 68);
+}
+.goals_goal_name:hover {
+  color: #0979b0;
+}
+.goals_goal_resultado {
+  display: flex;
+  justify-content: center;
+  width: 80px;
+}
+.goals_goal_resultado.red {
+  border-radius: 5px;
+  border: 1px solid rgb(182, 0, 0);
+  background-color: rgb(255, 188, 188);
+}
+.goals_goal_resultado.yellow {
+  border-radius: 5px;
+  border: 1px solid rgb(214, 211, 0);
+  background-color: rgb(255, 246, 144);
+}
+.goals_goal_resultado.green {
+  border-radius: 5px;
+  border: 1px solid rgb(63, 130, 43);
+  background-color: rgb(150, 219, 129);
+}
+.goals_goal_pac_pendientes {
+  display: flex;
+  justify-content: center;
+  width: 80px;
+}
+.goals_goal_pac_restantes {
+  display: flex;
+  justify-content: center;
+  width: 80px;
+}
+.goals_goal_puntos {
+  display: flex;
+  justify-content: center;
+  width: 80px;
+}
+.goals_goal_grafica {
+  display: flex;
+  justify-content: center;
+  width: 80px;
+}
+
+.infoGoal {
+  display: flex;
+  flex-direction: column;
+}
+.infoGoal .exit {
+  width: 40px;
+  align-self: flex-end;
+  padding: 20px;
+}
+.infoGoal_container {
+  padding: 20px 50px;
+}
+
+.goalListPatients {
+  display: flex;
+  flex-direction: column;
+}
+.goalListPatients .exit {
+  width: 40px;
+  align-self: flex-end;
+  padding: 20px;
+}
+.goalListPatients_container {
+  padding: 20px 50px;
+}
+.goalListPatients_container_name {
+  padding-bottom: 10px;
+}
+.goalListPatients_container_row {
+  display: flex;
+  width: 400px;
+  height: 30px;
+  -moz-column-gap: 10px;
+       column-gap: 10px;
+  background-color: #0979b0;
+  color: white;
+  justify-content: center;
+  align-items: center;
+}
+.goalListPatients_container_row .res {
+  text-align: center;
+  width: 100px;
+}
+.goalListPatients_container_row .no_res {
+  text-align: center;
+  width: 100px;
+}
+.goalListPatients_container_row .total {
+  text-align: center;
+  width: 100px;
+}
+.goalListPatients_container_row.values {
+  color: black;
+  background-color: white;
+}
+.goalListPatients_container_row2 {
+  padding: 0 10px;
+  display: flex;
+  width: 800px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  min-height: 30px;
+  -moz-column-gap: 10px;
+       column-gap: 10px;
+  background-color: #0979b0;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+.goalListPatients_container_row2 .cip {
+  text-align: center;
+  width: 200px;
+}
+.goalListPatients_container_row2 .name {
+  flex: 1;
+  text-align: center;
+}
+.goalListPatients_container_row2 .telephone {
+  text-align: center;
+  width: 200px;
+}
+.goalListPatients_container_row2 .exc {
+  text-align: center;
+  width: 70px;
+}
+.goalListPatients_container_row2.values {
+  color: black;
+  background-color: white;
+  cursor: pointer;
 }/*# sourceMappingURL=styles.css.map */
