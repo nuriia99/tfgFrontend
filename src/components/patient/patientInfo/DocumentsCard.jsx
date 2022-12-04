@@ -16,7 +16,7 @@ const DocumentsCard = ({ handleClickPrincipalComponent }) => {
     <div className="panel">
       <div className="panel_row_header">
         <p>{leng.documentosActuales}</p>
-        <button id='prescriptions_button' name='prescriptions_button' onClick={() => handleClickPrincipalComponent('documents_button')} className='button_plus'><FontAwesomeIcon id='prescriptions_button' name='prescriptions_button' className='icon' icon={faPlus}/></button>
+        <button id='documents_button' name='prescriptions_button' onClick={() => handleClickPrincipalComponent('documents_button')} className='button_plus'><FontAwesomeIcon id='prescriptions_button' name='prescriptions_button' className='icon' icon={faPlus}/></button>
       </div>
       {
         patientData.patient

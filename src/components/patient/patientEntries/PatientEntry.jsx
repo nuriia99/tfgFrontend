@@ -18,7 +18,7 @@ const PatientEntries = ({ entry, clickNote }) => {
   const { postData: postDataTranslation, data: dataTranslation } = usePost()
 
   useEffect(() => {
-    if (dataTranslation) setNotes(dataTranslation)
+    if (dataTranslation) setNotes(dataTranslation.data)
   }, [dataTranslation])
 
   useEffect(() => {
@@ -26,8 +26,9 @@ const PatientEntries = ({ entry, clickNote }) => {
   }, [])
 
   const handleTraduction = async () => {
-    await postDataTranslation('/entries/translateEntry', { notes, lengWorker })
+    await postDataTranslation('/entries/translateEntry', { notas: notes, lengWorker })
   }
+
   return (
     <>
     {

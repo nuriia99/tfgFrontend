@@ -14,7 +14,6 @@ const GoalPatients = ({ goal, handleBack }) => {
   const [pacientes, setPacientes] = useState()
   const navigate = useNavigate()
   useEffect(() => {
-    console.log(goal)
     fetchData('/goals/getPatientsListGoal', { pacientesTotales: goal.pacientesTotales, pacientesCompletados: goal.pacientesCompletados })
   }, [])
   useEffect(() => {
@@ -22,7 +21,6 @@ const GoalPatients = ({ goal, handleBack }) => {
       setPacientes(data)
     }
   }, [data])
-  console.log(pacientes)
 
   const handleclickPatient = (id) => {
     navigate('/app/patients/' + id)

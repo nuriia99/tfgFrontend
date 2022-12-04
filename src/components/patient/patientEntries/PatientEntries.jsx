@@ -47,6 +47,7 @@ const PatientEntries = () => {
     entry: '',
     note: ''
   })
+
   const [removedDiagnosis, setRemovedDiagnosis] = useState('')
   const handleClickDiagnosis = (diagnosis) => {
     setPrincipalComponent((prev) => {
@@ -195,10 +196,10 @@ const PatientEntries = () => {
         const newNotes = newPatient.entradas[modifyingNote.entry].notas
         newNotes[modifyingNote.note] = newNote
         setRemovedDiagnosis((prev) => {
+          updateNote('/entries/updateNote/' + patientData.patient.entradas[modifyingNote.entry]._id, { newNotes, centre: globalData.center, worker: globalData.worker._id, patient: patientData.patient._id, removedDiagnosis: prev })
           if (prev === newNote.diagnostico._id) {
             return ''
           }
-          updateNote('/entries/updateNote/' + patientData.patient.entradas[modifyingNote.entry]._id, { newNotes, centre: globalData.center, worker: globalData.worker._id, patient: patientData.patient._id, removedDiagnosis: prev })
           return prev
         })
       }
@@ -324,7 +325,6 @@ const PatientEntries = () => {
         prescripciones: modNote.prescripciones
       }
     })
-    console.log(modNote)
     setRemovedDiagnosis(modNote.diagnostico._id)
     setDiagnosisComponent(() => {
       if (status.active === 'active') {
@@ -392,8 +392,8 @@ const PatientEntries = () => {
             ? <>
               <div className="patient_entries_container">
                 <div className="navbar_entries">
-                  <button onClick={openEntries} className={principalComponent === 'entries' ? 'button_tag active' : 'button_tag inactive'}>Notas previas</button>
-                  <button onClick={openNewEntry} className={principalComponent === 'newEntry' ? 'button_tag active' : 'button_tag inactive'}>Añadir/modificar nota</button>
+                  <button onClick={openEntries} className={principalComponent === 'entries' ? 'notas_previas button_tag active' : 'notas_previas button_tag inactive'}>Notas previas</button>
+                  <button onClick={openNewEntry} className={principalComponent === 'newEntry' ? 'añadir_nota button_tag active' : 'añadir_nota button_tag inactive'}>Añadir/modificar nota</button>
                 </div>
                 {
                   principalComponent === 'entries'
@@ -499,7 +499,7 @@ const PatientEntries = () => {
                           }
                           <div className="plan_options">
                             <button className='button_classic' onClick={() => {}}>{leng.derivar}</button>
-                            <button className='capsules_button' onClick={() => { setShowAddPrescription(true) }}><FontAwesomeIcon className='icon' icon={faCapsules}/></button>
+                            <button type='button' className='capsules_button' onClick={() => { setShowAddPrescription(true) }}><FontAwesomeIcon className='icon' icon={faCapsules}/></button>
                           </div>
                         </div>
                         <div className="entryForm_save">
@@ -508,7 +508,7 @@ const PatientEntries = () => {
                               ? <div className="error"><p className="error_message">{errormessage}</p></div>
                               : null
                           }
-                          <button type='button' className='button_classic' onClick={addNote}>{leng.guardar}</button>
+                          <button className='button_classic addNote' onClick={addNote}>{leng.guardar}</button>
                         </div>
                       </form>
                       <div className="patient_entries_container_diagnosis">
