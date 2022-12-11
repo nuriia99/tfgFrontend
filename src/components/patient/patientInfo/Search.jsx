@@ -13,8 +13,9 @@ const Search = ({ type, submit }) => {
   const [rowSelected, setRowSelected] = useState()
 
   useEffect(() => {
-    if (type === 'med') fetchData('/prescriptions/searchMed/?name=' + name)
-    else fetchData('/prescriptions/searchDiagnosis/?name=' + name)
+    if (type === 'med') {
+      fetchData('/prescriptions/searchMed/?name=' + name, { role: globalData.role })
+    } else fetchData('/prescriptions/searchDiagnosis/?name=' + name)
   }, [name])
 
   const handleClick = (index) => {
