@@ -43,7 +43,7 @@ const PatientActiveIntelligenceCard = ({ handleClickPrincipalComponent }) => {
       ? <div className="patient_ai">
           <div className="patient_ai_title">
             <p>{leng.inteligenciaActiva}</p>
-            <button onClick={() => handleClickPrincipalComponent('active_intelligence_button')} className='ai_button'><FontAwesomeIcon className='icon' icon={faPlus}/></button>
+            <button onClick={() => handleClickPrincipalComponent('active_intelligence_button')} className='ai_button button_plus'><FontAwesomeIcon className='icon' icon={faPlus}/></button>
           </div>
           <div className="patient_ai_container">
             <div className="patient_ai_container_item">

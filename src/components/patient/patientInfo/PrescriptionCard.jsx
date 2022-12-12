@@ -9,6 +9,7 @@ const PrescriptionCard = ({ handleClickPrincipalComponent }) => {
   const { globalData } = useGlobalContext()
   const { patientData } = usePatientContext()
   const leng = getLenguage(globalData.lenguage, 'patient')
+  const currentDate = new Date()
 
   const [uniquePrescription, setUniquePrescription] = useState()
 
@@ -17,19 +18,7 @@ const PrescriptionCard = ({ handleClickPrincipalComponent }) => {
       const uniquePrescription = new Set()
       if (patientData.patient) {
         patientData.patient.prescripciones.forEach((prescription) => {
-          uniquePrescription.add(prescription.principioActivo)
-        })
-      }
-      return uniquePrescription
-    })
-  }, [])
-
-  useEffect(() => {
-    setUniquePrescription(() => {
-      const uniquePrescription = new Set()
-      if (patientData.patient) {
-        patientData.patient.prescripciones.forEach((prescription) => {
-          uniquePrescription.add(prescription.principioActivo)
+          if (new Date(prescription.fechaFinal).getTime() > currentDate.getTime()) uniquePrescription.add(prescription.principioActivo)
         })
       }
       return uniquePrescription

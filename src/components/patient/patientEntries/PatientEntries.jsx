@@ -53,9 +53,10 @@ const PatientEntries = () => {
     setPrincipalComponent((prev) => {
       if (prev === 'entries') {
         setLastDiagnosis(prev => {
+          console.log(prev)
           if (diagnosis.nombre === prev) {
             setEntries(allEntries)
-            setLastDiagnosis('')
+            return ''
           } else {
             const newEntries = []
             allEntries.forEach((entry) => {
@@ -64,7 +65,7 @@ const PatientEntries = () => {
               })
             })
             setEntries(newEntries)
-            setLastDiagnosis(diagnosis.nombre)
+            return diagnosis.nombre
           }
         })
       } else {
