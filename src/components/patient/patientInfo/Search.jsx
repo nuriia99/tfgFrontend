@@ -49,7 +49,7 @@ const Search = ({ type, submit }) => {
             <button onClick={() => { submit(data[rowSelected]) }} className='button_classic'>{leng.escoger}</button>
           </div>
           <div className="exit">
-            <button onClick={submit} className='button_classic'><FontAwesomeIcon className='icon' icon={faArrowRightFromBracket}/></button>
+            <button onClick={() => { submit('') }} className='button_classic'><FontAwesomeIcon className='icon' icon={faArrowRightFromBracket}/></button>
           </div>
         </div>
       </div>

@@ -58,7 +58,7 @@
             text-decoration: none;
           }
           &:hover{
-            li{
+            li.active{
               background-color: $navyBlueLight2;
             }
           }

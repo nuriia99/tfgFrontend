@@ -105,14 +105,16 @@ const PatientEntries = () => {
   }, [dataDeletePres])
 
   const submitDiagnosis = (diagnosis) => {
+    if (diagnosis !== '') {
+      setNewEntryData((prev) => { return ({ ...prev, diagnostico: diagnosis }) })
+      setDiagnosisComponent(() => {
+        if (status.active === 'active') {
+          return <DiagnosisList updateSelectedDiagnosis={diagnosis.nombre} diagnosis={activeDiagnosis} filterDiagnosis={handleClickDiagnosis}/>
+        }
+        return <DiagnosisList updateSelectedDiagnosis={diagnosis.nombre} diagnosis={inactiveDiagnosis} filterDiagnosis={handleClickDiagnosis}/>
+      })
+    }
     setSearch(false)
-    setNewEntryData((prev) => { return ({ ...prev, diagnostico: diagnosis }) })
-    setDiagnosisComponent(() => {
-      if (status.active === 'active') {
-        return <DiagnosisList updateSelectedDiagnosis={diagnosis.nombre} diagnosis={activeDiagnosis} filterDiagnosis={handleClickDiagnosis}/>
-      }
-      return <DiagnosisList updateSelectedDiagnosis={diagnosis.nombre} diagnosis={inactiveDiagnosis} filterDiagnosis={handleClickDiagnosis}/>
-    })
   }
 
   const handleActive = (e) => {

@@ -14,7 +14,18 @@ export const statisticsEs = {
   definicion: 'Definición',
   medicamentos: 'Medicamentos aceptados',
   estadisticas: 'Estadísticas',
-  objetivos: 'Objetivos'
+  objetivos: 'Objetivos',
+  listados: 'Listados',
+  diagnostico: 'Diagnóstico',
+  parametros: 'Parámetros de búsqueda',
+  estado: 'Estado:',
+  activo: 'Activo',
+  inactivo: 'Inactivo',
+  medicamento: 'Medicamento',
+  sexo: 'Sexo',
+  fem: 'Femenino',
+  masc: 'Masculino',
+  todos: 'Todos'
 }
 
 export const statisticsCa = {
@@ -33,5 +44,16 @@ export const statisticsCa = {
   definicion: 'Definició',
   medicamentos: 'Medicaments acceptats',
   estadisticas: 'Estadísticas',
-  objetivos: 'Objectius'
+  objetivos: 'Objectius',
+  listados: 'Llistats',
+  diagnostico: 'Diagnòstic',
+  parametros: 'Paràmetres de cerca',
+  estado: 'Estat:',
+  activo: 'Actiu',
+  inactivo: 'Inactiu',
+  medicamento: 'Medicament',
+  sexo: 'Sexe:',
+  fem: 'Femení',
+  masc: 'Masculí',
+  todos: 'Tots'
 }

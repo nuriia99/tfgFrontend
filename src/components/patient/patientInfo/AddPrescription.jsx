@@ -66,21 +66,22 @@ const AddPrescription = ({ diagnosis, quitAddPrescription, addPrescription, modi
   }, [prescription.nombreMedicamento])
 
   const submitMed = (med) => {
+    if (med !== '') {
+      setPrescription((prev) => {
+        return {
+          ...prev,
+          instruccionesPaciente: med.insPaciente,
+          instruccionesFarmacia: med.insFarmacia,
+          nombreMedicamento: med.nombre,
+          principioActivo: med.principioActivo,
+          idMed: med._id,
+          unidad: med.unidad,
+          frecuencia: med.frecuencia,
+          duracion: med.duracion
+        }
+      })
+    }
     setSearch(false)
-
-    setPrescription((prev) => {
-      return {
-        ...prev,
-        instruccionesPaciente: med.insPaciente,
-        instruccionesFarmacia: med.insFarmacia,
-        nombreMedicamento: med.nombre,
-        principioActivo: med.principioActivo,
-        idMed: med._id,
-        unidad: med.unidad,
-        frecuencia: med.frecuencia,
-        duracion: med.duracion
-      }
-    })
   }
 
   const importInsPac = () => {

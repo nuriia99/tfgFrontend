@@ -258,3 +258,115 @@ body, html{
     cursor: pointer;
   }
 }
+
+// input range
+
+.wrapper{
+  position: relative;
+  width: 100%;
+  background-color: white;
+  padding: 10px 0;
+  .values{
+    background-color: $navyBlueLight;
+    width: fit-content;
+    position: relative;
+    margin: auto;
+    padding: 4px 5px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 14px;
+    color: white;
+
+    &::before{
+      content: "";
+      position: absolute;
+      border-top: 10px solid $navyBlueLight;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      margin: auto;
+      bottom: -10px;
+      left: 0;
+      right: 0;
+      height: 0;
+      width: 0;
+    }
+  }
+  &_container{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border: 1p solid black;
+    margin-top: 30px;
+    input{
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      width: 100%;
+      outline: none;
+      position: absolute;
+      margin: auto;
+      top: 0;
+      bottom: 0;
+      background-color: transparent;
+      pointer-events: none;
+    }
+    input::-webkit-slider-runnable-track{
+      -webkit-appearance: none;
+      appearance: none;
+      height: 5px;
+    }
+    input::-moz-range-track{
+      -moz-appearance: none;
+      appearance: none;
+      height: 5px;
+    }
+    input::-ms-track{
+      appearance: none;
+      height: 5px;
+    }
+    input::-webkit-slider-thumb{
+      -webkit-appearance: none;
+      appearance: none;
+      height: 1.075rem;
+      width: 1.075rem;
+      background-color: $navyBlueLight;
+      cursor: pointer;
+      border-radius: 10px;
+      pointer-events: auto;
+      margin-top: -9px;
+    }
+    input::-moz-range-thumb{
+      -webkit-appearance: none;
+      appearance: none;
+      height: 1.075rem;
+      width: 1.075rem;
+      cursor: pointer;
+      border-radius: 50%;
+      background-color: $navyBlueLight;
+    }
+    input::-ms-thumb{
+      -webkit-appearance: none;
+      appearance: none;
+      height: 1.075rem;
+      width: 1.075rem;
+      cursor: pointer;
+      border-radius: 50%;
+      background-color: $navyBlueLight;
+    }
+    input:active::-webkit-slider-thumb{
+      background-color: white;
+      border: 3px solid $navyBlueLight;
+    }
+    .slider-track{
+      width: 100%;
+      height: 5px;
+      background-color: #d5d5d5;
+      position: absolute;
+      margin: auto;
+      top: -3px;
+      bottom: 0;
+      border-radius: 5px;
+    }
+  }
+}

@@ -8,6 +8,7 @@ import Login from './pages/login/Login'
 import Patient from './pages/patient/Patient'
 import PDFFile from './pages/home/PDFFile'
 import Goals from './pages/statistics/Goals'
+import Lists from './pages/statistics/Lists'
 
 function App () {
   return (
@@ -21,6 +22,7 @@ function App () {
           <Route path='/' element={<Navigate to='/app/home'/>}></Route>
           <Route path='/app/pdf/docs/:name' element={<PDFFile/>}></Route>
           <Route path='/app/goals' element={<Goals/>}></Route>
+          <Route path='/app/lists' element={<Lists/>}></Route>
           <Route path='*' element={<PageNotFound/>}></Route>
         </Routes>
       </BrowserRouter>
