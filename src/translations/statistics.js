@@ -25,7 +25,10 @@ export const statisticsEs = {
   sexo: 'Sexo',
   fem: 'Femenino',
   masc: 'Masculino',
-  todos: 'Todos'
+  todos: 'Todos',
+  edad: 'Edad: ',
+  fechaInicio: 'Fecha de inicio: ',
+  fechaFinal: 'Fecha final: '
 }
 
 export const statisticsCa = {
@@ -55,5 +58,8 @@ export const statisticsCa = {
   sexo: 'Sexe:',
   fem: 'Femení',
   masc: 'Masculí',
-  todos: 'Tots'
+  todos: 'Tots',
+  age: 'Edat: ',
+  fechaInicio: 'Data d\'inici: ',
+  fechaFinal: 'Data final: '
 }

@@ -4,6 +4,9 @@ import { faMagnifyingGlass, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { useGlobalContext } from '../../hooks/useGlobalContext'
 import { getLenguage } from '../../utils/lenguage'
 import Search from '../patient/patientInfo/Search'
+import 'react-datez/dist/css/react-datez.css'
+import { ReactDatez } from 'react-datez'
+
 const ListsContainer = () => {
   const { globalData } = useGlobalContext()
   const leng = getLenguage(globalData.lenguage, 'statistics')
@@ -11,11 +14,18 @@ const ListsContainer = () => {
   const [meds, setMeds] = useState([])
   const [searchD, setSearchD] = useState()
   const [searchM, setSearchM] = useState()
+  const currentDay = new Date()
+  const weekBefore = currentDay.setDate(currentDay.getDate() - 7)
   const [parameters, setParameters] = useState({
     minAge: 18,
     maxAge: 90,
-    sex: 'M'
+    sex: 'M',
+    p1: 18 / 130 * 100,
+    p2: 90 / 130 * 100,
+    startDate: weekBefore,
+    endDate: new Date()
   })
+
   const submitDiagnosis = (diagnosis) => {
     if (diagnosis !== '') setDiagnosis(prev => [...prev, { diagnosis, statusDiagnosis: 'active' }])
     setSearchD(false)
@@ -58,15 +68,17 @@ const ListsContainer = () => {
   const changeParameters = (value, type) => {
     setParameters(prev => {
       if (type === 'minAge') {
-        console.log(value, prev.maxAge)
-        if (parseInt(value) < prev.maxAge) return { ...prev, minAge: value }
-        return prev
+        if (parseInt(value) < prev.maxAge) return { ...prev, minAge: value, p1: parseInt(value) / 130 * 100 }
       } else if (type === 'maxAge') {
-        if (parseInt(value) > prev.minAge) return { ...prev, maxAge: value }
+        if (parseInt(value) > prev.minAge) return { ...prev, maxAge: value, p2: parseInt(value) / 130 * 100 }
         return prev
       } else if (type === 'sex') return { ...prev, sex: value }
+      else if (type === 'fechaInicio') return { ...prev, fechaInicio: new Date(value) }
+      else if (type === 'fechaFinal') return { ...prev, fechaFinal: new Date(value) }
+      return prev
     })
   }
+  console.log(parameters)
   return (
     <>
       <div className="lists">
@@ -129,14 +141,15 @@ const ListsContainer = () => {
             </div>
             <div className="lists_container_form_info">
               <div className="lists_container_form_info_age">
+                <div className="values">
+                  <label>{leng.age}</label>
+                  <span id='range1'>Min: {parameters.minAge}</span>
+                  <span> - </span>
+                  <span id='range2'>Max: {parameters.maxAge}</span>
+                </div>
                 <div className="wrapper">
-                  <div className="values">
-                    <span id='range1'>{parameters.minAge}</span>
-                    <span> - </span>
-                    <span id='range2'>{parameters.maxAge}</span>
-                  </div>
                   <div className="wrapper_container">
-                    <div className="slider-track"></div>
+                    <div className="slider-track" style={{ background: `linear-gradient(to right, #d5d5d5 ${parameters.p1}%, #0979b0 ${parameters.p1}% ${parameters.p2}%, #d5d5d5 ${parameters.p2}%` }}></div>
                     <input type='range' min='0' max='130' value={parameters.minAge} id='slider-1' onChange={(e) => changeParameters(e.target.value, 'minAge')}></input>
                     <input type='range' min='0' max='130' value={parameters.maxAge} id='slider-2' onChange={(e) => changeParameters(e.target.value, 'maxAge')}></input>
                   </div>
@@ -152,6 +165,16 @@ const ListsContainer = () => {
                   <input type="radio" checked={parameters.sex === 'B'} value={leng.inactivo} name='inputB' onChange={(e) => changeParameters('B', 'sex')} required="required"/>
                   <label>{leng.todos}</label>
                 </div>
+              </div>
+            </div>
+            <div className="lists_container_form_dates">
+              <div className="lists_container_form_dates_start">
+                <label>{leng.fechaInicio}</label>
+                <ReactDatez className='datePicker' allowPast={true} allowFuture={false} locale='es' value={parameters.fechaInicio} handleChange={(e) => changeParameters(e, 'fechaInicio')}/>
+              </div>
+              <div className="lists_container_form_dates_end">
+                <label>{leng.fechaFinal}</label>
+                <ReactDatez allowPast={true} allowFuture={false} locale='es' value={parameters.fechaFinal} handleChange={(e) => changeParameters(e, 'fechaFinal')}/>
               </div>
             </div>
           </div>

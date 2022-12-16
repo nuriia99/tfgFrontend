@@ -236,7 +236,7 @@ body, html {
 
 .wrapper {
   position: relative;
-  width: 100%;
+  width: 180px;
   background-color: white;
   padding: 10px 0;
 }
@@ -2292,11 +2292,18 @@ body, html {
   width: 100%;
 }
 .lists_container_form_info_age {
-  width: 50%;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding-right: 30px;
+}
+.lists_container_form_info_age label {
+  padding-left: 0;
+  align-self: center;
 }
 .lists_container_form_info_sex {
-  width: 50%;
-  align-self: flex-end;
+  flex: 1;
+  align-self: flex-start;
   padding-bottom: 3px;
 }
 .lists_container_form_info_sex label {
@@ -2304,4 +2311,15 @@ body, html {
 }
 .lists_container_form_info_sex label:is(:first-child) {
   padding-left: 20px;
+}
+.lists_container_form_dates {
+  display: flex;
+}
+.lists_container_form_dates .datePicker {
+  display: flex;
+  align-items: center;
+  width: 180px;
+  height: 30px;
+  font-size: 14px;
+  margin-left: 20px;
 }/*# sourceMappingURL=styles.css.map */

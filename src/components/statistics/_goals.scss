@@ -295,11 +295,16 @@
         width: 100%;
         
         &_age{
-          width: 50%;
+          width: fit-content;
+          padding-right: 30px;
+          label{
+            padding-left: 0;
+            align-self: center;
+          }
         }
         &_sex{
-          width: 50%;
-          align-self: flex-end;
+          flex: 1;
+          align-self: flex-start;
           padding-bottom: 3px;
           label{
             padding: 10px 7px;
@@ -307,6 +312,18 @@
               padding-left: 20px;
             }
           }
+        }
+        
+      }
+      &_dates{
+        display: flex;
+        .datePicker{
+          display: flex;
+          align-items: center;
+          width: 180px;
+          height: 30px;
+          font-size: 14px;
+          margin-left: 20px;
         }
       }
     }
