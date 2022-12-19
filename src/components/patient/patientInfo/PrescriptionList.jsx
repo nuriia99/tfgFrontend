@@ -47,6 +47,8 @@ const PrescriptionList = () => {
     })
   }
 
+  console.log(prescriptions)
+
   useEffect(() => {
     if (dataDelete) console.log(dataDelete)
   }, [dataDelete])

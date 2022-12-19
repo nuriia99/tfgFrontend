@@ -203,6 +203,40 @@ body, html {
   background-color: rgb(126, 199, 255);
 }
 
+.excelButton {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: rgba(19, 106, 0, 0.333) solid 1px;
+  background-color: rgba(26, 144, 0, 0.333);
+  border-radius: 5px;
+  cursor: pointer;
+}
+.excelButton .icon {
+  width: 18px;
+  height: 18px;
+  color: #188038;
+}
+
+.pdfButton {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: rgba(134, 0, 0, 0.333) solid 1px;
+  background-color: rgba(226, 0, 0, 0.333);
+  border-radius: 5px;
+  cursor: pointer;
+}
+.pdfButton .icon {
+  width: 18px;
+  height: 18px;
+  color: #ed1414;
+}
+
 .crossbar::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -214,24 +248,42 @@ body, html {
   border-radius: 8px;
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background: rgb(175, 175, 175);
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #004173;
+  border-radius: 8px;
+}
+
 .recs {
   width: 100%;
   box-sizing: border-box;
   display: flex;
+  flex-wrap: wrap;
   row-gap: 5px;
-  flex-direction: column;
   padding: 10px 20px;
   -moz-column-gap: 5px;
        column-gap: 5px;
 }
 .recs .rec {
   padding: 7px;
-  padding-left: 10px;
+  padding: 5px 15px;
   background-color: rgb(255, 212, 148);
   border: 1px rgb(255, 177, 60) solid;
   border-radius: 20px;
   font-size: 13px;
   cursor: pointer;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.recs .rec.selected {
+  background-color: rgb(255, 128, 0);
 }
 
 .wrapper {
@@ -624,7 +676,6 @@ body, html {
 
 .navbar {
   height: 3.125rem;
-  width: 100vw;
   background-color: #0979b0;
   display: flex;
   align-items: center;
@@ -1604,7 +1655,7 @@ body, html {
   height: 100%;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.7);
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -2137,49 +2188,53 @@ body, html {
   padding: 20px 50px;
 }
 
-.goalListPatients {
+.listPatients {
   display: flex;
   flex-direction: column;
 }
-.goalListPatients .exit {
+.listPatients .exit {
   width: 40px;
   align-self: flex-end;
   padding: 20px;
 }
-.goalListPatients_container {
+.listPatients_container {
   padding: 20px 50px;
 }
-.goalListPatients_container_name {
+.listPatients_container_name {
   padding-bottom: 10px;
 }
-.goalListPatients_container_row {
+.listPatients_container_row {
   display: flex;
   width: 400px;
-  height: 30px;
-  -moz-column-gap: 10px;
-       column-gap: 10px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  min-height: 30px;
+  -moz-column-gap: 20px;
+       column-gap: 20px;
   background-color: #0979b0;
   color: white;
   justify-content: center;
   align-items: center;
 }
-.goalListPatients_container_row .res {
+.listPatients_container_row .res, .listPatients_container_row .no.res, .listPatients_container_row .little_value {
+  text-align: center;
+  width: 100px;
+  padding: 5px 0;
+}
+.listPatients_container_row .total {
   text-align: center;
   width: 100px;
 }
-.goalListPatients_container_row .no_res {
-  text-align: center;
-  width: 100px;
-}
-.goalListPatients_container_row .total {
-  text-align: center;
-  width: 100px;
-}
-.goalListPatients_container_row.values {
+.listPatients_container_row.values {
   color: black;
   background-color: white;
 }
-.goalListPatients_container_row2 {
+.listPatients_container_row.border {
+  width: 398px;
+  border: 1px solid #0979b0;
+}
+.listPatients_container_row2 {
   padding: 0 10px;
   display: flex;
   width: 800px;
@@ -2195,32 +2250,38 @@ body, html {
   align-items: center;
   box-sizing: border-box;
 }
-.goalListPatients_container_row2 .cip {
+.listPatients_container_row2 .cip {
   text-align: center;
   width: 200px;
 }
-.goalListPatients_container_row2 .name {
+.listPatients_container_row2 .name {
   flex: 1;
   text-align: center;
 }
-.goalListPatients_container_row2 .telephone {
+.listPatients_container_row2 .telephone {
   text-align: center;
   width: 200px;
 }
-.goalListPatients_container_row2 .exc {
+.listPatients_container_row2 .exc {
   text-align: center;
   width: 70px;
 }
-.goalListPatients_container_row2.values {
+.listPatients_container_row2.values {
   color: black;
   background-color: white;
   cursor: pointer;
+}
+.listPatients_container a {
+  display: block;
+  text-decoration: none;
+  color: black;
 }
 
 .lists {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  row-gap: 30px;
   padding: 100px 40px;
   width: 100%;
   box-sizing: border-box;
@@ -2234,13 +2295,7 @@ body, html {
   background-color: white;
   box-sizing: border-box;
 }
-.lists_container_form {
-  padding: 30px 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.lists_container_form span.title {
+.lists_container span.title {
   position: absolute;
   z-index: 1;
   left: 0;
@@ -2253,6 +2308,16 @@ body, html {
   background-color: white;
   border: 1px solid rgb(126, 199, 255);
   letter-spacing: 0.0688rem;
+}
+.lists_container label {
+  font-weight: 600;
+  padding: 10px 20px;
+}
+.lists_container_form {
+  padding: 30px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .lists_container_form .search, .lists_container_form .prescription {
   height: -webkit-fit-content;
@@ -2272,10 +2337,6 @@ body, html {
   background-color: white;
   border: 0;
   cursor: pointer;
-}
-.lists_container_form label {
-  font-weight: 600;
-  padding: 10px 20px;
 }
 .lists_container_form_diagnosis {
   display: flex;
@@ -2322,4 +2383,94 @@ body, html {
   height: 30px;
   font-size: 14px;
   margin-left: 20px;
+}
+.lists_container_form_selector {
+  display: flex;
+  align-items: center;
+}
+.lists_container_form_selector .select {
+  width: 300px;
+}
+.lists_container_form .button_classic {
+  width: 20%;
+  margin: 20px;
+}
+.lists_container_result {
+  padding: 30px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.lists_container_result .exportButtons {
+  display: flex;
+  justify-content: flex-end;
+}
+.lists_container_result .exportButtons .excelButton {
+  margin-left: 20px;
+  margin-bottom: 15px;
+}
+.lists_container_result .exportButtons .excelButton {
+  border-radius: 5px 0 0 5px;
+}
+.lists_container_result .exportButtons .pdfButton {
+  border-radius: 0 5px 5px 0;
+}
+.lists_container_result .listPatients_container_row, .lists_container_result .listPatients_container_row2 {
+  margin-left: 20px;
+}
+.lists_container_result .table {
+  overflow-x: auto;
+  max-width: -webkit-fit-content;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
+}
+.lists_container_result .table table {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  border-spacing: 0;
+  padding-left: 20px;
+}
+.lists_container_result .table table tr.pair {
+  background-color: rgb(166, 217, 255);
+}
+.lists_container_result .table table p {
+  margin: 0;
+}
+.lists_container_result .table table th {
+  padding: 5px 10px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  background-color: #0979b0;
+  color: white;
+}
+.lists_container_result .table table th .th_value {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -moz-column-gap: 5px;
+       column-gap: 5px;
+}
+.lists_container_result .table table th .th_value p {
+  flex: 1;
+}
+.lists_container_result .table table th .th_value svg {
+  cursor: pointer;
+}
+.lists_container_result .table table th .th_value svg:hover {
+  color: rgb(126, 199, 255);
+}
+.lists_container_result .table table td {
+  border: 1px #0979b0 solid;
+  text-align: center;
+  padding: 3px 10px;
+}
+.lists_container_result .table table a {
+  display: block;
+  text-decoration: none;
+  color: black;
 }/*# sourceMappingURL=styles.css.map */

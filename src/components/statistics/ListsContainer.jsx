@@ -1,11 +1,16 @@
-import { React, useState } from 'react'
+import { React, useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMagnifyingGlass, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faArrowDownShortWide, faArrowDownWideShort, faFileExcel, faFilePdf, faMagnifyingGlass, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { useGlobalContext } from '../../hooks/useGlobalContext'
 import { getLenguage } from '../../utils/lenguage'
 import Search from '../patient/patientInfo/Search'
-import 'react-datez/dist/css/react-datez.css'
-import { ReactDatez } from 'react-datez'
+import DatePicker from 'react-date-picker'
+import { Select, Option } from '../home/Select'
+import useFetch from '../../hooks/useFetch'
+import { getName } from '../../utils/utils'
+import * as XLSX from 'xlsx/xlsx.mjs'
+import jsPDF from 'jspdf'
+import autoTable from 'jspdf-autotable'
 
 const ListsContainer = () => {
   const { globalData } = useGlobalContext()
@@ -14,17 +19,19 @@ const ListsContainer = () => {
   const [meds, setMeds] = useState([])
   const [searchD, setSearchD] = useState()
   const [searchM, setSearchM] = useState()
-  const currentDay = new Date()
-  const weekBefore = currentDay.setDate(currentDay.getDate() - 7)
+  const weekBefore = new Date()
+  weekBefore.setDate(weekBefore.getDate() - 30)
   const [parameters, setParameters] = useState({
     minAge: 18,
     maxAge: 90,
-    sex: 'M',
+    sex: 'B',
     p1: 18 / 130 * 100,
     p2: 90 / 130 * 100,
     startDate: weekBefore,
-    endDate: new Date()
+    endDate: new Date(),
+    currentSelect: 'Todos los pacientes'
   })
+  const AI = ['tabaquismo', 'drogas', 'alcohol', 'actividadFisica', 'valoracionPacientesCronicos', 'frecuenciaCardiaca', 'peso', 'estatura', 'colesterolTotal', 'colesterolTotal']
 
   const submitDiagnosis = (diagnosis) => {
     if (diagnosis !== '') setDiagnosis(prev => [...prev, { diagnosis, statusDiagnosis: 'active' }])
@@ -35,7 +42,6 @@ const ListsContainer = () => {
     setSearchM(false)
   }
   const changeDiagnosis = (index, change) => {
-    console.log(index, change)
     setDiagnosis(prev => {
       const arr = [...prev]
       const diagnosis = arr[index].diagnosis
@@ -73,20 +79,180 @@ const ListsContainer = () => {
         if (parseInt(value) > prev.minAge) return { ...prev, maxAge: value, p2: parseInt(value) / 130 * 100 }
         return prev
       } else if (type === 'sex') return { ...prev, sex: value }
-      else if (type === 'fechaInicio') return { ...prev, fechaInicio: new Date(value) }
-      else if (type === 'fechaFinal') return { ...prev, fechaFinal: new Date(value) }
+      else if (type === 'fechaInicio') return { ...prev, startDate: new Date(value) }
+      else if (type === 'fechaFinal') {
+        const newEndDate = new Date(value)
+        newEndDate.setDate(newEndDate.getDate() + 1)
+        return { ...prev, endDate: newEndDate }
+      } else if (type === 'selector') return { ...prev, currentSelect: value }
       return prev
     })
   }
-  console.log(parameters)
+
+  const { fetchData: fetchDataSearch, data: dataSearch } = useFetch()
+  const [dataPatients, setDataPatients] = useState()
+
+  const handleClick = async (e) => {
+    e.preventDefault()
+    await fetchDataSearch('/goals/getPatientsLists', { parameters, diagnosis, meds, centros: globalData.worker.centrosInfo })
+  }
+
+  const [result, setResult] = useState({
+    numMujeres: 0,
+    numHombres: 0,
+    columnasHeader: ['CIP', leng.nombre, leng.edad2, leng.sexo2],
+    columnasValue: ['cip', 'nombre', 'edad', 'sexo'],
+    numFixed: 3
+  })
+
+  useEffect(() => {
+    if (dataSearch) {
+      const newData = [...dataSearch]
+      setResult(prev => { return { ...prev, numHombres: 0, numMujeres: 0 } })
+      if (parameters.sex === 'M') setResult(prev => { return { ...prev, numHombres: newData.length } })
+      else if (parameters.sex === 'F') setResult(prev => { return { ...prev, numMujeres: newData.length } })
+      else {
+        newData.forEach(patient => {
+          if (patient.sexo === 'M') setResult(prev => { return { ...prev, numHombres: prev.numHombres + 1 } })
+          else setResult(prev => { return { ...prev, numMujeres: prev.numMujeres + 1 } })
+        })
+      }
+      const newVector = []
+      result.columnasValue.forEach((v, index2) => {
+        if (index2 === 0) newVector.push(1)
+        else newVector.push(0)
+      })
+      setResult(prev => { return { ...prev, sort: newVector } })
+      const selectedAI = []
+      AI.forEach(() => selectedAI.push(0))
+      setResult(prev => { return { ...prev, selectedAI } })
+      newData.sort((p1, p2) => {
+        return (p1.nombre > p2.nombre) ? 1 : (p1.nombre < p2.nombre) ? -1 : 0
+      })
+      setDataPatients(newData)
+    }
+  }, [dataSearch])
+
+  const sortBy = (index) => {
+    setDataPatients(prev => {
+      const newData = [...prev]
+      if (result.sort[index] === 0 || result.sort[index] === 2) {
+        if (index > 0) {
+          newData.sort((p1, p2) => {
+            return (p1[result.columnasValue[index]] > p2[result.columnasValue[index]]) ? 1 : (p1[result.columnasValue[index]] < p2[result.columnasValue[index]]) ? -1 : 0
+          })
+        } else {
+          newData.sort((p1, p2) => {
+            return (p1.nombre > p2.nombre) ? 1 : (p1.nombre < p2.nombre) ? -1 : 0
+          })
+        }
+        const newVector = [...result.sort]
+        result.sort.forEach((v, index2) => {
+          if (index === index2) newVector[index2] = 1
+          else newVector[index2] = 0
+        })
+        setResult(prev => { return { ...prev, sort: newVector } })
+      } else {
+        if (index > 0) {
+          newData.sort((p1, p2) => {
+            return (p1[result.columnasValue[index]] < p2[result.columnasValue[index]]) ? 1 : (p1[result.columnasValue[index]] > p2[result.columnasValue[index]]) ? -1 : 0
+          })
+        } else {
+          newData.sort((p1, p2) => {
+            return (p1.nombre < p2.nombre) ? 1 : (p1.nombre > p2.nombre) ? -1 : 0
+          })
+        }
+        const newVector = [...result.sort]
+        result.sort.forEach((v, index2) => {
+          if (index === index2) newVector[index2] = 2
+          else newVector[index2] = 0
+        })
+        setResult(prev => { return { ...prev, sort: newVector } })
+      }
+      return newData
+    })
+  }
+
+  const handleClickAI = (index) => {
+    const selectedAI = result.selectedAI
+    if (selectedAI[index] === 0) {
+      selectedAI[index] = 1
+      setResult(prev => {
+        prev.columnasHeader.push(leng[AI[index]])
+        prev.columnasValue.push(AI[index])
+        let newData = [...dataPatients]
+        const a = newData.map((patient) => {
+          let value = '-'
+          patient.inteligenciaActiva.every(ia => {
+            if (ia.name === AI[index]) {
+              if (ia.values.length > 0) value = ia.values.at(-1).value
+              return false
+            }
+            return true
+          })
+          return { ...patient, [AI[index]]: value }
+        })
+        newData = [...a]
+        setDataPatients(newData)
+        return { ...prev, selectedAI }
+      })
+    } else {
+      selectedAI[index] = 0
+      setResult(prev => {
+        const pos1 = result.columnasHeader.indexOf(AI[index])
+        const arr1 = [...prev.columnasHeader]
+        arr1.splice(pos1, 1)
+        const pos2 = result.columnasHeader.indexOf(AI[index])
+        const arr2 = [...prev.columnasValue]
+        arr2.splice(pos2, 1)
+        return { ...prev, selectedAI, columnasHeader: arr1, columnasValue: arr2 }
+      })
+    }
+  }
+
+  const handleClickExport = (fileExtension) => {
+    if (fileExtension === 'xlsx') {
+      const table = document.getElementById('patientsList')
+      const wb = XLSX.utils.table_to_book(table)
+      XLSX.writeFile(wb, 'ListaPacientes.xlsx')
+    } else {
+      // eslint-disable-next-line new-cap
+      const doc = new jsPDF()
+      autoTable(doc, { html: '#patientsList' })
+      doc.save('prueba.pdf')
+    }
+  }
+
   return (
     <>
+      {searchD ? <Search type='diagnosis' submit={submitDiagnosis}/> : null}
+      {searchM ? <Search type='med' submit={submitMeds}/> : null}
       <div className="lists">
-        {searchD ? <Search type='diagnosis' submit={submitDiagnosis}/> : null}
-        {searchM ? <Search type='med' submit={submitMeds}/> : null}
         <div className="lists_container">
           <div className="lists_container_form">
             <span className='title'>{leng.parametros}</span>
+            <div className="lists_container_form_dates">
+              <div className="lists_container_form_dates_start">
+                <label>{leng.fechaInicio}</label>
+                <DatePicker maxDate={new Date()} format='dd/MM/yyyy' clearIcon={null} autoFocus={false} onChange={(e) => changeParameters(e, 'fechaInicio')} value={parameters.startDate} />
+              </div>
+              <div className="lists_container_form_dates_end">
+                <label>{leng.fechaFinal}</label>
+                <DatePicker maxDate={new Date()} format='dd/MM/yyyy' clearIcon={null} autoFocus={false} onChange={(e) => changeParameters(e, 'fechaFinal')} value={parameters.endDate} />
+              </div>
+            </div>
+            <div className="lists_container_form_selector">
+              <label>{leng.selec}</label>
+              <Select currentSelect={parameters.currentSelect} handleChange={(e) => changeParameters(e, 'selector')}>
+                  {
+                    globalData.worker.centros.map((option, index) => {
+                      return <Option key={index} option={option}></Option>
+                    })
+                  }
+                <Option option={leng.todosLosCentros}></Option>
+                <Option option={leng.todosLosPacientes}></Option>
+              </Select>
+            </div>
             <label>{leng.diagnostico}</label>
             {
               diagnosis.map((d, index) => {
@@ -167,20 +333,76 @@ const ListsContainer = () => {
                 </div>
               </div>
             </div>
-            <div className="lists_container_form_dates">
-              <div className="lists_container_form_dates_start">
-                <label>{leng.fechaInicio}</label>
-                <ReactDatez className='datePicker' allowPast={true} allowFuture={false} locale='es' value={parameters.fechaInicio} handleChange={(e) => changeParameters(e, 'fechaInicio')}/>
-              </div>
-              <div className="lists_container_form_dates_end">
-                <label>{leng.fechaFinal}</label>
-                <ReactDatez allowPast={true} allowFuture={false} locale='es' value={parameters.fechaFinal} handleChange={(e) => changeParameters(e, 'fechaFinal')}/>
-              </div>
-            </div>
+            <button onClick={handleClick} id='button_submit_search' className='button_classic'>{leng.buscar}</button>
           </div>
         </div>
+        {
+          dataPatients
+            ? <div className="lists_container">
+                <div className="lists_container_result">
+                  <span className='title'>{leng.listaPacientes}</span>
+                  <label>{leng.resultadosFinales}</label>
+                  <div className="listPatients_container_row">
+                    <div className="little_value">{leng.pacientes}</div>
+                    <div className="little_value">{leng.hombres}</div>
+                    <div className="little_value">{leng.mujeres}</div>
+                  </div>
+                  <div className="listPatients_container_row values border">
+                    <div className="little_value">{dataPatients.length}</div>
+                    <div className="little_value">{result.numHombres}</div>
+                    <div className="little_value">{result.numMujeres}</div>
+                  </div>
+                  <label>{leng.listaPacientes}</label>
+                  <div className="selectorAI">
+                  <div className="recs">
+                    {
+                      AI.map((ai, index) => {
+                        return <div onClick={() => handleClickAI(index)} key={index} className={result.selectedAI[index] === 0 ? 'rec' : 'rec selected'}>{leng[ai]}</div>
+                      })
+                    }
+                  </div>
+                  </div>
+                  <div className="table" id='table'>
+                    <div className="exportButtons">
+                      <button className='excelButton' onClick={() => handleClickExport('xlsx')}><FontAwesomeIcon className='icon' icon={faFileExcel}/></button>
+                      <button className='pdfButton' onClick={() => handleClickExport('pdf')}><FontAwesomeIcon className='icon' icon={faFilePdf}/></button>
+                    </div>
+                    <table id='patientsList'>
+                      <tbody>
+                      <tr>
+                        {
+                          result.columnasHeader.map((c, index) => {
+                            if (c === 'nombre') return <th><div className="th_value"><p>Nombre completo</p><FontAwesomeIcon onClick={() => sortBy(index)} className='icon' icon={result.sort[index] === 1 ? faArrowDownWideShort : faArrowDownShortWide}/></div></th>
+                            return (
+                              <th key={index}><div className="th_value"><p>{c}</p><FontAwesomeIcon onClick={() => sortBy(index)} className='icon' icon={result.sort[index] === 1 ? faArrowDownWideShort : faArrowDownShortWide}/></div></th>
+                            )
+                          })
+                        }
+                      </tr>
+                      {
+                        dataPatients.map((patient, index) => {
+                          return (
+                            <tr key={index} className={index % 2 ? 'pair' : null}>
+                              {
+                                result.columnasValue.map((c) => {
+                                  if (c === 'nombre') return <td key={`${patient.cip}_${c}`}><a href={'/app/patients/' + patient._id}>{getName(patient.nombre, patient.apellido1, patient.apellido2)}</a></td>
+                                  return (
+                                    <td key={`${patient.cip}_${c}`}><a href={'/app/patients/' + patient._id}>{patient[c]}</a></td>
+                                  )
+                                })
+                              }
+                            </tr>
+                          )
+                        })
+                      }
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            : null
+        }
       </div>
-      <FontAwesomeIcon icon={faTrash}/>
     </>
   )
 }

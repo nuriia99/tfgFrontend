@@ -220,6 +220,40 @@ body, html{
   }
 }
 
+.excelButton{
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: rgba(19, 106, 0, 0.333) solid 1px;
+  background-color: rgba(26, 144, 0, 0.333);
+  border-radius: 5px;
+  cursor: pointer;
+  .icon{
+    width: 18px;
+    height: 18px;
+    color: #188038;
+  }
+}
+
+.pdfButton{
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: rgba(134, 0, 0, 0.333) solid 1px;
+  background-color: rgba(226, 0, 0, 0.333);
+  border-radius: 5px;
+  cursor: pointer;
+  .icon{
+    width: 18px;
+    height: 18px;
+    color: #ed1414;
+  }
+}
+
 
 // crossbar
 
@@ -237,25 +271,40 @@ body, html{
   
 }
 
+::-webkit-scrollbar{
+  width: 8px;
+  height: 8px;
+  background: $BlackLight2;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb{
+  background: $navyBlue;
+  border-radius: 8px;
+}
+
 // recs
 
 .recs{
   width: 100%;
   box-sizing: border-box;
   display: flex;
+  flex-wrap: wrap;
   row-gap: 5px;
-  flex-direction: column;
   padding: 10px 20px;
   column-gap: 5px;
 
   .rec{
     padding: 7px;
-    padding-left: 10px;
+    padding: 5px 15px;
     background-color: rgb(255, 212, 148);
     border: 1px rgb(255, 177, 60) solid;
     border-radius: 20px;
     font-size: 13px;
     cursor: pointer;
+    width: fit-content;
+    &.selected{
+      background-color: rgb(255, 128, 0);
+    }
   }
 }
 
