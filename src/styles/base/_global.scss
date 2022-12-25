@@ -13,6 +13,7 @@ body, html{
   display: flex;
   flex-direction: column;
   width: 250px;
+  min-width: fit-content;
   padding: 20px 0;
 
   &_title{
@@ -418,4 +419,18 @@ body, html{
       border-radius: 5px;
     }
   }
+}
+
+// calendar 
+.DatePicker{
+  z-index: 3;
+}
+.react-calendar{
+  position: fixed;
+  height: fit-content;
+  width: 280px;
+}
+
+input, textarea{
+  font-family: "Segoe UI",Helvetica,Arial,sans-serif,"Segoe UI Emoji","Segoe UI Symbol";
 }

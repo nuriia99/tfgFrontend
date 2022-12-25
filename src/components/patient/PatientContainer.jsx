@@ -8,6 +8,7 @@ import PatientActiveIntelligenceCard from './patientInfo/PatientActiveIntelligen
 import PatientActiveIntelligence from './patientInfo/PatientActiveIntelligence'
 import PrescriptionCard from './patientInfo/PrescriptionCard'
 import PrescriptionList from './patientInfo/PrescriptionList'
+import VisitsList from './patientInfo/VisitsList'
 import DocumentsCard from './patientInfo/DocumentsCard'
 import VisitsCard from './patientInfo/VisitsCard'
 import DocumentsList from './patientInfo/DocumentList'
@@ -40,6 +41,8 @@ const PatientContainer = () => {
         return 'documents'
       } else if (name === 'active_intelligence_button') {
         return 'activeIntelligence'
+      } else if (name === 'visits_button') {
+        return 'visits'
       }
       return 'entries'
     })
@@ -91,7 +94,7 @@ const PatientContainer = () => {
                                 {
                                   prescripciones: <PrescriptionCard handleClickPrincipalComponent={ handleClickPrincipalComponent }/>,
                                   documentos: <DocumentsCard handleClickPrincipalComponent={ handleClickPrincipalComponent }/>,
-                                  visitas: <VisitsCard/>
+                                  visitas: <VisitsCard handleClickPrincipalComponent={ handleClickPrincipalComponent }/>
                                 }[extraFeatures]
                               }
                             </div>
@@ -104,6 +107,7 @@ const PatientContainer = () => {
                             prescriptions: <PrescriptionList/>,
                             documents: <DocumentsList/>,
                             activeIntelligence: <PatientActiveIntelligence/>,
+                            visits: <VisitsList/>,
                             entries: <PatientEntries/>
                           }[principalComponent]
                         }

@@ -19,8 +19,10 @@
       border-right: 1px solid $BlueIcs;
       padding-top: 10px;
       box-sizing: border-box;
+      overflow-y: auto;
       &_search{
         margin: 10px;
+        margin-top: 18px;
         min-width: 200px;
         border: 1px solid $BlueIcs;
         position: relative;
@@ -70,7 +72,7 @@
             input{
               box-sizing: border-box;
               width: 100%;
-              padding: 6px;
+              padding: 5px;
               font-size: 12px;
               border: 1px solid #dadce0;
               border-radius: 3px;
@@ -105,6 +107,47 @@
           
         }
       }
+      &_schedule{
+        margin: 10px;
+        min-width: 200px;
+        border: 1px solid $BlueIcs;
+        position: relative;
+        &_title{
+          position: absolute;
+          z-index: 1;
+          left: 0;
+          top: 0;
+          color: $LightBlack;
+          text-transform: uppercase;
+          transform: translateX(10px) translateY(-13px);
+          font-size: 12px;
+          padding: 5px 10px;
+          background-color: white;
+          border: 1px solid $BlueIcs;
+          letter-spacing: 0.0688rem;
+        }
+        &_container{
+          box-sizing: border-box;
+          padding: 20px;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          background-color: $BlueIcsLight2;
+          padding-bottom: 10px;
+          .DatePicker{
+            margin-top: 5px;
+            background-color: white;
+          }
+          #button_submit_search{
+            background-color: $BlueIcs;
+            margin-top: 10px;
+            &:hover{
+              background-color: $BlueIcsLight;
+            }
+          }
+        }
+      }
     }
     &_right{
       flex: 1;
@@ -113,12 +156,12 @@
       min-width: 220px;
       padding: 40px;
       box-sizing: border-box;
+      overflow-y: auto;
       
       .table{
         display: grid;
         padding: 30px;
         row-gap: 3px;
-        overflow-y: auto;
         overflow-x: auto;
         .table_row{
           display: flex;

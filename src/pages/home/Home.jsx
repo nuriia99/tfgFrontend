@@ -4,15 +4,29 @@ import { useGlobalContext } from '../../hooks/useGlobalContext'
 import { useNavigate } from 'react-router-dom'
 import SearchForm from '../../components/home/SearchForm'
 import { getLenguage } from '../../utils/lenguage'
+import Schedule from '../../components/home/Schedule'
+import DatePicker from 'react-date-picker'
+import Search from '../../components/patient/patientInfo/Search'
 
 const Home = () => {
-  const { globalData } = useGlobalContext()
+  const { globalData, updateData } = useGlobalContext()
   const leng = getLenguage(globalData.lenguage, 'home')
   const { worker } = globalData
   const [patients, setPatients] = useState()
+  const [agenda, setAgenda] = useState()
+  const [scheduleDay, setScheduleDay] = useState(new Date())
+  const [selectS, setSelectS] = useState(false)
   const navigate = useNavigate()
   useEffect(() => {
     if (!worker) navigate('/app/login')
+    worker.centrosInfo.every(c => {
+      if (c.nombre === globalData.center) {
+        setAgenda(c.agenda)
+        updateData({ schedule: c.agenda })
+        return false
+      }
+      return true
+    })
   }, [])
 
   const handleSearch = (patients) => {
@@ -21,13 +35,31 @@ const Home = () => {
   const handleClick = (e) => {
     navigate('/app/patients/' + e.currentTarget.id)
   }
+
+  const submitSchedule = (schedule) => {
+    if (schedule) {
+      setAgenda(schedule._id)
+      setScheduleDay(new Date())
+    }
+    setSelectS(false)
+  }
+
   return (
     worker
       ? <div>
       <Navbar/>
       <div className="home">
+        {selectS ? <Search type='schedule' submit={submitSchedule}/> : null}
         <div className="home_container">
           <div className="home_container_left">
+            <div className="home_container_left_schedule">
+            <span className="home_container_left_schedule_title">{leng.busqueda}</span>
+              <div className="home_container_left_schedule_container">
+                {leng.visitasDia}
+                <DatePicker className='DatePicker' format='dd/MM/yyyy' clearIcon={null} autoFocus={false} onChange={(e) => setScheduleDay(e)} value={scheduleDay} />
+                <button onClick={() => setSelectS(true)} id='button_submit_search' className='button_classic'>{leng.cambiarAgenda}</button>
+              </div>
+            </div>
             <div className="home_container_left_search">
               <SearchForm handleSearch={handleSearch}/>
             </div>
@@ -57,7 +89,15 @@ const Home = () => {
                       })
                     }
                   </div>
-                  : null
+                  : <>
+                  {
+                    agenda
+                      ? <div>
+                        <Schedule idSchedule={agenda} scheduleDay={scheduleDay} />
+                      </div>
+                      : null
+                  }
+                  </>
               }
           </div>
         </div>
@@ -65,6 +105,6 @@ const Home = () => {
     </div>
       : null
   )
-}// nombre sexo, edad
+}
 
 export default Home

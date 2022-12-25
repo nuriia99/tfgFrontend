@@ -803,24 +803,33 @@
   justify-content: center;
 
   &_container{
-    height: 70%;
+    height: fit-content;
     width: 70%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     background-color: white;
     
-    padding-top: 20px;
+    padding: 40px 0;
+
+    .button_classic{
+      margin-top: 20px;
+      width: 90%;
+    }
+    
     .exit{
-      margin-right: 20px;
-      width: 30px;
-      align-self: flex-end;
+      width: 90%;
+      display: flex;
+      justify-content: flex-end;
       .button_classic{
+        width: 40px;
+        margin: 0;
         &:hover{
           color: $RedError;
         }
       }
     }
+
     &_info{
       display: flex;
       flex-direction: column;
@@ -846,7 +855,7 @@
       }
       .rows{
         width: 90%;
-        height: 100px;
+        max-height: 90%;
         overflow-y: auto;
         .row{
           display: flex;
@@ -874,11 +883,283 @@
           }
         }
       }
-  
-      .button_classic{
-        margin-top: 20px;
-        width: 90%;
+
+    }
+  }
+}
+
+.visits{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+  &_container{
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    border: 1px solid $navyBlue;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+
+    .new_appointment_button{
+      margin: 10px;
+      margin-right: 0;
+      width: 100px;
+      min-height: 40px;
+      align-self: flex-end;
+    }
+
+    &_table{
+      overflow-x: auto;
+      max-width: fit-content;
+      table{
+        width: fit-content;
+        border-spacing: 0;
+        tr.pair{
+          background-color: $BlueIcsLight;
+        }
+        p{
+          margin: 0;
+        }
+        th{
+          padding: 5px 10px;
+          width: fit-content;
+          height: fit-content;
+          background-color: $navyBlueLight;
+          color: white;
+          .th_value{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            column-gap: 5px;
+            p{
+              flex: 1;
+            }
+          }
+          &.small{
+            width: 2.5rem;
+          }
+          &.big{
+            width: 12.5rem;
+          }
+        }
+        td{
+          border: 1px $navyBlueLight solid;
+          text-align: center;
+          padding: 3px 10px;
+        }
+        a{
+          display:block;
+          text-decoration:none;
+          color: black;
+        }
+        button{
+          background-color: white;
+          cursor: pointer;
+          border: 0;
+          &:hover{
+            color: $RedError;
+          }
+        }
       }
+    }
+  }
+}
+
+.addAppointment{
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding-right: 10px;
+
+  .button_classic{
+    min-height: 40px;
+  }
+  p{
+    margin: 0;
+  }
+  .select{
+    padding: 10px 0;
+  }
+  .exit_appointment{
+    align-self: flex-end;
+    .button_classic{
+      width: 40px;
+    }
+  }
+  .search{
+    height: fit-content;
+    min-height: 25px;
+    width: 90%;
+    background-color: white;
+    margin: 5px 0;
+    border: 1px solid $BlackLight2;
+    padding-left: 10px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    .search_button, .delete_prescription_button{
+      background-color: white;
+      border: 0;
+      cursor: pointer;
+    }
+    .med{
+      font-size: 13px;
+    }
+  }
+  label{
+    font-weight: 500;
+  }
+
+  &_agenda{
+    border: 1px solid $navyBlueLight;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
+  }
+  
+  &_paciente{
+    border: 1px solid $navyBlueLight;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
+    .search_container{
+      box-sizing: border-box;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      padding: 5px 0;
+      flex-direction: column;
+      justify-content: space-between;
+      padding-bottom: 10px;
+  
+      &_name{
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+      }
+  
+      
+  
+      &_item{
+        padding: 1px;
+        width: 168px;
+        
+        display: flex;
+        flex-direction: column;
+  
+        
+        label{
+          font-size: 14px;
+          padding-bottom: 3px;
+          font-weight: 600;
+          padding-left: 7px;
+        }
+        input{
+          box-sizing: border-box;
+          width: 100%;
+          padding: 5px;
+          font-size: 12px;
+          border: 1px solid #dadce0;
+          border-radius: 3px;
+          border-radius: 10px;
+          padding-left: 15px;
+          color: $LightBlack;
+        }
+        &_radio {
+          display: flex;
+          padding-bottom: 5px;
+          padding-right: 10px;
+          label{
+            padding: 0;
+            padding-left: 3px;
+          }
+          input{
+            width: 15px;
+          }
+        }
+      }
+      
+    }
+
+    &_list{
+      width: 100%;
+      &_table{
+        overflow-x: auto;
+        width: 100%;
+        table{
+          width: 100%;
+          border-spacing: 0;
+          thead{
+            display: table;
+            width: 100%;
+          }
+          tbody{
+            overflow-y: auto;
+            max-height: 60px;
+            display: block;
+            tr {
+              cursor: pointer;
+              display: table;
+              min-width: 100%;
+              table-layout: fixed;
+            }
+          }
+          tr.pair{
+            background-color: $BlueIcsLight;
+          }
+          th{
+            width: 20px;
+            padding: 5px 10px;
+            height: fit-content;
+            background-color: $navyBlueLight;
+            color: white;
+          }
+          td{
+            border: 1px $navyBlueLight solid;
+            text-align: center;
+            padding: 3px 10px;
+          }
+          a{
+            display:block;
+            text-decoration:none;
+            color: black;
+          }
+          button{
+            background-color: white;
+            cursor: pointer;
+            border: 0;
+            &:hover{
+              color: $RedError;
+            }
+          }
+        }
+      }
+
+    }
+  }
+
+  &_motivo{
+    border: 1px solid $navyBlueLight;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    
+  }
+  &_time{
+    display: flex;
+    align-items: center;
+    &_item{
+      padding-right: 20px;
     }
   }
 }

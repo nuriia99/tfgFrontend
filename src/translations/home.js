@@ -7,7 +7,9 @@ export const homeEs = {
   sexo: 'Sexo',
   hombre: 'Masculino',
   mujer: 'Femenino',
-  edad: 'Edad'
+  edad: 'Edad',
+  visitasDia: 'Visitas día: ',
+  cambiarAgenda: 'Cambiar agenda'
 }
 
 export const homeCa = {
@@ -19,5 +21,7 @@ export const homeCa = {
   sexo: 'Sexe',
   hombre: 'Masculí',
   mujer: 'Femení',
-  edad: 'Edat'
+  edad: 'Edat',
+  visitasDia: 'Visites dia: ',
+  cambiarAgenda: 'Canviar agenda'
 }

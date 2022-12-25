@@ -102,4 +102,53 @@
   
 }
 
+.schedule{
+  &_table{
+    overflow-x: auto;
+    max-width: fit-content;
+    table{
+      width: fit-content;
+      border-spacing: 0;
+      tr.pair{
+        background-color: $BlueIcsLight;
+      }
+      p{
+        margin: 0;
+      }
+      th{
+        padding: 5px 10px;
+        width: fit-content;
+        height: fit-content;
+        background-color: $navyBlueLight;
+        color: white;
+        .th_value{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          column-gap: 5px;
+          p{
+            flex: 1;
+          }
+        }
+        &.small{
+          width: 2.5rem;
+        }
+        &.big{
+          width: 12.5rem;
+        }
+      }
+      td{
+        border: 1px $navyBlueLight solid;
+        text-align: center;
+        padding: 3px 10px;
+      }
+      a{
+        display:block;
+        text-decoration:none;
+        color: black;
+      }
+    }
+  }
+}
+
 

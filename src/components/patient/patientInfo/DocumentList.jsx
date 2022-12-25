@@ -22,7 +22,6 @@ const DocumentsList = () => {
   const [newDocs, setNewDocs] = useState()
 
   const deleteDoc = (index) => {
-    console.log(documents[index])
     deleteData('/patients/' + patientData.patient._id + '/deleteDoc/' + documents[index]._id)
     setNewDocs(() => {
       const arr = [...patientData.patient.documentos]

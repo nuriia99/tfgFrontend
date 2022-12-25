@@ -35,8 +35,14 @@ export const patientEs = {
   fechaSubida: 'Fecha de subida',
   prescripciones: 'Prescripciones',
   prescripcionesActuales: 'Prescripciones actuales',
+  visitasActuales: 'Visitas futuras',
   documentosActuales: 'Documentos actuales',
   documentos: 'Documentos',
+  fecha: 'Fecha',
+  centro: 'Centro',
+  sanitario: 'Sanitario',
+  especialidad: 'Especialidad',
+  tipoVisita: 'Tipo de visita',
 
   amnanesi: 'Amnanesi',
   motivo: 'Motivo de la visita',
@@ -55,9 +61,14 @@ export const patientEs = {
 
   searchMessageMed: 'Escriba el nombre del medicamento o del principio activo',
   searchMessageDiagnosis: 'Escriba el nombre del diagnóstico',
+  searchSchedule: 'Escriba el nombre de la agenda',
   medName: 'Nombre del medicamento',
   diagnosisName: 'Nombre del diagnóstico',
-  escoger: 'Escoger'
+  scheduleName: 'Nombre de la agenda',
+  escoger: 'Escoger',
+
+  seleccionarAgenda: 'Seleccionar agenda:',
+  nombreCompleto: 'Nombre completo'
 }
 
 export const patientCa = {
@@ -89,9 +100,15 @@ export const patientCa = {
   prescripciones: 'Prescripcions',
   prescripcionesActuales: 'Prescripcions actuals',
   documentosActuales: 'Documents actuals',
+  visitasActuales: 'Visites futures',
   documentos: 'Documents',
   visitas: 'Visites',
   traducir: 'Traduir',
+  fecha: 'Data',
+  centro: 'Centre',
+  sanitario: 'Sanitari',
+  especialidad: 'Especialitat',
+  tipoVisita: 'Tipus de visita',
 
   nombreMedicamento: 'Medicament',
   frecuencia: 'Freqüència',
@@ -117,7 +134,12 @@ export const patientCa = {
 
   searchMessageMed: 'Escriviu el nom del medicament o del principi actiu',
   searchMessageDiagnosis: 'Escriviu el nom del diagnòstic',
+  searchSchedule: 'Escriviu el nom de la agenda',
   medName: 'Nom del medicament',
   diagnosisName: 'Nom del diagnòstic',
-  escoger: 'Escollir'
+  scheduleName: 'Nom de la agenda',
+  escoger: 'Escollir',
+
+  seleccionarAgenda: 'Seleccionar agenda:',
+  nombreCompleto: 'Nombre complet'
 }

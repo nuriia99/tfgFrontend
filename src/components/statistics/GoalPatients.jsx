@@ -25,7 +25,7 @@ const GoalPatients = ({ goal, handleBack }) => {
     {
       pacientes
         ? <>
-<div className="listPatients">
+      <div className="listPatients">
         <div className="exit">
           <button onClick={handleBack} className='button_classic'><FontAwesomeIcon className='icon' icon={faArrowRightFromBracket}/></button>
         </div>

@@ -8,11 +8,6 @@ const LoginForm = () => {
 
   const handleClick = async (e) => {
     e.preventDefault()
-
-    if (username === '1' && password === '1') {
-      setUsername('1Q2W3E4R')
-      setPassword('1Q2W3E4R')
-    }
     await login(username, password)
   }
 

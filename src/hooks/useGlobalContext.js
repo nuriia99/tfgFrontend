@@ -11,9 +11,11 @@ export const useGlobalContext = () => {
   }
 
   const updateData = async (data) => {
-    dispatch({ type: 'UPDATECENTER', payload: data.center })
-    dispatch({ type: 'UPDATELENGUAGE', payload: data.lenguage })
-    dispatch({ type: 'UPDATEROLE', payload: data.role })
+    if (data.center) dispatch({ type: 'UPDATECENTER', payload: data.center })
+    if (data.lenguage) dispatch({ type: 'UPDATELENGUAGE', payload: data.lenguage })
+    if (data.role) dispatch({ type: 'UPDATEROLE', payload: data.role })
+    if (data.schedule) dispatch({ type: 'UPDATESCHEDULE', payload: data.schedule })
+    if (data.schedules) dispatch({ type: 'UPDATESCHEDULES', payload: data.schedules })
   }
 
   const reset = () => {
