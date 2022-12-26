@@ -68,7 +68,11 @@ export const patientEs = {
   escoger: 'Escoger',
 
   seleccionarAgenda: 'Seleccionar agenda:',
-  nombreCompleto: 'Nombre completo'
+  nombreCompleto: 'Nombre completo',
+  errorSolapa: 'El trabajador ya tiene una visita en este periodo de tiempo.',
+  errorPasado: 'La fecha de la visita ha de ser mayor que la actual.',
+  errorTurno: 'El trabajador no tiene ningún turno en ese periodo de tiempo.',
+  otrasAgendas: 'Otras agendas'
 }
 
 export const patientCa = {
@@ -141,5 +145,9 @@ export const patientCa = {
   escoger: 'Escollir',
 
   seleccionarAgenda: 'Seleccionar agenda:',
-  nombreCompleto: 'Nombre complet'
+  nombreCompleto: 'Nombre complet',
+  errorSolapa: 'El treballador ja té una visita en aquest període de temps.',
+  errorPasado: 'La data de la visita ha de ser més gran que l\'actual.',
+  errorTurno: 'El treballador no té cap torn en aquest període de temps.',
+  otrasAgendas: 'Altres agendes'
 }

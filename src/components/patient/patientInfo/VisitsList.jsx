@@ -2,7 +2,7 @@ import { React, useEffect, useState } from 'react'
 import { useGlobalContext } from '../../../hooks/useGlobalContext'
 import { usePatientContext } from '../../../hooks/usePatientContext'
 import { getLenguage } from '../../../utils/lenguage'
-import { getDate, getFormalName, getHour } from '../../../utils/utils'
+import { getDate, getHour, getName } from '../../../utils/utils'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import useDelete from '../../../hooks/useDelete'
@@ -18,8 +18,10 @@ const VisitsList = () => {
 
   const [newAppointments, setNewAppointments] = useState()
   const [showAddAppointment, setShowAddAppointment] = useState(false)
+  const [modifying, setModifying] = useState()
 
   const deleteAppointment = async (index) => {
+    console.log(appointments[index])
     await deleteData('/schedules/deleteAppointment/' + appointments[index]._id, { paciente: appointments[index].paciente, agenda: appointments[index].agenda })
     setNewAppointments(() => {
       const arr = [...patientData.patient.citasPrevias]
@@ -27,7 +29,6 @@ const VisitsList = () => {
       return arr
     })
   }
-
   useEffect(() => {
     if (data) {
       const newPatient = { ...patientData.patient }
@@ -35,6 +36,11 @@ const VisitsList = () => {
       updatePatient(newPatient)
     }
   }, [data])
+
+  const handleClickAppointment = (index) => {
+    setModifying(appointments[index])
+    setShowAddAppointment(true)
+  }
 
   return (
     <>
@@ -50,24 +56,26 @@ const VisitsList = () => {
                       ? <table>
                         <tbody>
                           <tr>
-                            <th className='small'>Hora</th>
-                            <th className='small'>{leng.fecha}</th>
-                            <th className='big'>{leng.centro}</th>
-                            <th className='big'>{leng.sanitario}</th>
-                            <th className='big'>{leng.especialidad}</th>
-                            <th className='big'>{leng.tipoVisita}</th>
-                            <th className='small'></th>
+                            <th>Hora</th>
+                            <th>{leng.fecha}</th>
+                            <th>{leng.centro}</th>
+                            <th>{leng.sanitario}</th>
+                            <th>{leng.especialidad}</th>
+                            <th>{leng.tipoVisita}</th>
+                            <th>{leng.motivo}</th>
+                            <th></th>
                           </tr>
                           {
                             appointments.map((appointment, index) => {
                               return (
                                 <tr key={index}>
-                                  <td>{getHour(appointment.fecha)}</td>
-                                  <td>{getDate(appointment.fecha)}</td>
-                                  <td>{appointment.centro}</td>
-                                  <td>{getFormalName(appointment.trabajador.nombre, appointment.trabajador.apellido1, appointment.trabajador.apellido2)}</td>
-                                  <td>{appointment.especialidad}</td>
-                                  <td>{appointment.tipoVisita}</td>
+                                  <td onClick={() => handleClickAppointment(index)}>{getHour(appointment.fecha)}</td>
+                                  <td onClick={() => handleClickAppointment(index)}>{getDate(appointment.fecha)}</td>
+                                  <td onClick={() => handleClickAppointment(index)}>{appointment.centro}</td>
+                                  <td onClick={() => handleClickAppointment(index)}>{getName(appointment.trabajador.nombre, appointment.trabajador.apellido1, appointment.trabajador.apellido2)}</td>
+                                  <td onClick={() => handleClickAppointment(index)}>{appointment.especialidad}</td>
+                                  <td onClick={() => handleClickAppointment(index)}>{appointment.tipoVisita}</td>
+                                  <td onClick={() => handleClickAppointment(index)}>{appointment.motivo}</td>
                                   <td><button type='button' onClick={() => { deleteAppointment(index) }} className='delete_appointment_button'><FontAwesomeIcon icon={faTrash}/></button></td>
                                 </tr>
                               )
@@ -79,7 +87,7 @@ const VisitsList = () => {
                   }
                 </div>
               </>
-              : <AddAppointment quitAddAppointment={() => setShowAddAppointment(false)}/>
+              : <AddAppointment type='paciente' modifying={modifying} quitAddAppointment={() => { setShowAddAppointment(false); setModifying() }}/>
           }
         </div>
       </div>

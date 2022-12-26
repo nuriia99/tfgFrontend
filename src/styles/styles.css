@@ -1777,7 +1777,7 @@ input, textarea {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 2;
+  z-index: 4;
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -1938,6 +1938,7 @@ input, textarea {
   border: 1px #0979b0 solid;
   text-align: center;
   padding: 3px 10px;
+  cursor: pointer;
 }
 .visits_container_table table a {
   display: block;
@@ -2125,6 +2126,11 @@ input, textarea {
   margin: 10px 0;
   display: flex;
   flex-direction: column;
+}
+.addAppointment_motivo_tipo {
+  align-items: center;
+  display: flex;
+  gap: 15px;
 }
 .addAppointment_time {
   display: flex;

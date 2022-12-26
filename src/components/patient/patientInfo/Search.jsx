@@ -11,7 +11,11 @@ const Search = ({ type, submit }) => {
   const [name, setName] = useState('')
   const { fetchData, data: dataFetch } = useFetch()
   const [data, setData] = useState()
+  const [activeSchedules, setActiveSchedules] = useState([])
+  const [inactiveSchedules, setInactiveSchedules] = useState([])
   const [rowSelected, setRowSelected] = useState()
+  const [rowSelectedActive, setRowSelectedActive] = useState()
+  const [rowSelectedInactive, setRowSelectedInactive] = useState()
   const messagesPlaceholder = {
     med: leng.searchMessageMed,
     diagnosis: leng.searchMessageDiagnosis,
@@ -31,17 +35,65 @@ const Search = ({ type, submit }) => {
       fetchData('/prescriptions/searchDiagnosis/?name=' + name)
     } else {
       if (globalData.schedules === null) fetchData('/schedules/getSchedules', { centro: globalData.center })
-      else setData(globalData.schedules)
+      else {
+        const currentDate = new Date()
+        setData(globalData.schedules)
+        globalData.schedules.forEach(s => {
+          let isActive = false
+          if (s.trabajador._id === globalData.worker._id) {
+            s.citasPrevias.every(c => {
+              const appointmentDate = new Date(c.fecha)
+              if (currentDate.getFullYear() === appointmentDate.getFullYear() && currentDate.getMonth() === appointmentDate.getMonth() && currentDate.getDate() === appointmentDate.getDate()) {
+                isActive = true
+                return false
+              }
+              return true
+            })
+          }
+          if (isActive) setActiveSchedules(prev => [...prev, s])
+          else setInactiveSchedules(prev => [...prev, s])
+        })
+      }
     }
   }, [name])
 
   useEffect(() => {
-    if (dataFetch) setData(dataFetch)
-    if (type === 'schedule') updateData({ schedules: data })
+    if (dataFetch) {
+      setData(dataFetch)
+      if (type === 'schedule') {
+        updateData({ schedules: dataFetch })
+        const currentDate = new Date()
+        dataFetch.forEach(s => {
+          let isActive = false
+          if (s.trabajador._id === globalData.worker._id) {
+            s.citasPrevias.every(c => {
+              const appointmentDate = new Date(c.fecha)
+              if (currentDate.getFullYear() === appointmentDate.getFullYear() && currentDate.getMonth() === appointmentDate.getMonth() && currentDate.getDate() === appointmentDate.getDate()) {
+                isActive = true
+                return false
+              }
+              return true
+            })
+          }
+          if (isActive) setActiveSchedules(prev => [...prev, s])
+          else setInactiveSchedules(prev => [...prev, s])
+        })
+      }
+    }
   }, [dataFetch])
 
   const handleClick = (index) => {
     setRowSelected(index)
+  }
+
+  const handleClickActive = (index) => {
+    setRowSelectedActive(index)
+    setRowSelectedInactive()
+  }
+
+  const handleClickInactive = (index) => {
+    setRowSelectedInactive(index)
+    setRowSelectedActive()
   }
 
   return (
@@ -56,19 +108,52 @@ const Search = ({ type, submit }) => {
                   <button onClick={() => { submit('') }} className='button_classic'><FontAwesomeIcon className='icon' icon={faArrowRightFromBracket}/></button>
                 </div>
                 <input placeholder={messagesPlaceholder[type]} type="text" value={name} name="inputName" onChange={({ target }) => setName(target.value)} required="required" autoComplete='false'/>
-                <div className="row_header">
-                  <p>{messagesTitle[type]}</p>
-                </div>
-                <div className="rows crossbar">
                   {
-                    data.map((med, index) => {
-                      return (
-                        <div onClick={() => { handleClick(index) }} key={index} className={rowSelected === index ? 'row active' : 'row'}>{med.nombre}</div>
-                      )
-                    })
-                  }
-                </div>
-                <button onClick={() => { submit(data[rowSelected]) }} className='button_classic'>{leng.escoger}</button>
+                    type !== 'schedule'
+                      ? <>
+                        <div className="row_header">
+                          <p>{messagesTitle[type]}</p>
+                        </div>
+                        <div className="rows crossbar">
+                          {
+                            data.map((med, index) => {
+                              return (
+                                <div onClick={() => { handleClick(index) }} key={index} className={rowSelected === index ? 'row active' : 'row'}>{med.nombre}</div>
+                              )
+                            })
+                          }
+                        </div>
+                        <button onClick={() => { submit(data[rowSelected]) }} className='button_classic'>{leng.escoger}</button>
+                      </>
+                      : <>
+                        <div className="row_header">
+                          <p>Agenda activa</p>
+                        </div>
+                        <div className="rows crossbar">
+                          {
+                            activeSchedules.map((med, index) => {
+                              return (
+                                <div onClick={() => { handleClickActive(index) }} key={index} className={rowSelectedActive === index ? 'row active' : 'row'}>{med.nombre}</div>
+                              )
+                            })
+                          }
+                        </div>
+                        <br />
+                        <div className="row_header">
+                          <p>{leng.otrasAgendas}</p>
+                        </div>
+                        <div className="rows crossbar">
+                          {
+                            inactiveSchedules.map((med, index) => {
+                              return (
+                                <div onClick={() => { handleClickInactive(index) }} key={index} className={rowSelectedInactive === index ? 'row active' : 'row'}>{med.nombre}</div>
+                              )
+                            })
+                          }
+                        </div>
+                        <button onClick={() => { submit(rowSelectedActive !== undefined ? activeSchedules[rowSelectedActive] : inactiveSchedules[rowSelectedInactive]) }} className='button_classic'>{leng.escoger}</button>
+                      </>
+                }
               </div>
               </>
               : null

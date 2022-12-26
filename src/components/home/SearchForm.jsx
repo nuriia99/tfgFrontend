@@ -26,7 +26,6 @@ const SearchForm = ({ handleSearch, type }) => {
     if (!initialRender) {
       searchData()
     }
-    console.log('a')
     setInitialRender(false)
   }, [name, firstSurname, secondSurname, sex, dni, cip])
 

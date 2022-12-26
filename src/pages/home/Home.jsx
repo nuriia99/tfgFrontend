@@ -40,6 +40,7 @@ const Home = () => {
     if (schedule) {
       setAgenda(schedule._id)
       setScheduleDay(new Date())
+      setPatients()
     }
     setSelectS(false)
   }
