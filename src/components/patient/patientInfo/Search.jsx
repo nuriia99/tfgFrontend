@@ -34,50 +34,40 @@ const Search = ({ type, submit }) => {
     } else if (type === 'diagnosis') {
       fetchData('/prescriptions/searchDiagnosis/?name=' + name)
     } else {
-      if (globalData.schedules === null) fetchData('/schedules/getSchedules', { centro: globalData.center })
-      else {
-        const currentDate = new Date()
-        setData(globalData.schedules)
-        globalData.schedules.forEach(s => {
-          let isActive = false
-          if (s.trabajador._id === globalData.worker._id) {
-            s.citasPrevias.every(c => {
-              const appointmentDate = new Date(c.fecha)
-              if (currentDate.getFullYear() === appointmentDate.getFullYear() && currentDate.getMonth() === appointmentDate.getMonth() && currentDate.getDate() === appointmentDate.getDate()) {
-                isActive = true
-                return false
-              }
-              return true
-            })
-          }
-          if (isActive) setActiveSchedules(prev => [...prev, s])
-          else setInactiveSchedules(prev => [...prev, s])
-        })
-      }
+      fetchData('/schedules/getSchedules', { centro: globalData.center, name })
     }
   }, [name])
+
+  const splitSchedules = (schedules) => {
+    setData(schedules)
+    const newActiveSchedules = []
+    const newInactiveSchedules = []
+    const currentDate = new Date()
+    schedules.forEach(s => {
+      let isActive = false
+      if (s.trabajador._id === globalData.worker._id) {
+        s.citasPrevias.every(c => {
+          const appointmentDate = new Date(c.fecha)
+          if (currentDate.getFullYear() === appointmentDate.getFullYear() && currentDate.getMonth() === appointmentDate.getMonth() && currentDate.getDate() === appointmentDate.getDate()) {
+            isActive = true
+            return false
+          }
+          return true
+        })
+      }
+      if (isActive) newActiveSchedules.push(s)
+      else newInactiveSchedules.push(s)
+    })
+    setActiveSchedules(newActiveSchedules)
+    setInactiveSchedules(newInactiveSchedules)
+  }
 
   useEffect(() => {
     if (dataFetch) {
       setData(dataFetch)
       if (type === 'schedule') {
         updateData({ schedules: dataFetch })
-        const currentDate = new Date()
-        dataFetch.forEach(s => {
-          let isActive = false
-          if (s.trabajador._id === globalData.worker._id) {
-            s.citasPrevias.every(c => {
-              const appointmentDate = new Date(c.fecha)
-              if (currentDate.getFullYear() === appointmentDate.getFullYear() && currentDate.getMonth() === appointmentDate.getMonth() && currentDate.getDate() === appointmentDate.getDate()) {
-                isActive = true
-                return false
-              }
-              return true
-            })
-          }
-          if (isActive) setActiveSchedules(prev => [...prev, s])
-          else setInactiveSchedules(prev => [...prev, s])
-        })
+        splitSchedules(dataFetch)
       }
     }
   }, [dataFetch])

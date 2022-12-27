@@ -157,6 +157,11 @@
       padding: 40px;
       box-sizing: border-box;
       overflow-y: auto;
+
+      .schedule{
+        height: 100%;
+        box-sizing: border-box;
+      }
       
       .table{
         display: grid;

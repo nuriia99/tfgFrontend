@@ -417,6 +417,58 @@ input, textarea {
   font-family: "Segoe UI", Helvetica, Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
+.classic_table {
+  width: 100%;
+  max-height: 100%;
+  box-sizing: border-box;
+  font-size: 0.8125em;
+  overflow-y: auto;
+}
+.classic_table table {
+  width: 100%;
+  border-spacing: 0;
+}
+.classic_table table tbody tr {
+  cursor: pointer;
+}
+.classic_table table tr {
+  width: 100%;
+}
+.classic_table table td, .classic_table table th {
+  padding: 3px;
+  width: 25%;
+}
+.classic_table table .small {
+  width: 10%;
+}
+.classic_table table tr.pair {
+  background-color: rgb(166, 217, 255);
+}
+.classic_table table th {
+  border: 1px #0979b0 solid;
+  background-color: #0979b0;
+  color: white;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+.classic_table table td {
+  border: 1px #0979b0 solid;
+  text-align: center;
+}
+.classic_table table a {
+  text-decoration: none;
+  color: black;
+}
+.classic_table table button {
+  background-color: white;
+  cursor: pointer;
+  border: 0;
+}
+.classic_table table button:hover {
+  color: rgb(182, 0, 0);
+}
+
 .home {
   width: 100%;
   height: calc(100vh - 50px);
@@ -569,6 +621,10 @@ input, textarea {
   padding: 40px;
   box-sizing: border-box;
   overflow-y: auto;
+}
+.home_container_right .schedule {
+  height: 100%;
+  box-sizing: border-box;
 }
 .home_container_right .table {
   display: grid;

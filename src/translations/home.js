@@ -1,6 +1,7 @@
 export const homeEs = {
   nombre: 'Nombre',
   busqueda: 'Búsqueda de paciente',
+  busquedaAgenda: 'Búsqueda de agenda',
   buscar: 'Buscar',
   apellido1: 'Primer apellido',
   apellido2: 'Segundo apellido',
@@ -9,12 +10,19 @@ export const homeEs = {
   mujer: 'Femenino',
   edad: 'Edad',
   visitasDia: 'Visitas día: ',
-  cambiarAgenda: 'Cambiar agenda'
+  cambiarAgenda: 'Cambiar agenda',
+  horaLlegada: 'Llegada',
+  triaje: 'Triaje',
+  tiempo: 'Tiempo',
+  tiempoAsistencia: 'T.I.Ass',
+  comentario: 'Comentario',
+  nombreCompleto: 'Nombre completo'
 }
 
 export const homeCa = {
   nombre: 'Nom',
   busqueda: 'Cerca de pacient',
+  busquedaAgenda: 'Cerca de agenda',
   buscar: 'Cerca',
   apellido1: 'Primer cognom',
   apellido2: 'Segon cognom',
@@ -23,5 +31,11 @@ export const homeCa = {
   mujer: 'Femení',
   edad: 'Edat',
   visitasDia: 'Visites dia: ',
-  cambiarAgenda: 'Canviar agenda'
+  cambiarAgenda: 'Canviar agenda',
+  horaLlegada: 'Arribada',
+  triaje: 'Triatge',
+  tiempo: 'Temps',
+  tiempoAsistencia: 'T.I.Ass',
+  comentario: 'Comentari',
+  nombreCompleto: 'Nombre complet'
 }
