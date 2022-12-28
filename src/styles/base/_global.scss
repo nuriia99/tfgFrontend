@@ -488,3 +488,22 @@ input, textarea{
     }
   }
 }
+
+// float span
+
+.float_title{
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  color: black;
+  font-weight: 600;
+  text-transform: uppercase;
+  transform: translateX(10px) translateY(-13px);
+  font-size: 13px;
+  padding: 5px 10px;
+  border-left: 1px solid $BlueIcs;
+  border-right: 1px solid $BlueIcs;
+  background-color: $BlueIcsLight2;
+  letter-spacing: 0.0688rem;
+}

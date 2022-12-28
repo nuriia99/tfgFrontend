@@ -14,7 +14,6 @@ const DiagnosisList = ({ diagnosis, filterDiagnosis, updateSelectedDiagnosis }) 
     else setSelectedDiagnosis(name)
     filterDiagnosis(JSON.parse([...uniqueDiagnosis][index]))
   }
-
   const uniqueDiagnosis = new Set()
   diagnosis.forEach((d) => {
     uniqueDiagnosis.add(JSON.stringify(d))

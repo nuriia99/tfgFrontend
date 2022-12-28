@@ -6,25 +6,37 @@ import { getDate } from '../../../utils/utils'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import useDelete from '../../../hooks/useDelete'
+import axios from 'axios'
+import { saveAs } from 'file-saver'
 
 const DocumentsList = () => {
   const { globalData } = useGlobalContext()
   const { patientData, updatePatient } = usePatientContext()
   const leng = getLenguage(globalData.lenguage, 'patient')
-  const documents = patientData.patient.documentos
+  console.log(patientData.patient)
+  const [documentos, setDocumentos] = useState(patientData.patient.documentos)
 
   const openPdf = (e) => {
-    window.open('/app/pdf/docs/' + e.target.getAttribute('name'), '_blank', 'noopener,noreferrer')
+    const params = { reportName: e.target.getAttribute('name') }
+    const requestOptions = {
+      responseType: 'blob',
+      headers: { Authorization: `Bearer ${globalData.token}` },
+      params
+    }
+    axios.get('/patients/report/download', requestOptions
+    )
+      .then((res) => {
+        const pdf = new Blob([res.data], { type: 'application/pdf' })
+        // window.open(pdf, '_blank', 'noopener,noreferrer')
+        saveAs(pdf, e.target.getAttribute('name'))
+      })
   }
 
   const { deleteData, data } = useDelete()
-
-  const [newDocs, setNewDocs] = useState()
-
   const deleteDoc = (index) => {
-    deleteData('/patients/' + patientData.patient._id + '/deleteDoc/' + documents[index]._id)
-    setNewDocs(() => {
-      const arr = [...patientData.patient.documentos]
+    deleteData('/patients/' + patientData.patient._id + '/deleteDoc/' + documentos[index]._id, { reportName: documentos[index].pdfUrl })
+    setDocumentos(() => {
+      const arr = [...documentos]
       arr.splice(index, 1)
       return arr
     })
@@ -33,8 +45,8 @@ const DocumentsList = () => {
   useEffect(() => {
     if (data) {
       const newPatient = { ...patientData.patient }
-      newPatient.documentos = newDocs
-      updatePatient(newPatient)
+      newPatient.documentos = documentos
+      updatePatient({ patient: newPatient })
     }
   }, [data])
 
@@ -50,7 +62,7 @@ const DocumentsList = () => {
                 <div className="table_row_title delete"></div>
               </div>
               {
-                documents.map((doc, index) => {
+                documentos.map((doc, index) => {
                   return (
                     <div key={index} className="table_row">
                       <div className='table_row_values nameValue' onClick={openPdf} name={doc.pdfUrl}>

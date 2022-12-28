@@ -7,6 +7,7 @@ const INITIAL_STATE = {
   center: null,
   schedule: null,
   schedules: null,
+  report: null,
   role: null
 }
 
@@ -28,6 +29,8 @@ export const globalReducer = (state, action) => {
       return { ...state, schedule: action.payload }
     case 'UPDATESCHEDULES':
       return { ...state, schedules: action.payload }
+    case 'UPDATEREPORT':
+      return { ...state, report: action.payload }
     case 'RESET':
       return INITIAL_STATE
     default:

@@ -53,7 +53,6 @@ const PatientEntries = () => {
     setPrincipalComponent((prev) => {
       if (prev === 'entries') {
         setLastDiagnosis(prev => {
-          console.log(prev)
           if (diagnosis.nombre === prev) {
             setEntries(allEntries)
             return ''
@@ -90,7 +89,7 @@ const PatientEntries = () => {
     })
   }
 
-  const { deleteData: delPres, data: dataDeletePres } = useDelete()
+  const { deleteData: delPres } = useDelete()
 
   const deletePrescription = (index) => {
     setNewEntryData((prev) => {
@@ -100,9 +99,6 @@ const PatientEntries = () => {
       return { ...prev, prescripciones: arr }
     })
   }
-  useEffect(() => {
-    if (dataDeletePres) console.log(dataDeletePres)
-  }, [dataDeletePres])
 
   const submitDiagnosis = (diagnosis) => {
     if (diagnosis !== '') {
@@ -501,7 +497,6 @@ const PatientEntries = () => {
                               : null
                           }
                           <div className="plan_options">
-                            <button className='button_classic' onClick={() => {}}>{leng.derivar}</button>
                             <button type='button' className='capsules_button' onClick={() => { setShowAddPrescription(true) }}><FontAwesomeIcon className='icon' icon={faCapsules}/></button>
                           </div>
                         </div>

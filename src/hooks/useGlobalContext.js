@@ -16,6 +16,7 @@ export const useGlobalContext = () => {
     if (data.role) dispatch({ type: 'UPDATEROLE', payload: data.role })
     if (data.schedule) dispatch({ type: 'UPDATESCHEDULE', payload: data.schedule })
     if (data.schedules) dispatch({ type: 'UPDATESCHEDULES', payload: data.schedules })
+    if (data.report) dispatch({ type: 'UPDATEREPORT', payload: data.report })
   }
 
   const reset = () => {

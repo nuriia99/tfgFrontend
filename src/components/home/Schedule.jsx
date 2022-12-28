@@ -3,10 +3,12 @@ import useFetch from '../../hooks/useFetch'
 import { useGlobalContext } from '../../hooks/useGlobalContext'
 import { getLenguage } from '../../utils/lenguage'
 import { getHour, getName } from '../../utils/utils'
+import { useNavigate } from 'react-router-dom'
 
 const Schedule = ({ idSchedule, scheduleDay, isCuap }) => {
-  const { globalData } = useGlobalContext()
+  const { globalData, updateData } = useGlobalContext()
   const leng = getLenguage(globalData.lenguage, 'home')
+  const navigate = useNavigate()
 
   const [scheduleData, setScheduleData] = useState()
 
@@ -38,6 +40,12 @@ const Schedule = ({ idSchedule, scheduleDay, isCuap }) => {
       if (seconds.length < 2) seconds = '0' + seconds
       return minutes + ':' + seconds
     } else return '00:00'
+  }
+
+  const handleClickReport = (index) => {
+    console.log(scheduleData.visitasUrgencia[index])
+    updateData({ report: scheduleData.visitasUrgencia[index] })
+    navigate('/app/patients/informe/' + scheduleData.visitasUrgencia[index].paciente._id)
   }
 
   return (
@@ -98,14 +106,14 @@ const Schedule = ({ idSchedule, scheduleDay, isCuap }) => {
                         scheduleData.visitasUrgencia.map((cita, index) => {
                           return (
                               <tr key={index} className={index % 2 ? 'pair' : null}>
-                                <td className='small'><a href={'/app/patients/' + cita.paciente._id}>{getHour(cita.fechaEntrada)}</a></td>
-                                <td><a href={'/app/patients/' + cita.paciente._id}>{getName(cita.paciente.nombre, cita.paciente.apellido1, cita.paciente.apellido2)}</a></td>
-                                <td className='small'><a href={'/app/patients/' + cita.paciente._id}>{cita.paciente.sexo}</a></td>
-                                <td className='small'><a href={'/app/patients/' + cita.paciente._id}>{cita.paciente.edad}</a></td>
-                                <td className='small'><a href={'/app/patients/' + cita.paciente._id}>{cita.triaje}</a></td>
-                                <td className='small'><a href={'/app/patients/' + cita.paciente._id}>{getTime(cita.fechaEntrada)}</a></td>
-                                <td className='small'><a href={'/app/patients/' + cita.paciente._id}>{getTime(cita.fechaAsistencia)}</a></td>
-                                <td><a href={'/app/patients/' + cita.paciente._id}>{cita.comentario}</a></td>
+                                <td className='small' onClick={() => handleClickReport(index)}>{getHour(cita.fechaEntrada)}</td>
+                                <td onClick={() => handleClickReport(index)}>{getName(cita.paciente.nombre, cita.paciente.apellido1, cita.paciente.apellido2)}</td>
+                                <td className='small' onClick={() => handleClickReport(index)}>{cita.paciente.sexo}</td>
+                                <td className='small' onClick={() => handleClickReport(index)}>{cita.paciente.edad}</td>
+                                <td className='small' onClick={() => handleClickReport(index)}>{cita.triaje}</td>
+                                <td className='small' onClick={() => handleClickReport(index)}>{getTime(cita.fechaEntrada)}</td>
+                                <td className='small' onClick={() => handleClickReport(index)}>{getTime(cita.fechaAsistencia)}</td>
+                                <td>{cita.comentario}</td>
                               </tr>
                           )
                         })

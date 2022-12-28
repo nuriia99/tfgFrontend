@@ -10,7 +10,7 @@ export const patientReducer = (state, action) => {
   let patient = null
   switch (action.type) {
     case 'UPDATEPATIENT':
-      return { ...state, patient: action.payload }
+      return { ...state, patient: action.payload.patient }
     case 'UPDATEPATIENTANDAI':
       patient = action.payload.dataPatient
       patient.inteligenciaActiva = action.payload.dataAi

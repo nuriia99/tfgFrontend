@@ -1,4 +1,5 @@
 export const patientEs = {
+  nombre: 'Nombre',
   sexo: 'Sexo',
   edad: 'Edad',
   infoCompleta: 'Enseñar más datos',
@@ -58,6 +59,15 @@ export const patientEs = {
   noPres: 'No hay ninguna prescripción hecha.',
   guardar: 'Guardar nota',
   derivar: 'Derivar',
+  datosInforme: 'Datos del nuevo informe de asistencia urgente',
+  informe: 'Informe de asistencia urgente',
+  datosPaciente: 'Datos del paciente',
+  horaEntrada: 'Hora de entrada',
+  horaAsistencia: 'Hora de asistencia',
+  visitadoPor: 'Visitado por',
+  medico: 'Médico',
+  enfermero: 'Enfermero',
+  cursoClinico: 'Ver curso clínico',
 
   searchMessageMed: 'Escriba el nombre del medicamento o del principio activo',
   searchMessageDiagnosis: 'Escriba el nombre del diagnóstico',
@@ -76,6 +86,7 @@ export const patientEs = {
 }
 
 export const patientCa = {
+  nombre: 'Nom',
   sexo: 'Sexe',
   edad: 'Edat',
   infoCompleta: 'Mostrar més dades',
@@ -135,6 +146,15 @@ export const patientCa = {
   noPres: 'No hi ha cap prescripció feta.',
   guardar: 'Guardar nota',
   derivar: 'Derivar',
+  datosInforme: 'Dades del nou informe d\'assistència urgent',
+  informe: 'Informe d\'assistència urgent',
+  datosPaciente: 'Dades del pacient',
+  horaEntrada: 'Hora d\'entrada',
+  horaAsistencia: 'Hora assistència',
+  visitadoPor: 'Visitat per',
+  medico: 'Metge',
+  enfermero: 'Infermer',
+  cursoClinico: 'Veure curs clínic',
 
   searchMessageMed: 'Escriviu el nom del medicament o del principi actiu',
   searchMessageDiagnosis: 'Escriviu el nom del diagnòstic',
