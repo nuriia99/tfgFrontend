@@ -27,7 +27,7 @@ const VisitsCard = ({ handleClickPrincipalComponent }) => {
       return date1 - date2
     })
     setAppointments(newPatient.citasPrevias)
-    updatePatient(newPatient)
+    updatePatient({ patient: newPatient })
   }, [])
 
   useEffect(() => {
@@ -40,17 +40,31 @@ const VisitsCard = ({ handleClickPrincipalComponent }) => {
         {
           appoitnments
             ? <>
-              <div className="panel_row_header">
-                <p>{leng.visitasActuales}</p>
-                <button id='visits_button' name='visits_button' onClick={() => handleClickPrincipalComponent('visits_button')} className='button_plus'><FontAwesomeIcon id='prescriptions_button' name='prescriptions_button' className='icon' icon={faPlus}/></button>
+              <div className="classic_table no_selected_rows">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>
+                        <div className='row'>
+                          <p>{leng.visitasActuales}</p>
+                          <button id='visits_button' name='visits_button' onClick={() => handleClickPrincipalComponent('visits_button')} className='button_plus'><FontAwesomeIcon id='prescriptions_button' name='prescriptions_button' className='icon' icon={faPlus}/></button>
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {
+                      appoitnments.map((cita, index) => {
+                        return (
+                          <tr key={index}>
+                            <td>{cita.especialidad}</td>
+                          </tr>
+                        )
+                      })
+                    }
+                  </tbody>
+                </table>
               </div>
-              {
-                appoitnments.map((cita, index) => {
-                  return (
-                    <div key={index} className="panel_row">{cita.especialidad}</div>
-                  )
-                })
-              }
             </>
             : null
         }

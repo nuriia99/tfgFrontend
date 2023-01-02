@@ -16,7 +16,9 @@ export const homeEs = {
   tiempo: 'Tiempo',
   tiempoAsistencia: 'T.I.Ass',
   comentario: 'Comentario',
-  nombreCompleto: 'Nombre completo'
+  nombreCompleto: 'Nombre completo',
+  cursoClinico: 'Ver curso clínico',
+  consulta: 'Nueva consulta'
 }
 
 export const homeCa = {
@@ -37,5 +39,7 @@ export const homeCa = {
   tiempo: 'Temps',
   tiempoAsistencia: 'T.I.Ass',
   comentario: 'Comentari',
-  nombreCompleto: 'Nombre complet'
+  nombreCompleto: 'Nombre complet',
+  cursoClinico: 'Veure curs clínic',
+  consulta: 'Nova consulta'
 }

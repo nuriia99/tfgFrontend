@@ -8,6 +8,7 @@ describe('tests related to goals', () => {
     cy.get('[name=inputUsername]').type(username)
     cy.get('[name=inputPassword]').type(username)
     cy.get('#button_submit_login').click()
+    cy.wait(500)
     cy.get('#navbar')
     cy.get('li').eq(0).click({ force: true })
   })
@@ -25,7 +26,7 @@ describe('tests related to goals', () => {
   //   cy.get('.yellow').should('have.css', 'background-color', 'rgb(182, 0, 0)')
   // })
 
-  it('if the result is less than half result, the color is red', () => {
+  it('if the result is bigger than half result, the color is green', () => {
     cy.get('.green').should('have.css', 'background-color', 'rgb(150, 219, 129)')
   })
 
@@ -36,8 +37,8 @@ describe('tests related to goals', () => {
 
   it('show patient list goals works correctly', () => {
     cy.get('.goals_goal_name').eq(1).click()
-    cy.get('.goalListPatients_container_row')
-    cy.get('.goalListPatients_container_row2.values').contains('FAME1111111111').click()
+    cy.get('.listPatients_container_row')
+    cy.get('.listPatients_container_row2.values').contains('FAME1111111111').click()
     cy.wait(500)
     cy.get('.patient_info').contains('FÁTIMA MENÉNDEZ BECERRA')
   })

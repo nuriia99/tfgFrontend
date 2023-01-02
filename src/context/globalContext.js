@@ -1,4 +1,5 @@
 import { React, createContext, useEffect, useReducer } from 'react'
+import CryptoJS from 'crypto-js'
 
 const INITIAL_STATE = {
   worker: null,
@@ -39,10 +40,10 @@ export const globalReducer = (state, action) => {
 }
 
 export const GlobalContextProvider = ({ children }) => {
-  const [globalData, dispatch] = useReducer(globalReducer, JSON.parse(localStorage.getItem('globalContext')) || INITIAL_STATE)
+  const [globalData, dispatch] = useReducer(globalReducer, localStorage.getItem('globalContext') ? JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem('globalContext'), process.env.REACT_APP_CRYPT_WORD).toString(CryptoJS.enc.Utf8)) : INITIAL_STATE)
 
   useEffect(() => {
-    window.localStorage.setItem('globalContext', JSON.stringify(globalData))
+    window.localStorage.setItem('globalContext', CryptoJS.AES.encrypt(JSON.stringify(globalData), process.env.REACT_APP_CRYPT_WORD).toString())
   }, [globalData])
 
   return (

@@ -7,11 +7,12 @@ import useFetch from '../../hooks/useFetch'
 import Search from './patientInfo/Search'
 import DiagnosisList from './patientEntries/DiagnosisList'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCapsules, faMagnifyingGlass, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faCapsules, faCheck, faFileImport, faFloppyDisk, faMagnifyingGlass, faTrash } from '@fortawesome/free-solid-svg-icons'
 import useDelete from '../../hooks/useDelete'
 import AddPrescription from './patientInfo/AddPrescription'
 import { getDate, getHour, getName } from '../../utils/utils'
 import usePost from '../../hooks/usePost'
+import usePatch from '../../hooks/usePatch'
 
 const ReportContainer = () => {
   const { globalData } = useGlobalContext()
@@ -32,7 +33,6 @@ const ReportContainer = () => {
     horaAssistencia: getHour(new Date()),
     atencionMedico: true,
     atencionEnfermero: true,
-    tipoVisita: 'Consulta',
     motivo: '',
     antecedentes: '',
     clinica: '',
@@ -53,9 +53,11 @@ const ReportContainer = () => {
   const [recs, setRecs] = useState()
   const [errormessage, setErrorMessage] = useState('')
   const [showAddPrescription, setShowAddPrescription] = useState(false)
+  const [exit, setExit] = useState(false)
 
   const { fetchData: fetchDataPatient, data: dataPatient } = useFetch()
   const { fetchData: fetchRec, data: dataRec } = useFetch()
+  const { patchData: updatePatientBD, data: dataUpdatePatient } = usePatch()
 
   useEffect(() => {
     fetchDataPatient('/patients/' + patientId)
@@ -192,7 +194,6 @@ const ReportContainer = () => {
       navigate('/app/home')
     }
   }
-  console.log(globalData.report)
 
   const addPrescription = (prescription) => {
     setNewReportData((prev) => {
@@ -213,6 +214,26 @@ const ReportContainer = () => {
 
   const handleClickEnf = () => {
     setNewReportData((prev) => { return { ...prev, atencionEnfermero: !prev.atencionEnfermero } })
+  }
+
+  useEffect(() => {
+    if (dataUpdatePatient) {
+      const newPatient = { ...patientData.patient }
+      newPatient.antecedentes = newReportData.antecedentes
+      updatePatient({ patient: newPatient })
+      setExit(true)
+      setTimeout(function () {
+        setExit(false)
+      }, 5000)
+    }
+  }, [dataUpdatePatient])
+
+  const saveAntecedentes = () => {
+    updatePatientBD('/patients/' + patientData.patient._id + '/updatePatient', { antecedentes: newReportData.antecedentes })
+  }
+
+  const importAntecedentes = () => {
+    setNewReportData((prev) => { return { ...prev, antecedentes: patientData.patient.antecedentes } })
   }
 
   return (
@@ -261,7 +282,13 @@ const ReportContainer = () => {
                           <label>{leng.motivo}</label>
                           <textarea name="motivo" id="" rows="2" onChange={({ target }) => setNewReportData((prev) => { return { ...prev, motivo: target.value } })} value={newReportData.motivo}></textarea>
                           <label>{leng.antecedentes}</label>
-                          <textarea name="antecedentes" id="" rows="4" onChange={({ target }) => setNewReportData((prev) => { return { ...prev, antecedentes: target.value } })} value={newReportData.antecedentes}></textarea>
+                          <div className="antecedentes">
+                            <textarea name="antecedentes" id="" rows="4" onChange={({ target }) => setNewReportData((prev) => { return { ...prev, antecedentes: target.value } })} value={newReportData.antecedentes}></textarea>
+                            <div className="antecedentes_buttons">
+                              <button className='button_classic' type='button' onClick={importAntecedentes}><FontAwesomeIcon className='icon' icon={faFileImport}/></button>
+                              <button className='button_classic'type='button' onClick={saveAntecedentes}><FontAwesomeIcon className={exit ? 'icon exit' : 'icon noexit'} icon={exit ? faCheck : faFloppyDisk}/></button>
+                            </div>
+                          </div>
                           <label>{leng.clinica}</label>
                           <textarea name="clinica" id="" rows="4" onChange={({ target }) => setNewReportData((prev) => { return { ...prev, clinica: target.value } })} value={newReportData.clinica}></textarea>
                         </div>

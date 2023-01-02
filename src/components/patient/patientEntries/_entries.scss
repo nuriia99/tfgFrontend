@@ -64,6 +64,44 @@
           border: 1px solid $BlueIcs;
           position: relative;
           padding-top: 20px;
+          .antecedentes{
+            display: flex;
+            justify-content: space-between;
+            box-sizing: border-box;
+            width: 90%;
+            &_buttons{
+              display: flex;
+              flex-direction: column;
+              justify-content: space-around;
+              button{
+                width: 30px;
+                height: 30px;  
+                margin-right: 0;             
+                color: $LightBlack;
+                &:hover{
+                  color: $navyBlueLight;
+                }
+                .exit{
+                  animation: save 5s;
+                }
+
+                @keyframes save {
+                  0%{
+                    opacity: 0;
+                  }
+                  15%{
+                    opacity: 1;
+                  }
+                  85%{
+                    opacity: 1;
+                  }
+                  100%{
+                    opacity: 0;
+                  }
+                }
+              }
+            }
+          }
         }
 
         &_exploracion{
@@ -79,7 +117,19 @@
           min-width: 200px;
           border: 1px solid $BlueIcs;
           position: relative;
-          padding-top: 20px;
+          padding: 20px 0;
+
+          .estado_diagnostico{
+            display: flex;
+            padding-left: 20px;
+            label{
+              padding: 0 6px 0 0;
+            }
+            p{
+              margin: 0;
+              padding: 0 6px;
+            }
+          }
         }
 
         &_plan_terapeutico{

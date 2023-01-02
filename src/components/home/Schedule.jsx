@@ -5,7 +5,7 @@ import { getLenguage } from '../../utils/lenguage'
 import { getHour, getName } from '../../utils/utils'
 import { useNavigate } from 'react-router-dom'
 
-const Schedule = ({ idSchedule, scheduleDay, isCuap }) => {
+const Schedule = ({ idSchedule, scheduleDay, isCuap, handleClickNewAppointment }) => {
   const { globalData, updateData } = useGlobalContext()
   const leng = getLenguage(globalData.lenguage, 'home')
   const navigate = useNavigate()
@@ -13,6 +13,7 @@ const Schedule = ({ idSchedule, scheduleDay, isCuap }) => {
   const [scheduleData, setScheduleData] = useState()
 
   const { fetchData: fetchDataSearch, data: dataSearch } = useFetch()
+  const [selectedRow, setSelectedRow] = useState()
 
   useEffect(() => {
     const searchSchedule = async () => {
@@ -23,6 +24,7 @@ const Schedule = ({ idSchedule, scheduleDay, isCuap }) => {
 
   useEffect(() => {
     setScheduleData(dataSearch)
+    // setSelectedRow()
   }, [dataSearch])
 
   const getTime = (dateString) => {
@@ -48,6 +50,10 @@ const Schedule = ({ idSchedule, scheduleDay, isCuap }) => {
     navigate('/app/patients/informe/' + scheduleData.visitasUrgencia[index].paciente._id)
   }
 
+  const handleClickRow = (cita) => {
+    setSelectedRow(cita)
+  }
+
   return (
     <div className='schedule'>
       {
@@ -56,29 +62,25 @@ const Schedule = ({ idSchedule, scheduleDay, isCuap }) => {
             {
               !isCuap
                 ? <>
-                  <div className='schedule_table'>
+                  <div className="classic_table">
                     <table>
                       <tbody>
-                        <tr>
+                        <tr className='schedule_header'>
                           <th className='small'>Hora</th>
-                          <th className='big'>{leng.nombre}</th>
-                          <th className='big'>{leng.apellido1}</th>
-                          <th className='big'>{leng.apellido2}</th>
+                          <th className='big'>{leng.nombreCompleto}</th>
                           <th className='small'>{leng.sexo}</th>
                           <th className='small'>{leng.edad}</th>
-                          <th className='small'>T.Vis.</th>
+                          <th className='big'>T.Vis.</th>
                         </tr>
                         {
                           scheduleData.citasPrevias.map((cita, index) => {
                             return (
-                              <tr key={index} className={index % 2 ? 'pair' : null}>
-                                <td><a href={'/app/patients/' + cita.paciente._id}>{getHour(cita.fecha)}</a></td>
-                                <td><a href={'/app/patients/' + cita.paciente._id}>{cita.paciente.nombre}</a></td>
-                                <td><a href={'/app/patients/' + cita.paciente._id}>{cita.paciente.apellido1}</a></td>
-                                <td><a href={'/app/patients/' + cita.paciente._id}>{cita.paciente.apellido2}</a></td>
-                                <td><a href={'/app/patients/' + cita.paciente._id}>{cita.paciente.sexo}</a></td>
-                                <td><a href={'/app/patients/' + cita.paciente._id}>{cita.paciente.edad}</a></td>
-                                <td><a href={'/app/patients/' + cita.paciente._id}>{cita.tipoVisita}</a></td>
+                              <tr key={index} onClick={() => handleClickRow(cita)} className={selectedRow && selectedRow._id === cita._id ? 'pair schedule_row' : 'schedule_row'}>
+                                <td className='small'>{getHour(cita.fecha)}</td>
+                                <td className='big'>{getName(cita.paciente.nombre, cita.paciente.apellido1, cita.paciente.apellido2)}</td>
+                                <td className='small'>{cita.paciente.sexo}</td>
+                                <td className='small'>{cita.paciente.edad}</td>
+                                <td className='big'>{cita.tipoVisita}</td>
                               </tr>
                             )
                           })
@@ -86,6 +88,30 @@ const Schedule = ({ idSchedule, scheduleDay, isCuap }) => {
                       </tbody>
                     </table>
                   </div>
+                  {
+                    selectedRow
+                      ? <div className="schedule_infoPatient">
+                          <div className="schedule_infoPatient_row">
+                            <div className='schedule_infoPatient_row_items'>
+                              <label>CIP: </label>
+                              <p>{selectedRow.paciente.cip}</p>
+                              <label>DNI: </label>
+                              <p>{selectedRow.paciente.dni}</p>
+                            </div>
+                            <a href={'/app/patients/' + selectedRow.paciente._id}><button className='button_classic'>{leng.cursoClinico}</button></a>
+                          </div>
+                          <div className="schedule_infoPatient_row">
+                            <div className='schedule_infoPatient_row_items'>
+                              <label>Direccion: </label>
+                              <p>{selectedRow.paciente.direccion}</p>
+                              <label>Telefono: </label>
+                              <p>{selectedRow.paciente.telefono}</p>
+                            </div>
+                            <button className='button_classic' onClick={() => handleClickNewAppointment(selectedRow.paciente)}>{leng.consulta}</button>
+                          </div>
+                        </div>
+                      : null
+                  }
                 </>
                 : <div className="classic_table">
                   <table>
@@ -105,7 +131,7 @@ const Schedule = ({ idSchedule, scheduleDay, isCuap }) => {
                       {
                         scheduleData.visitasUrgencia.map((cita, index) => {
                           return (
-                              <tr key={index} className={index % 2 ? 'pair' : null}>
+                              <tr key={index} className={index % 2 ? 'pair schedule_row' : 'schedule_row'}>
                                 <td className='small' onClick={() => handleClickReport(index)}>{getHour(cita.fechaEntrada)}</td>
                                 <td onClick={() => handleClickReport(index)}>{getName(cita.paciente.nombre, cita.paciente.apellido1, cita.paciente.apellido2)}</td>
                                 <td className='small' onClick={() => handleClickReport(index)}>{cita.paciente.sexo}</td>

@@ -11,21 +11,13 @@ const PrescriptionRow = ({ prescription, deletePres, modPres }) => {
 
   return (
     <>
-      <div onClick={modPres} className={alert ? 'table_row_values name alert' : 'table_row_values name'}>
-        {prescription.nombreMedicamento}
-      </div>
-      <div onClick={modPres} className='table_row_values component'>
-        {prescription.principioActivo}
-      </div>
-      <div onClick={modPres} className='table_row_values frecuencia'>
-        {prescription.frecuencia}
-      </div>
-      <div onClick={modPres} className='table_row_values duracion'>
-        {prescription.duracion}
-      </div>
-      <div className='table_row_values delete'>
-        <button type='button' onClick={deletePres} className='delete_prescription_button'><FontAwesomeIcon icon={faTrash}/></button>
-      </div>
+      <tr className='prescription_row'>
+        <td onClick={modPres} className={alert ? 'table_row_values name alert' : 'table_row_values name'}>{prescription.nombreMedicamento}</td>
+        <td onClick={modPres}>{prescription.principioActivo}</td>
+        <td className='small' onClick={modPres}>{prescription.frecuencia}</td>
+        <td className='small' onClick={modPres}>{prescription.duracion}</td>
+        <td className='small'><button className='delete_prescription_button' type='button' onClick={deletePres}><FontAwesomeIcon icon={faTrash}/></button></td>
+      </tr>
     </>
   )
 }

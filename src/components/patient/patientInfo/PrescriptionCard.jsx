@@ -28,23 +28,37 @@ const PrescriptionCard = ({ handleClickPrincipalComponent }) => {
   return (
     <>
     <div className="panel">
-      <div className="panel_row_header">
-        <p>{leng.prescripcionesActuales}</p>
-        <button id='prescriptions_button' name='prescriptions_button' onClick={() => handleClickPrincipalComponent('prescriptions_button')} className='button_plus'><FontAwesomeIcon id='prescriptions_button' name='prescriptions_button' className='icon' icon={faPlus}/></button>
-      </div>
-      {
-        uniquePrescription
-          ? <>
+      <div className="classic_table no_selected_rows">
+        <table>
+          <thead>
+            <tr>
+              <th>
+                <div className='row'>
+                  <p>{leng.prescripcionesActuales}</p>
+                  <button id='prescriptions_button' name='prescriptions_button' onClick={() => handleClickPrincipalComponent('prescriptions_button')} className='button_plus'><FontAwesomeIcon id='prescriptions_button' name='prescriptions_button' className='icon' icon={faPlus}/></button>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
             {
-              [...uniquePrescription].map((prescription, index) => {
-                return (
-                  <div key={index} className="panel_row">{prescription}</div>
-                )
-              })
+              uniquePrescription
+                ? <>
+                  {
+                    [...uniquePrescription].map((prescription, index) => {
+                      return (
+                        <tr key={index}>
+                          <td>{prescription}</td>
+                        </tr>
+                      )
+                    })
+                  }
+                </>
+                : null
             }
-          </>
-          : null
-      }
+          </tbody>
+        </table>
+      </div>
     </div>
     </>
   )

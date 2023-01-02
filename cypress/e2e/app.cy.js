@@ -2,6 +2,42 @@
 /* eslint-disable no-undef */
 const username = '1Q2W3E4R'
 
+describe('tests related to schedules', () => {
+  beforeEach(() => {
+    cy.visit('http://localhost:3001/app/login')
+    cy.get('[name=inputUsername]').type(username)
+    cy.get('[name=inputPassword]').type(username)
+    cy.get('#button_submit_login').click()
+    cy.wait(500)
+    cy.get('#navbar')
+  })
+  it('see the schedule works fine', () => {
+    cy.get('.schedule_header').contains('Hora')
+  })
+  it('changing the date works fine', () => {
+    cy.get('.react-date-picker__calendar-button').click()
+    cy.get('.react-calendar__tile').eq(28).click()
+    cy.get('.schedule_row').eq(0).contains('10:30')
+  })
+  it('see the clinical info of a patient works fine', () => {
+    cy.get('.react-date-picker__calendar-button').click()
+    cy.get('.react-calendar__tile').eq(28).click()
+    cy.get('.schedule_row').eq(0).click()
+    cy.get('.button_classic').eq(1).click()
+    cy.get('.patient_info_name').eq(0).contains('FÁTIMA MENÉNDEZ BECERRA')
+  })
+  it('create an appointment works fine', () => {
+    cy.get('[name=inputFem]').click()
+    cy.wait(500)
+    cy.get('.schedule_row').eq(0).click()
+    cy.get('.button_classic').eq(2).click()
+    cy.get('[name=inputTime]').type('23:30')
+    cy.get('.button_classic').eq(1).click()
+    cy.wait(500)
+    cy.get('.schedule_row').contains('23:30')
+  })
+})
+
 describe('settings works correctly', () => {
   beforeEach(() => { // login
     cy.visit('http://localhost:3001/app/login')
@@ -47,7 +83,7 @@ describe('search patient works correctly', () => {
     cy.get('[name=inputName]').type('alex')
     cy.get('[name=inputFem]').click()
     cy.get('#button_submit_search').click()
-    cy.get('.nameValue').eq(0).contains('Alexandra')
+    cy.get('.big').eq(1).contains('ALEXANDRA')
   })
 })
 

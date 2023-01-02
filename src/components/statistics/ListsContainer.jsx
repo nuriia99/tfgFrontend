@@ -6,7 +6,7 @@ import { getLenguage } from '../../utils/lenguage'
 import Search from '../patient/patientInfo/Search'
 import DatePicker from 'react-date-picker'
 import { Select, Option } from '../home/Select'
-import useFetch from '../../hooks/useFetch'
+import usePost from '../../hooks/usePost'
 import { getName } from '../../utils/utils'
 import * as XLSX from 'xlsx/xlsx.mjs'
 import jsPDF from 'jspdf'
@@ -89,7 +89,7 @@ const ListsContainer = () => {
     })
   }
 
-  const { fetchData: fetchDataSearch, data: dataSearch } = useFetch()
+  const { postData: fetchDataSearch, data: dataSearch } = usePost()
   const [dataPatients, setDataPatients] = useState()
 
   const handleClick = async (e) => {
@@ -107,7 +107,7 @@ const ListsContainer = () => {
 
   useEffect(() => {
     if (dataSearch) {
-      const newData = [...dataSearch]
+      const newData = [...dataSearch.data]
       setResult(prev => { return { ...prev, numHombres: 0, numMujeres: 0 } })
       if (parameters.sex === 'M') setResult(prev => { return { ...prev, numHombres: newData.length } })
       else if (parameters.sex === 'F') setResult(prev => { return { ...prev, numMujeres: newData.length } })

@@ -34,7 +34,11 @@ const Search = ({ type, submit }) => {
     } else if (type === 'diagnosis') {
       fetchData('/prescriptions/searchDiagnosis/?name=' + name)
     } else {
-      fetchData('/schedules/getSchedules', { centro: globalData.center, name })
+      if (globalData.schedules === null) fetchData('/schedules/getSchedules', { centro: globalData.center, name })
+      else {
+        updateData({ schedules: dataFetch })
+        splitSchedules(globalData.schedules)
+      }
     }
   }, [name])
 
@@ -101,45 +105,72 @@ const Search = ({ type, submit }) => {
                   {
                     type !== 'schedule'
                       ? <>
-                        <div className="row_header">
-                          <p>{messagesTitle[type]}</p>
-                        </div>
-                        <div className="rows crossbar">
-                          {
-                            data.map((med, index) => {
-                              return (
-                                <div onClick={() => { handleClick(index) }} key={index} className={rowSelected === index ? 'row active' : 'row'}>{med.nombre}</div>
-                              )
-                            })
-                          }
+                        <div className="table">
+                          <div className="classic_table">
+                            <table>
+                              <thead>
+                                <tr>
+                                  <th><p>{messagesTitle[type]}</p></th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {
+                                  data.map((med, index) => {
+                                    return (
+                                      <tr key={index} onClick={() => { handleClick(index) }} className={rowSelected === index ? 'pair med_row' : 'med_row'}>
+                                        <td>{med.nombre}</td>
+                                      </tr>
+                                    )
+                                  })
+                                }
+                              </tbody>
+                            </table>
+                          </div>
                         </div>
                         <button onClick={() => { submit(data[rowSelected]) }} className='button_classic'>{leng.escoger}</button>
                       </>
                       : <>
-                        <div className="row_header">
-                          <p>Agenda activa</p>
-                        </div>
-                        <div className="rows crossbar">
-                          {
-                            activeSchedules.map((med, index) => {
-                              return (
-                                <div onClick={() => { handleClickActive(index) }} key={index} className={rowSelectedActive === index ? 'row active' : 'row'}>{med.nombre}</div>
-                              )
-                            })
-                          }
-                        </div>
-                        <br />
-                        <div className="row_header">
-                          <p>{leng.otrasAgendas}</p>
-                        </div>
-                        <div className="rows crossbar">
-                          {
-                            inactiveSchedules.map((med, index) => {
-                              return (
-                                <div onClick={() => { handleClickInactive(index) }} key={index} className={rowSelectedInactive === index ? 'row active' : 'row'}>{med.nombre}</div>
-                              )
-                            })
-                          }
+                        <div className='tables'>
+                          <div className="classic_table">
+                            <table>
+                              <thead>
+                                <tr>
+                                  <th>Agenda activa</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {
+                                  activeSchedules.map((schedule, index) => {
+                                    return (
+                                      <tr onClick={() => { handleClickActive(index) }} key={index} className={rowSelectedActive === index ? 'pair' : null}>
+                                        <td>{schedule.nombre}</td>
+                                      </tr>
+                                    )
+                                  })
+                                }
+                              </tbody>
+                            </table>
+                          </div>
+                          <div className="classic_table">
+                            <table>
+                              <thead>
+                                <tr>
+                                  <th>{leng.otrasAgendas}</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {
+                                  inactiveSchedules.map((schedule, index) => {
+                                    return (
+                                      <tr onClick={() => { handleClickInactive(index) }} key={index} className={rowSelectedInactive === index ? 'pair' : null}>
+                                        <td>{schedule.nombre}</td>
+                                      </tr>
+                                    )
+                                  })
+                                }
+                              </tbody>
+                            </table>
+                          </div>
                         </div>
                         <button onClick={() => { submit(rowSelectedActive !== undefined ? activeSchedules[rowSelectedActive] : inactiveSchedules[rowSelectedInactive]) }} className='button_classic'>{leng.escoger}</button>
                       </>

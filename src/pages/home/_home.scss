@@ -5,6 +5,12 @@
   display: flex;
   padding: 10px;
   box-sizing: border-box;
+  justify-content: center;
+  .addAppointment{
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid $navyBlueLight;
+  }
   &_container{
     display: flex;
     width: 100%;
@@ -157,85 +163,54 @@
       padding: 40px;
       box-sizing: border-box;
       overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      .classic_table {
+        box-sizing: border-box;
+        height: 78%;
+      }
 
       .schedule{
         height: 100%;
         box-sizing: border-box;
-      }
-      
-      .table{
-        display: grid;
-        padding: 30px;
-        row-gap: 3px;
-        overflow-x: auto;
-        .table_row{
+        
+        &_infoPatient{
+          height: 22%;
+          max-height: 105px;
+          box-sizing: border-box;
+          overflow-y: auto;
+          border: 1px solid $navyBlueLight;
+          padding: 10px;
           display: flex;
-          width: 100%;
-          justify-content: left;
-          column-gap: 3px;
-          &:not(:first-child){
-            cursor: pointer;  
-          }
+          flex-direction: column;
+          justify-content: space-around;
+          &_row{
+            display: flex;
+            justify-content: space-between;
+            column-gap: 20px;
 
-    
-          .name{
-            display: flex;
-            align-items: center;
-            background-color: $BlueIcs;
-            padding: 0 15px;
-            font-weight: 700;
-            border-radius: 10px;
-            height: 40px;
-            width: 100%;
-            min-width: 120px;
-          }
-          .sex{
-            display: flex;
-            align-items: center;
-            padding: 0 15px;
-            font-weight: 700;
-            background-color: $BlueIcs;
-            border-radius: 10px;
-            height: 40px;
-            width: 30%;
-          }
-          .age{
-            display: flex;
-            align-items: center;
-            padding: 0 15px;
-            font-weight: 700;
-            background-color: $BlueIcs;
-            border-radius: 10px;
-            height: 40px;
-            width: 30%;
-          }
-          .nameValue{
-            display: flex;
-            align-items: center;
-            padding: 0 15px;
-            background-color: $BlueIcsLight2;
-            border-radius: 10px;
-            height: 40px;
-            width: 100%;
-            min-width: 120px;
-          }
-          .sexValue{
-            display: flex;
-            align-items: center;
-            padding: 0 15px;
-            background-color: $BlueIcsLight2;
-            border-radius: 10px;
-            height: 40px;
-            width: 30%;
-          }
-          .ageValue{
-            display: flex;
-            align-items: center;
-            padding: 0 15px;
-            background-color: $BlueIcsLight2;
-            border-radius: 10px;
-            height: 40px;
-            width: 30%;
+            &_items{
+              display: flex;
+              align-items: center;
+            }
+            p{
+              margin: 0;
+              padding: 3px;
+              padding-right: 6px;
+            }
+            label{
+              font-weight: 600;
+              padding-right: 6px;
+            }
+            .button_classic{
+              width: 150px;
+            }
+            a{
+              display:block;
+              text-decoration:none;
+              color: black;
+            }
           }
         }
       }

@@ -7,6 +7,9 @@ import { getLenguage } from '../../utils/lenguage'
 import Schedule from '../../components/home/Schedule'
 import DatePicker from 'react-date-picker'
 import Search from '../../components/patient/patientInfo/Search'
+import { getName } from '../../utils/utils'
+import AddAppointment from '../../components/patient/patientInfo/AddAppointment'
+import useFetch from '../../hooks/useFetch'
 
 const Home = () => {
   const { globalData, updateData } = useGlobalContext()
@@ -17,6 +20,8 @@ const Home = () => {
   const [scheduleDay, setScheduleDay] = useState(new Date())
   const [selectS, setSelectS] = useState(false)
   const [isCUAP, setIsCuap] = useState(false)
+  const [selectedRow, setSelectedRow] = useState()
+  const [showAddAppointment, setShowAddAppointment] = useState(false)
   const navigate = useNavigate()
   useEffect(() => {
     if (!worker) navigate('/app/login')
@@ -31,19 +36,24 @@ const Home = () => {
       })
       const centre = globalData.center.slice(0, 4)
       if (centre === 'CUAP') setIsCuap(true)
+      fetchData('/schedules/getSchedules', { centro: globalData.center, name: '' })
     }
   }, [])
+
+  const { fetchData, data: dataFetch } = useFetch()
+  useEffect(() => {
+    if (dataFetch) {
+      updateData({ schedules: dataFetch })
+    }
+  }, [dataFetch])
 
   const handleSearch = (patients) => {
     setPatients(patients)
   }
-  const handleClick = (e) => {
-    navigate('/app/patients/' + e.currentTarget.id)
-  }
 
   const submitSchedule = (schedule) => {
     if (schedule) {
-      setAgenda(schedule._id)
+      setAgenda(schedule)
       setScheduleDay(new Date())
       setPatients()
     }
@@ -55,78 +65,121 @@ const Home = () => {
     setPatients()
   }
 
+  const handleClickRow = (paciente) => {
+    console.log(paciente)
+    setSelectedRow(paciente)
+  }
+  const handleClickNewAppointment = (paciente) => {
+    if (paciente._id) setSelectedRow(paciente)
+    setShowAddAppointment(true)
+  }
+
   return (
     worker
       ? <div>
       <Navbar/>
       <div className="home">
         {selectS ? <Search type='schedule' submit={submitSchedule}/> : null}
-        <div className="home_container">
-          <div className="home_container_left">
-            {
-              agenda
-                ? <>
-                  {
-                    !isCUAP
-                      ? <>
-                        <div className="home_container_left_schedule">
-                        <span className="home_container_left_schedule_title">{leng.busquedaAgenda}</span>
-                          <div className="home_container_left_schedule_container">
-                            {leng.visitasDia}
-                            <DatePicker className='DatePicker' format='dd/MM/yyyy' clearIcon={null} autoFocus={false} onChange={(e) => setScheduleDay(e)} value={scheduleDay} />
-                            <button onClick={() => setSelectS(true)} id='button_submit_search' className='button_classic'>{leng.cambiarAgenda}</button>
+        {
+          showAddAppointment
+            ? <AddAppointment type='paciente' patient={selectedRow} quitAddAppointment={() => { setShowAddAppointment(false) }}/>
+            : <>
+            <div className="home_container">
+              <div className="home_container_left">
+                {
+                  agenda
+                    ? <>
+                      {
+                        !isCUAP
+                          ? <>
+                            <div className="home_container_left_schedule">
+                            <span className="home_container_left_schedule_title">{leng.busquedaAgenda}</span>
+                              <div className="home_container_left_schedule_container">
+                                {leng.visitasDia}
+                                <DatePicker className='DatePicker' format='dd/MM/yyyy' clearIcon={null} autoFocus={false} onChange={(e) => setScheduleDay(e)} value={scheduleDay} />
+                                <button onClick={() => setSelectS(true)} id='button_submit_search' className='button_classic'>{leng.cambiarAgenda}</button>
+                              </div>
+                            </div>
+                          </>
+                          : <div className="home_container_left_schedule">
+                              <span className="home_container_left_schedule_title">{leng.busquedaAgenda}</span>
+                              <div className="home_container_left_schedule_container">
+                                <button onClick={refreshSchedule} id='button_submit_search' className='button_classic'>Refrescar</button>
+                              </div>
                           </div>
-                        </div>
-                      </>
-                      : <div className="home_container_left_schedule">
-                          <span className="home_container_left_schedule_title">{leng.busquedaAgenda}</span>
-                          <div className="home_container_left_schedule_container">
-                            <button onClick={refreshSchedule} id='button_submit_search' className='button_classic'>Refrescar</button>
-                          </div>
+                      }
+                      <div className="home_container_left_search">
+                        <SearchForm handleSearch={handleSearch}/>
                       </div>
-                  }
-                  <div className="home_container_left_search">
-                    <SearchForm handleSearch={handleSearch}/>
-                  </div>
-                </>
-                : null
-            }
-          </div>
-          <div className="home_container_right">
-              {
-                patients
-                  ? <div className="table">
-                    <div className="table_row">
-                      <div className="name">{leng.nombre}</div>
-                      <div className="name">{leng.apellido1}</div>
-                      <div className="name">{leng.apellido2}</div>
-                      <div className="sex">{leng.sexo}</div>
-                      <div className="age">{leng.edad}</div>
-                    </div>
-                    {
-                      patients.map((patient, index) => {
-                        return (
-                          <div key={index} className="table_row" id={patient._id} onClick={handleClick}>
-                            <div className="nameValue">{patient.nombre}</div>
-                            <div className="nameValue">{patient.apellido1}</div>
-                            <div className="nameValue">{patient.apellido2}</div>
-                            <div className="sexValue">{patient.sexo}</div>
-                            <div className="ageValue">{patient.edad}</div>
-                          </div>
-                        )
-                      })
-                    }
-                  </div>
-                  : <>
+                    </>
+                    : null
+                }
+              </div>
+              <div className="home_container_right">
                   {
-                    agenda
-                      ? <Schedule idSchedule={agenda} scheduleDay={scheduleDay} isCuap={isCUAP}/>
-                      : null
+                    patients
+                      ? <>
+                      <div className="classic_table">
+                        <table>
+                          <thead>
+                            <tr>
+                              <th className='big'>{leng.nombreCompleto}</th>
+                              <th className='small'>{leng.sexo}</th>
+                              <th className='small'>{leng.edad}</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {
+                              patients.map((patient, index) => {
+                                return (
+                                  <tr key={index} className={selectedRow && selectedRow._id === patient._id ? 'pair schedule_row' : 'schedule_row'} id={patient._id} onClick={() => handleClickRow(patient)}>
+                                    <td className="big">{getName(patient.nombre, patient.apellido1, patient.apellido2)}</td>
+                                    <td className="small">{patient.sexo}</td>
+                                    <td className="small">{patient.edad}</td>
+                                  </tr>
+                                )
+                              })
+                            }
+                          </tbody>
+                        </table>
+                      </div>
+                      {
+                        selectedRow
+                          ? <div className="schedule_infoPatient">
+                              <div className="schedule_infoPatient_row">
+                                <div className='schedule_infoPatient_row_items'>
+                                  <label>CIP: </label>
+                                  <p>{selectedRow.cip}</p>
+                                  <label>DNI: </label>
+                                  <p>{selectedRow.dni}</p>
+                                </div>
+                                <a href={'/app/patients/' + selectedRow._id}><button className='button_classic'>{leng.cursoClinico}</button></a>
+                              </div>
+                              <div className="schedule_infoPatient_row">
+                                <div className='schedule_infoPatient_row_items'>
+                                  <label>Direccion: </label>
+                                  <p>{selectedRow.direccion}</p>
+                                  <label>Telefono: </label>
+                                  <p>{selectedRow.telefono}</p>
+                                </div>
+                                <button onClick={handleClickNewAppointment} className='button_classic'>{leng.consulta}</button>
+                              </div>
+                            </div>
+                          : null
+                      }
+                      </>
+                      : <>
+                      {
+                        agenda
+                          ? <Schedule idSchedule={agenda._id} scheduleDay={scheduleDay} isCuap={isCUAP} handleClickNewAppointment={handleClickNewAppointment}/>
+                          : null
+                      }
+                      </>
                   }
-                  </>
-              }
-          </div>
-        </div>
+              </div>
+            </div>
+          </>
+        }
       </div>
     </div>
       : null

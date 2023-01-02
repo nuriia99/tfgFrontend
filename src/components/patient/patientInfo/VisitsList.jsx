@@ -4,7 +4,7 @@ import { usePatientContext } from '../../../hooks/usePatientContext'
 import { getLenguage } from '../../../utils/lenguage'
 import { getDate, getHour, getName } from '../../../utils/utils'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faCircleExclamation, faTrash } from '@fortawesome/free-solid-svg-icons'
 import useDelete from '../../../hooks/useDelete'
 import AddAppointment from './AddAppointment'
 
@@ -19,21 +19,23 @@ const VisitsList = () => {
   const [newAppointments, setNewAppointments] = useState()
   const [showAddAppointment, setShowAddAppointment] = useState(false)
   const [modifying, setModifying] = useState()
+  const [deleteIndex, setDeleteIndex] = useState()
 
-  const deleteAppointment = async (index) => {
-    console.log(appointments[index])
+  const deleteAppointment = async () => {
+    const index = deleteIndex
     await deleteData('/schedules/deleteAppointment/' + appointments[index]._id, { paciente: appointments[index].paciente, agenda: appointments[index].agenda })
     setNewAppointments(() => {
       const arr = [...patientData.patient.citasPrevias]
       arr.splice(index, 1)
       return arr
     })
+    setDeleteIndex()
   }
   useEffect(() => {
     if (data) {
       const newPatient = { ...patientData.patient }
       newPatient.citasPrevias = newAppointments
-      updatePatient(newPatient)
+      updatePatient({ patient: newPatient })
     }
   }, [data])
 
@@ -45,44 +47,64 @@ const VisitsList = () => {
   return (
     <>
       <div className="visits">
+        {
+          deleteIndex || deleteIndex === 0
+            ? <>
+              <div className="overlay">
+                <div className="overlay_box">
+                  <FontAwesomeIcon icon={faCircleExclamation} className='icon'/>
+                  <p>{leng.seguroVisita}</p>
+                  <div className="overlay_box_buttons">
+                    <button type='button' onClick={deleteAppointment} className='button_classic accept'>Eliminar</button>
+                    <button type='button' onClick={() => setDeleteIndex()} className='button_classic cancel'>{leng.cancelar}</button>
+                  </div>
+                </div>
+              </div>
+            </>
+            : null
+        }
         <div className="visits_container">
           {
             !showAddAppointment
               ? <>
-                <button className='button_classic new_appointment_button' onClick={() => setShowAddAppointment(true)}>Crear cita</button>
+                <button className='button_classic new_appointment_button' onClick={() => setShowAddAppointment(true)}>{leng.consulta}</button>
                 <div className="visits_container_table">
                   {
                     appointments
-                      ? <table>
-                        <tbody>
-                          <tr>
-                            <th>Hora</th>
-                            <th>{leng.fecha}</th>
-                            <th>{leng.centro}</th>
-                            <th>{leng.sanitario}</th>
-                            <th>{leng.especialidad}</th>
-                            <th>{leng.tipoVisita}</th>
-                            <th>{leng.motivo}</th>
-                            <th></th>
-                          </tr>
+                      ? <div className="classic_table">
+                        <table>
+                          <thead>
+                            <tr>
+                              <th className='small'>Hora</th>
+                              <th className='small'>{leng.fecha}</th>
+                              <th className='small'>{leng.centro}</th>
+                              <th>{leng.sanitario}</th>
+                              <th className='small'>{leng.especialidad}</th>
+                              <th className='small'>{leng.tipoVisita}</th>
+                              <th>{leng.motivo}</th>
+                              <th className='small'></th>
+                            </tr>
+                          </thead>
+                          <tbody>
                           {
                             appointments.map((appointment, index) => {
                               return (
-                                <tr key={index}>
-                                  <td onClick={() => handleClickAppointment(index)}>{getHour(appointment.fecha)}</td>
-                                  <td onClick={() => handleClickAppointment(index)}>{getDate(appointment.fecha)}</td>
-                                  <td onClick={() => handleClickAppointment(index)}>{appointment.centro}</td>
+                                <tr className='visits_row' key={index}>
+                                  <td className='small' onClick={() => handleClickAppointment(index)}>{getHour(appointment.fecha)}</td>
+                                  <td className='small' onClick={() => handleClickAppointment(index)}>{getDate(appointment.fecha)}</td>
+                                  <td className='small' onClick={() => handleClickAppointment(index)}>{appointment.centro}</td>
                                   <td onClick={() => handleClickAppointment(index)}>{getName(appointment.trabajador.nombre, appointment.trabajador.apellido1, appointment.trabajador.apellido2)}</td>
-                                  <td onClick={() => handleClickAppointment(index)}>{appointment.especialidad}</td>
-                                  <td onClick={() => handleClickAppointment(index)}>{appointment.tipoVisita}</td>
+                                  <td className='small' onClick={() => handleClickAppointment(index)}>{appointment.especialidad}</td>
+                                  <td className='small' onClick={() => handleClickAppointment(index)}>{appointment.tipoVisita}</td>
                                   <td onClick={() => handleClickAppointment(index)}>{appointment.motivo}</td>
-                                  <td><button type='button' onClick={() => { deleteAppointment(index) }} className='delete_appointment_button'><FontAwesomeIcon icon={faTrash}/></button></td>
+                                  <td className='small' onClick={() => { setDeleteIndex(index) }}><button type='button' className='delete_appointment_button'><FontAwesomeIcon icon={faTrash}/></button></td>
                                 </tr>
                               )
                             })
                           }
-                        </tbody>
-                      </table>
+                          </tbody>
+                        </table>
+                      </div>
                       : null
                   }
                 </div>

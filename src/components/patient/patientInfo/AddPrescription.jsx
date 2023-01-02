@@ -57,10 +57,6 @@ const AddPrescription = ({ diagnosis, quitAddPrescription, addPrescription, modi
   }, [])
 
   useEffect(() => {
-    if (dataRecs) console.log(dataRecs)
-  }, [dataRecs])
-
-  useEffect(() => {
     setInsFar('')
     setInsPac('')
   }, [prescription.nombreMedicamento])
@@ -136,7 +132,7 @@ const AddPrescription = ({ diagnosis, quitAddPrescription, addPrescription, modi
       const newPrescription = { ...newPres, _id: dataPres.data._id }
       const newPatient = { ...patientData.patient }
       newPatient.prescripciones.push(newPrescription)
-      updatePatient(newPatient)
+      updatePatient({ patient: newPatient })
       if (addPrescription) addPrescription(newPrescription)
       else quitAddPrescription()
     }
@@ -153,7 +149,7 @@ const AddPrescription = ({ diagnosis, quitAddPrescription, addPrescription, modi
         return pres
       })
       newPatient.prescripciones = newPrescriptions
-      updatePatient(newPatient)
+      updatePatient({ patient: newPatient })
       quitAddPrescription()
     }
   }, [dataPatch])

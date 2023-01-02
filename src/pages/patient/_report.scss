@@ -109,6 +109,44 @@
         padding: 20px 0;
         display: flex;
         flex-direction: column;
+        .antecedentes{
+          display: flex;
+          justify-content: space-between;
+          box-sizing: border-box;
+          width: 90%;
+          &_buttons{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            button{
+              width: 30px;
+              height: 30px;  
+              margin-right: 0;             
+              color: $LightBlack;
+              &:hover{
+                color: $navyBlueLight;
+              }
+              .exit{
+                animation: save 5s;
+              }
+
+              @keyframes save {
+                0%{
+                  opacity: 0;
+                }
+                15%{
+                  opacity: 1;
+                }
+                85%{
+                  opacity: 1;
+                }
+                100%{
+                  opacity: 0;
+                }
+              }
+            }
+          }
+        }
       }
 
       &_exploracion{

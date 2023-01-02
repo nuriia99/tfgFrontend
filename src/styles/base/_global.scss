@@ -157,7 +157,7 @@ body, html{
 //buttons
 .button_classic {
   width: 100%;
-  height: 40px;
+  height: 35px;
   border-radius: 0.3125rem;
   border: $navyBlueLight solid 1px;
   background-color: $BlueIcs;
@@ -187,6 +187,9 @@ body, html{
   font-size: 14px;
   font-weight: 700;
   color: $LightBlack;
+  &:hover{
+    background-color: rgb(166, 217, 255);
+  }
 }
 
 .button_tag.active {
@@ -440,7 +443,7 @@ input, textarea{
   width: 100%;
   max-height: 100%;
   box-sizing: border-box;
-  font-size: 0.8125em;
+  font-size: 0.9375em;
   overflow-y: auto;
   table{
     width: 100%;
@@ -450,12 +453,15 @@ input, textarea{
         cursor: pointer;
       }
     }
-    tr{
+    tr, thead{
       width: 100%;
     }
     td, th {
       padding: 3px;
       width: 25%;
+      &.alert{
+        color: $RedError;
+      }
     }
     .small{
       width: 10%;
@@ -463,12 +469,34 @@ input, textarea{
     tr.pair{
       background-color: $BlueIcsLight;
     }
-    th{
-      border: 1px $navyBlueLight solid;
+    tbody tr{
+      &:hover{
+        background-color: $BlueIcsLight;
+        button {
+          background-color: $BlueIcsLight;
+        }
+      }
+    }
+    thead tr{
       background-color: $navyBlueLight;
+    }
+    th{
+      background-color: $navyBlueLight;
+      border: 1px $navyBlueLight solid;
       color: white;
       position: sticky;
-      top: 0;
+      top: -1px;
+      .row{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-sizing: border-box;
+        padding: 3px 10px;
+        p{
+          margin: 0;
+        }
+      }
     }
     td{
       border: 1px $navyBlueLight solid;
@@ -478,13 +506,22 @@ input, textarea{
       text-decoration:none;
       color: black;
     }
-    button{
+    button:not(.button_plus){
       background-color: white;
       cursor: pointer;
       border: 0;
       &:hover{
         color: $RedError;
       }
+    }
+  }
+}
+
+.classic_table.no_selected_rows{
+  tbody tr{
+    cursor: auto;
+    &:hover{
+      background-color: white;
     }
   }
 }
@@ -506,4 +543,48 @@ input, textarea{
   border-right: 1px solid $BlueIcs;
   background-color: $BlueIcsLight2;
   letter-spacing: 0.0688rem;
+}
+
+//overlay
+
+.overlay{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: rgba(51,51,51,0.7);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &_box{
+    width: fit-content;
+    height: fit-content;
+    background-color: white;
+    border-radius: 10px;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .icon{
+      width: 80px;
+      height: 80px;
+      color: $RedError;
+    }
+    &_buttons{
+      display: flex;
+      column-gap: 20px;
+      button{
+        width: 80px;
+        &.cancel{
+          background-color: $RedErrorLight;
+          border: 1px solid $RedError;
+          &:hover{
+            background-color: $RedErrorLight2;
+          }
+        }
+      }
+    }
+  }
 }

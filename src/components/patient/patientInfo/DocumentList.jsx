@@ -4,17 +4,27 @@ import { usePatientContext } from '../../../hooks/usePatientContext'
 import { getLenguage } from '../../../utils/lenguage'
 import { getDate } from '../../../utils/utils'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faCircleExclamation, faTrash } from '@fortawesome/free-solid-svg-icons'
 import useDelete from '../../../hooks/useDelete'
 import axios from 'axios'
-import { saveAs } from 'file-saver'
 
 const DocumentsList = () => {
   const { globalData } = useGlobalContext()
   const { patientData, updatePatient } = usePatientContext()
   const leng = getLenguage(globalData.lenguage, 'patient')
-  console.log(patientData.patient)
+
   const [documentos, setDocumentos] = useState(patientData.patient.documentos)
+  const [deleteIndex, setDeleteIndex] = useState()
+
+  const { deleteData, data } = useDelete()
+
+  useEffect(() => {
+    if (data) {
+      const newPatient = { ...patientData.patient }
+      newPatient.documentos = documentos
+      updatePatient({ patient: newPatient })
+    }
+  }, [data])
 
   const openPdf = (e) => {
     const params = { reportName: e.target.getAttribute('name') }
@@ -27,57 +37,66 @@ const DocumentsList = () => {
     )
       .then((res) => {
         const pdf = new Blob([res.data], { type: 'application/pdf' })
-        // window.open(pdf, '_blank', 'noopener,noreferrer')
-        saveAs(pdf, e.target.getAttribute('name'))
+        const url = URL.createObjectURL(pdf)
+        window.open(url, '_blank', 'noopener,noreferrer')
       })
   }
 
-  const { deleteData, data } = useDelete()
-  const deleteDoc = (index) => {
+  const deleteDoc = () => {
+    const index = deleteIndex
     deleteData('/patients/' + patientData.patient._id + '/deleteDoc/' + documentos[index]._id, { reportName: documentos[index].pdfUrl })
     setDocumentos(() => {
       const arr = [...documentos]
       arr.splice(index, 1)
       return arr
     })
+    setDeleteIndex()
   }
-
-  useEffect(() => {
-    if (data) {
-      const newPatient = { ...patientData.patient }
-      newPatient.documentos = documentos
-      updatePatient({ patient: newPatient })
-    }
-  }, [data])
 
   return (
     <>
       <div className="documents">
+        {
+          deleteIndex || deleteIndex === 0
+            ? <>
+              <div className="overlay">
+                <div className="overlay_box">
+                  <FontAwesomeIcon icon={faCircleExclamation} className='icon'/>
+                  <p>{leng.seguroDocumento}</p>
+                  <div className="overlay_box_buttons">
+                    <button type='button' onClick={deleteDoc} className='button_classic accept'>Eliminar</button>
+                    <button type='button' onClick={() => setDeleteIndex()} className='button_classic cancel'>{leng.cancelar}</button>
+                  </div>
+                </div>
+              </div>
+            </>
+            : null
+        }
         <div className="documents_container">
           <div className="documents_container_table">
-            <div className="table">
-              <div className="table_row">
-                <div className="table_row_title name">{leng.nombreDoc}</div>
-                <div className="table_row_title date">{leng.fechaSubida}</div>
-                <div className="table_row_title delete"></div>
-              </div>
-              {
-                documentos.map((doc, index) => {
-                  return (
-                    <div key={index} className="table_row">
-                      <div className='table_row_values nameValue' onClick={openPdf} name={doc.pdfUrl}>
-                        {doc.nombre}
-                      </div>
-                      <div id={'table_row_' + index} onClick={openPdf} name={doc.pdfUrl} className='table_row_values dateValue'>
-                        {getDate(doc.fechaSubida)}
-                      </div>
-                      <div className='table_row_values delete'>
-                        <button type='button' onClick={() => { deleteDoc(index) }} className='delete_prescription_button'><FontAwesomeIcon icon={faTrash}/></button>
-                      </div>
-                    </div>
-                  )
-                })
-              }
+            <div className="classic_table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>{leng.nombreDoc}</th>
+                    <th className='small'>{leng.fechaSubida}</th>
+                    <th className='small'></th>
+                  </tr>
+                </thead>
+                <tbody>
+                {
+                  documentos.map((doc, index) => {
+                    return (
+                      <tr className='documents_row' key={index}>
+                        <td onClick={openPdf} name={doc.pdfUrl}>{doc.nombre}</td>
+                        <td className={'small date_' + index} onClick={openPdf} name={doc.pdfUrl} >{getDate(doc.fechaSubida)}</td>
+                        <td className='small' onClick={() => { setDeleteIndex(index) }}><button type='button' className='delete_prescription_button'><FontAwesomeIcon icon={faTrash}/></button></td>
+                      </tr>
+                    )
+                  })
+                }
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

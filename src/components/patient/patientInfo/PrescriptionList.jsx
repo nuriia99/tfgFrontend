@@ -6,7 +6,7 @@ import PrescriptionRow from './PrescriptionRow'
 import useDelete from '../../../hooks/useDelete'
 import AddPrescription from './AddPrescription'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCapsules } from '@fortawesome/free-solid-svg-icons'
+import { faCapsules, faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
 
 // patient={{ allergy: globalData.patient.inteligenciaActiva.alergias, prescriptions: globalData.patient.prescripciones }}
 const PrescriptionList = () => {
@@ -16,6 +16,7 @@ const PrescriptionList = () => {
   const allergy = patientData.patient.inteligenciaActiva.at(-1).at(-1)
   const currentDate = new Date()
   const [prescriptions, setPrescriptions] = useState()
+  const [deleteIndex, setDeleteIndex] = useState()
 
   useEffect(() => {
     setPrescriptions(() => {
@@ -35,19 +36,19 @@ const PrescriptionList = () => {
 
   const { deleteData: delPres, data: dataDelete } = useDelete()
 
-  const deletePres = (index) => {
+  const deletePres = () => {
+    const index = deleteIndex
     delPres('/prescriptions/deletePrescription/' + prescriptions[index]._id, { worker: globalData.worker._id, centre: globalData.center, removedPrincipioActivo: prescriptions[index].principioActivo, patient: prescriptions[index].paciente })
     setPrescriptions((prev) => {
       const arr = [...prev]
       arr.splice(index, 1)
       const newPatient = { ...patientData.patient }
       newPatient.prescripciones = arr
-      updatePatient(newPatient)
+      updatePatient({ patient: newPatient })
       return arr
     })
+    setDeleteIndex()
   }
-
-  console.log(prescriptions)
 
   useEffect(() => {
     if (dataDelete) console.log(dataDelete)
@@ -69,6 +70,22 @@ const PrescriptionList = () => {
   return (
     <>
       <div className="prescriptions">
+        {
+            deleteIndex || deleteIndex === 0
+              ? <>
+                <div className="overlay">
+                  <div className="overlay_box">
+                    <FontAwesomeIcon icon={faCircleExclamation} className='icon'/>
+                    <p>{leng.seguroPrescripcion}</p>
+                    <div className="overlay_box_buttons">
+                      <button type='button' onClick={deletePres} className='button_classic accept'>Eliminar</button>
+                      <button type='button' onClick={() => setDeleteIndex()} className='button_classic cancel'>{leng.cancelar}</button>
+                    </div>
+                  </div>
+                </div>
+              </>
+              : null
+          }
         <div className="prescriptions_container">
           {
             !showAddPrescription
@@ -84,32 +101,34 @@ const PrescriptionList = () => {
                         {allergy}
                       </div>
                       <div className="prescriptions_container_button"><button className='capsules_button' onClick={() => { setShowAddPrescription(true) }}><FontAwesomeIcon className='icon' icon={faCapsules}/></button></div>
-                      <div className="prescriptions_container_table crossbar">
-                        <div className="table">
-                          <div className="table_row">
-                            <div className="table_row_title name">{leng.nombreMedicamento}</div>
-                            <div className="table_row_title component">{leng.principioActivo}</div>
-                            <div className="table_row_title frecuencia">{leng.frecuencia}</div>
-                            <div className="table_row_title duracion">{leng.duracion}</div>
-                            <div className="table_row_title delete"></div>
-                          </div>
-                        </div>
-                        <div className="table">
-                          {
-                            prescriptions
-                              ? <>
-                              {
-                                prescriptions.map((prescription, index) => {
-                                  return (
-                                    <div key={index} className="table_row">
-                                      <PrescriptionRow prescription={prescription} deletePres={() => { deletePres(index) }} modPres={() => { modPres(prescription) }}/>
-                                    </div>
-                                  )
-                                })
-                              }
-                              </>
-                              : null
-                          }
+                      <div className="prescriptions_container_table">
+                        <div className="classic_table">
+                          <table>
+                            <thead>
+                              <tr>
+                                <th>{leng.nombreMedicamento}</th>
+                                <th>{leng.principioActivo}</th>
+                                <th className='small'>{leng.frecuencia}</th>
+                                <th className='small'>{leng.duracion}</th>
+                                <th className='small'></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                            {
+                              prescriptions
+                                ? <>
+                                {
+                                  prescriptions.map((prescription, index) => {
+                                    return (
+                                      <PrescriptionRow key={index} prescription={prescription} deletePres={() => { setDeleteIndex(index) }} modPres={() => { modPres(prescription) }}/>
+                                    )
+                                  })
+                                }
+                                </>
+                                : null
+                            }
+                            </tbody>
+                          </table>
                         </div>
                       </div>
                   </>

@@ -82,7 +82,13 @@ export const patientEs = {
   errorSolapa: 'El trabajador ya tiene una visita en este periodo de tiempo.',
   errorPasado: 'La fecha de la visita ha de ser mayor que la actual.',
   errorTurno: 'El trabajador no tiene ningún turno en ese periodo de tiempo.',
-  otrasAgendas: 'Otras agendas'
+  otrasAgendas: 'Otras agendas',
+  consulta: 'Nueva consulta',
+  cancelar: 'Cancelar',
+  seguroDocumento: '¿Seguro que quieres eliminar el documento?',
+  seguroVisita: '¿Seguro que quieres eliminar la visita?',
+  seguroPrescripcion: '¿Seguro que quieres eliminar la prescripción?',
+  seguroNota: '¿Seguro que quieres eliminar la nota?'
 }
 
 export const patientCa = {
@@ -169,5 +175,11 @@ export const patientCa = {
   errorSolapa: 'El treballador ja té una visita en aquest període de temps.',
   errorPasado: 'La data de la visita ha de ser més gran que l\'actual.',
   errorTurno: 'El treballador no té cap torn en aquest període de temps.',
-  otrasAgendas: 'Altres agendes'
+  otrasAgendas: 'Altres agendes',
+  consulta: 'Nova consulta',
+  cancelar: 'Cancel·lar',
+  seguroDocumento: 'Segur que vols eliminar el document?',
+  seguroVisita: 'Segur que vols eliminar la visita?',
+  seguroPrescripcion: 'Segur que vols eliminar la prescripció?',
+  seguroNota: 'Segur que vols eliminar la nota?'
 }

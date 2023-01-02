@@ -38,13 +38,11 @@ const ProfileSettings = () => {
   }
 
   const { patchData: postLenguage, data: dataLenguage, loading, error } = usePatch()
-  console.log(globalData)
   useEffect(() => {
     if (dataLenguage) {
       if (dataLenguage.request.status === 200) {
         updateData({ worker: globalData.worker, token: globalData.token, center: currentData.currentCenter, lenguage: currentData.currentLenguage === 'Español' ? 'es' : 'ca', role: currentData.currentRole })
         leng = getLenguage(currentData.currentLenguage === 'Español' ? 'es' : 'ca', 'settings')
-        console.log(leng)
       }
     }
   }, [dataLenguage])

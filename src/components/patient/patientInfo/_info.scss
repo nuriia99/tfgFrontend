@@ -157,9 +157,8 @@
         box-sizing: border-box;
         padding: 3px 10px;
         text-align: center;
-        width: 130px;
+        width: 106px;
         background-color: $BlueIcsLight2;
-        border-radius: 10px;
         border: 1px solid white;
         min-height: 35px;
       }
@@ -168,12 +167,11 @@
         display: flex;
         align-items: center;
         background-color: $navyBlue;
-        width: 260px;
+        width: 228px;
         color: white;
         left: 0;
         z-index: 1;
         position: sticky; 
-        border-radius: 10px;
         padding-left: 20px;
         box-sizing: border-box;
         min-height: 35px;
@@ -184,10 +182,9 @@
         align-items: center;
         background-color: $BlueIcs;
         position: sticky; 
-        width: 260px;
+        width: 228px;
         left: 0;
         z-index: 1;
-        border-radius: 10px;
         border: 1px solid white;
         padding-left: 20px;
         box-sizing: border-box;
@@ -201,9 +198,8 @@
         box-sizing: border-box;
         padding: 3px 10px;
         text-align: center;
-        width: 130px;
+        width: 106px;
         background-color: $BlueIcs;
-        border-radius: 10px;
         border: 1px solid white;
         min-height: 35px;
       }
@@ -218,10 +214,9 @@
         padding: 3px 10px;
         text-align: center;
         position: sticky;
-        width: 180px;
+        width: 126px;
         right: 0;
         z-index: 1;
-        border-radius: 10px;
         min-height: 35px;
       }
 
@@ -231,10 +226,9 @@
         align-items: center;
         justify-content: center;
         right: 0;
-        width: 180px;
+        width: 126px;
         z-index: 1;
-        background-color: $BlueIcsLight2;
-        border-radius: 10px;
+        background-color: $BlueIcs;
         border: 1px solid white;
         text-align: center;
         min-height: 35px;
@@ -262,75 +256,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      .table{
-        display: grid;
-        padding: 30px;
-        overflow-x: auto;
-        box-sizing: border-box;
-
-        .table_row{
-          display: flex;
-          width: 100%;
-          justify-content: left;
-          &:not(:first-child){
-            cursor: pointer;  
-          }
-
-          &_title{
-            padding: 10px;
-            background-color: $navyBlueLight;
-            color: white;
-            border: 1px solid $navyBlueLight;
-            display: flex;
-            align-items: center;
-
-            &.name{
-              width: 500px;
-            }
-            &.date{
-              width: 200px;
-            }
-            &.delete{
-              width: 20px;
-            }
-          }
-
-          &_values{
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            background-color: $BlueIcsLight2;
-            border: 1px solid $BlueIcs;
-            border-top: 0;
-            font-size: 12px;
-
-            &:not(:last-child){
-              border-right: 1px solid $BlueIcsLight2;
-            }
-
-            
-  
-            &.nameValue{
-              width: 500px;
-            }
-
-            &.dateValue{
-              width: 200px;
-            }
-
-            &.delete{
-              width: 20px;
-              button{
-                background-color: $BlueIcsLight2;
-                border: 0;
-                &:hover{
-                  color: $RedError;
-                }
-              }
-            }
-          }
-        }
-      }
+      height: 90%
     }
     
 
@@ -339,47 +265,8 @@
 
 .panel{
   width: 90%;
+  height: 90%;
   overflow-y: auto;
-
-  &_row_header{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: $navyBlueLight;
-    border: 1px solid $navyBlueLight;
-    padding: 5px 10px;
-    color: white;
-    p{
-      margin: 0;
-    }
-    button{
-      &:hover{
-        background-color: $BlueIcsLight;
-      }
-    }
-  }
-  &_row{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: $BlueIcsLight2;
-    padding: 5px 10px;
-    border-radius: 10p;
-    border: 1px solid $BlueIcs;
-    &:not(:last-child){
-      border-bottom: 0;
-    }
-    p{
-      margin: 0;
-    }
-
-    &.activable{
-      cursor: pointer;
-      &:hover{
-        background-color: $BlueIcsLight;
-      }
-    }
-  }
 }
 
 .prescriptions{
@@ -801,20 +688,29 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
 
   &_container{
     height: fit-content;
+    max-height: 100%;
     width: 70%;
+    padding: 20px 0;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     background-color: white;
-    
-    padding: 40px 0;
+    box-sizing: border-box;
 
     .button_classic{
       margin-top: 20px;
       width: 90%;
+    }
+
+    .tables{
+      width: 90%;
+      .classic_table:is(:first-child){
+        padding-bottom: 20px;
+      }
     }
     
     .exit{
@@ -834,6 +730,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      height: 100%;
+      box-sizing: border-box;
       input{
         height: 25px;
         width: calc(90% - 5px);
@@ -842,46 +740,10 @@
         margin: 10px;
         padding: 0 0 0 5px;
       }
-      .row_header{
-        background-color: $navyBlueLight;
-        border: 1px solid $navyBlueLight;
-        padding: 5px 10px;
-        color: white;
+
+      .table{
+        height: 300px;
         width: 90%;
-        box-sizing: border-box;
-        p{
-          margin: 0;
-        }
-      }
-      .rows{
-        width: 90%;
-        max-height: 90%;
-        overflow-y: auto;
-        .row{
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          background-color: $BlueIcsLight2;
-          padding: 5px 10px;
-          border-radius: 10p;
-          font-size: 13px;
-          border: 1px solid $BlueIcs;
-          &:not(:last-child){
-            border-bottom: 0;
-          }
-          p{
-            margin: 0;
-          }
-      
-          cursor: pointer;
-          &:hover{
-            background-color: $BlueIcsLight;
-          }
-  
-          &.active{
-            background-color: $BlueIcs;
-          }
-        }
       }
 
     }
@@ -906,6 +768,10 @@
     display: flex;
     flex-direction: column;
 
+    &_table{
+      height: calc(90% - 40px);
+    }
+
     .new_appointment_button{
       margin: 10px;
       margin-right: 0;
@@ -914,61 +780,6 @@
       align-self: flex-end;
     }
 
-    &_table{
-      overflow-x: auto;
-      max-width: fit-content;
-      table{
-        width: fit-content;
-        border-spacing: 0;
-        tr.pair{
-          background-color: $BlueIcsLight;
-        }
-        p{
-          margin: 0;
-        }
-        th{
-          padding: 5px 10px;
-          width: fit-content;
-          height: fit-content;
-          background-color: $navyBlueLight;
-          color: white;
-          .th_value{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            column-gap: 5px;
-            p{
-              flex: 1;
-            }
-          }
-          &.small{
-            width: 2.5rem;
-          }
-          &.big{
-            width: 12.5rem;
-          }
-        }
-        td{
-          border: 1px $navyBlueLight solid;
-          text-align: center;
-          padding: 3px 10px;
-          cursor: pointer;
-        }
-        a{
-          display:block;
-          text-decoration:none;
-          color: black;
-        }
-        button{
-          background-color: white;
-          cursor: pointer;
-          border: 0;
-          &:hover{
-            color: $RedError;
-          }
-        }
-      }
-    }
   }
 }
 
@@ -977,6 +788,7 @@
   flex-direction: column;
   overflow-y: auto;
   padding-right: 10px;
+  background-color: white;
 
   .button_classic{
     min-height: 40px;

@@ -5,7 +5,7 @@ import { getLenguage } from '../../../utils/lenguage'
 import DiagnosisList from './DiagnosisList'
 import { usePatientContext } from '../../../hooks/usePatientContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCapsules, faEraser, faMagnifyingGlass, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faCapsules, faCheck, faCircleExclamation, faEraser, faFileImport, faFloppyDisk, faMagnifyingGlass, faTrash } from '@fortawesome/free-solid-svg-icons'
 import AddPrescription from '../patientInfo/AddPrescription'
 import Search from '../patientInfo/Search'
 import usePost from '../../../hooks/usePost'
@@ -47,6 +47,8 @@ const PatientEntries = () => {
     entry: '',
     note: ''
   })
+  const [deleteIndexEntry, setDeleteIndexEntry] = useState()
+  const [deleteIndexPres, setDeleteIndexPres] = useState()
 
   const [removedDiagnosis, setRemovedDiagnosis] = useState('')
   const handleClickDiagnosis = (diagnosis) => {
@@ -91,13 +93,15 @@ const PatientEntries = () => {
 
   const { deleteData: delPres } = useDelete()
 
-  const deletePrescription = (index) => {
+  const deletePrescription = () => {
+    const index = deleteIndexPres
     setNewEntryData((prev) => {
       delPres('/prescriptions/deletePrescription/' + prev.prescripciones[index]._id, { worker: globalData.worker._id, centre: globalData.center, removedPrincipioActivo: prev.prescripciones[index].principioActivo, patient: prev.prescripciones[index].paciente })
       const arr = [...prev.prescripciones]
       arr.splice(index, 1)
       return { ...prev, prescripciones: arr }
     })
+    setDeleteIndexPres()
   }
 
   const submitDiagnosis = (diagnosis) => {
@@ -108,6 +112,14 @@ const PatientEntries = () => {
           return <DiagnosisList updateSelectedDiagnosis={diagnosis.nombre} diagnosis={activeDiagnosis} filterDiagnosis={handleClickDiagnosis}/>
         }
         return <DiagnosisList updateSelectedDiagnosis={diagnosis.nombre} diagnosis={inactiveDiagnosis} filterDiagnosis={handleClickDiagnosis}/>
+      })
+    } else {
+      setNewEntryData((prev) => { return ({ ...prev, diagnostico: '' }) })
+      setDiagnosisComponent(() => {
+        if (status.active === 'active') {
+          return <DiagnosisList updateSelectedDiagnosis='' diagnosis={activeDiagnosis} filterDiagnosis={handleClickDiagnosis}/>
+        }
+        return <DiagnosisList updateSelectedDiagnosis='' diagnosis={inactiveDiagnosis} filterDiagnosis={handleClickDiagnosis}/>
       })
     }
     setSearch(false)
@@ -132,6 +144,8 @@ const PatientEntries = () => {
     if (patientData.patient) {
       setAllEntries(patientData.patient.entradas)
       setEntries(patientData.patient.entradas)
+      setActiveDiagnosis([])
+      setInactiveDiagnosis([])
       patientData.patient.entradas.map((entry) => {
         return entry.notas.map(nota => {
           return nota.estado === 'activo' ? setActiveDiagnosis(prev => [...prev, nota.diagnostico]) : setInactiveDiagnosis(prev => [...prev, nota.diagnostico])
@@ -158,11 +172,13 @@ const PatientEntries = () => {
 
   const { postData, error, data } = usePost()
   const { patchData: updateNote, error: errorUpdate, data: dataUpdate } = usePatch()
+  const { patchData: updatePatientBD, data: dataUpdatePatient } = usePatch()
   const { deleteData: deleteNote, error: errorDelete, data: dataDelete } = useDelete()
   const { fetchData: fetchRec, data: dataRec } = useFetch()
   const [recs, setRecs] = useState()
   const newPatient = { ...patientData.patient }
   const [errormessage, setErrorMessage] = useState('')
+  const [exit, setExit] = useState(false)
 
   const addNote = async () => {
     if (newEntryData.diagnostico === null) {
@@ -178,7 +194,7 @@ const PatientEntries = () => {
         if (getCurrentDate() === lastEntryDate) {
           newNote = { ...newNote, entryId: patientData.patient.entradas[0]._id }
           newPatient.entradas[0].notas.push(newNote)
-          updatePatient(newPatient)
+          updatePatient({ patient: newPatient })
           await postData('/entries/createNote', { newNote, centre: globalData.center, worker: globalData.worker._id, patient: patientData.patient._id })
         } else {
           const newEntry = {
@@ -232,6 +248,7 @@ const PatientEntries = () => {
       } else newPatient.entradas[modifyingNote.entry].notas = arr
       deleteNote('/entries/deleteNote/' + patientData.patient.entradas[modifyingNote.entry]._id, { newNotes: arr, patient: patientData.patient._id, centre: globalData.center, worker: globalData.worker._id, removedDiagnosis })
       setNewPatient2(newPatient)
+      setDeleteIndexEntry()
     }
   }
 
@@ -243,7 +260,7 @@ const PatientEntries = () => {
     if (error) console.log(error.response.data)
     if (data) {
       if (data.data._id) newPatient.entradas[0]._id = data.data._id
-      updatePatient(newPatient)
+      updatePatient({ patient: newPatient })
       setNewEntryData(() => {
         return {
           motivo: '',
@@ -265,7 +282,7 @@ const PatientEntries = () => {
   useEffect(() => {
     if (errorUpdate) console.log(errorUpdate.response.data)
     if (dataUpdate) {
-      updatePatient(newPatient)
+      updatePatient({ patient: newPatient })
       setNewEntryData(() => {
         return {
           motivo: '',
@@ -287,7 +304,7 @@ const PatientEntries = () => {
   useEffect(() => {
     if (errorDelete) console.log(errorDelete.response.data)
     if (dataDelete) {
-      updatePatient(newPatient2)
+      updatePatient({ patient: newPatient2 })
       setNewEntryData(() => {
         return {
           motivo: '',
@@ -383,9 +400,101 @@ const PatientEntries = () => {
     })
   }
 
+  const handleChangeDiagnosticStatus = (type) => {
+    if (type === 'active') {
+      setNewEntryData((prev) => { return { ...prev, estado: 'activo' } })
+      setStatus((prev) => {
+        setDiagnosisComponent(() => {
+          const newActiveDiagnosis = activeDiagnosis
+          const newInactiveDiagnosis = inactiveDiagnosis
+          const index = newInactiveDiagnosis.indexOf(newEntryData.diagnostico)
+          newActiveDiagnosis.push(newEntryData.diagnostico)
+          newInactiveDiagnosis.splice(index, 1)
+          setActiveDiagnosis(newActiveDiagnosis)
+          setInactiveDiagnosis(newInactiveDiagnosis)
+          if (prev.active === 'active') {
+            return <DiagnosisList updateSelectedDiagnosis={lastDiagnosis} diagnosis={newActiveDiagnosis} filterDiagnosis={handleClickDiagnosis}/>
+          }
+          return <DiagnosisList updateSelectedDiagnosis={lastDiagnosis} diagnosis={newInactiveDiagnosis} filterDiagnosis={handleClickDiagnosis}/>
+        })
+        return prev
+      })
+    } else {
+      setNewEntryData((prev) => { return { ...prev, estado: 'inactivo' } })
+      setStatus((prev) => {
+        setDiagnosisComponent(() => {
+          const newActiveDiagnosis = activeDiagnosis
+          const newInactiveDiagnosis = inactiveDiagnosis
+          const index = newActiveDiagnosis.indexOf(newEntryData.diagnostico)
+          newActiveDiagnosis.splice(index, 1)
+          newInactiveDiagnosis.push(newEntryData.diagnostico)
+          setActiveDiagnosis(newActiveDiagnosis)
+          setInactiveDiagnosis(newInactiveDiagnosis)
+          if (prev.active === 'active') {
+            return <DiagnosisList updateSelectedDiagnosis={lastDiagnosis} diagnosis={activeDiagnosis} filterDiagnosis={handleClickDiagnosis}/>
+          }
+          return <DiagnosisList updateSelectedDiagnosis={lastDiagnosis} diagnosis={inactiveDiagnosis} filterDiagnosis={handleClickDiagnosis}/>
+        })
+        return prev
+      })
+    }
+  }
+
+  useEffect(() => {
+    if (dataUpdatePatient) {
+      const newPatient = { ...patientData.patient }
+      newPatient.antecedentes = newEntryData.antecedentes
+      updatePatient({ patient: newPatient })
+      setExit(true)
+      setTimeout(function () {
+        setExit(false)
+      }, 5000)
+    }
+  }, [dataUpdatePatient])
+
+  const saveAntecedentes = () => {
+    updatePatientBD('/patients/' + patientData.patient._id + '/updatePatient', { antecedentes: newEntryData.antecedentes })
+  }
+
+  const importAntecedentes = () => {
+    setNewEntryData((prev) => { return { ...prev, antecedentes: patientData.patient.antecedentes } })
+  }
+
   return (
     entries
       ? <div className="patient_entries">
+        {
+          deleteIndexEntry
+            ? <>
+              <div className="overlay">
+                <div className="overlay_box">
+                  <FontAwesomeIcon icon={faCircleExclamation} className='icon'/>
+                  <p>{leng.seguroNota}</p>
+                  <div className="overlay_box_buttons">
+                    <button type='button' onClick={handleDeleteNote} className='button_classic accept'>Eliminar</button>
+                    <button type='button' onClick={() => setDeleteIndexEntry()} className='button_classic cancel'>{leng.cancelar}</button>
+                  </div>
+                </div>
+              </div>
+            </>
+            : null
+        }
+        {
+          deleteIndexPres || deleteIndexPres === 0
+            ? <>
+              <div className="overlay">
+                <div className="overlay_box">
+                  <FontAwesomeIcon icon={faCircleExclamation} className='icon'/>
+                  <p>{leng.seguroPrescripcion}</p>
+                  <div className="overlay_box_buttons">
+                    <button type='button' onClick={deletePrescription} className='button_classic accept'>Eliminar</button>
+                    <button type='button' onClick={() => setDeleteIndexPres()} className='button_classic cancel'>{leng.cancelar}</button>
+                  </div>
+                </div>
+              </div>
+            </>
+            : null
+        }
         {
           !showAddPrescription
             ? <>
@@ -424,7 +533,7 @@ const PatientEntries = () => {
                         {
                           modifyingNote.entry === ''
                             ? <button type='button' onClick={handleDeleteNote} className='button_classic trash'><FontAwesomeIcon icon={faEraser}/></button>
-                            : <button type='button' onClick={handleDeleteNote} className='button_classic trash'><FontAwesomeIcon icon={faTrash}/></button>
+                            : <button type='button' onClick={() => setDeleteIndexEntry(1)} className='button_classic trash'><FontAwesomeIcon icon={faTrash}/></button>
                         }
                         </div>
                         <div className="entryForm_anamsesio">
@@ -432,7 +541,13 @@ const PatientEntries = () => {
                           <label>{leng.motivo}</label>
                           <textarea name="motivo" id="" rows="2" onChange={({ target }) => setNewEntryData((prev) => { return { ...prev, motivo: target.value } })} value={newEntryData.motivo}></textarea>
                           <label>{leng.antecedentes}</label>
-                          <textarea name="antecedentes" id="" rows="4" onChange={({ target }) => setNewEntryData((prev) => { return { ...prev, antecedentes: target.value } })} value={newEntryData.antecedentes}></textarea>
+                          <div className="antecedentes">
+                            <textarea name="antecedentes" id="" rows="4" onChange={({ target }) => setNewEntryData((prev) => { return { ...prev, antecedentes: target.value } })} value={newEntryData.antecedentes}></textarea>
+                            <div className="antecedentes_buttons">
+                              <button className='button_classic' type='button' onClick={importAntecedentes}><FontAwesomeIcon className='icon' icon={faFileImport}/></button>
+                              <button className='button_classic'type='button' onClick={saveAntecedentes}><FontAwesomeIcon className={exit ? 'icon exit' : 'icon noexit'} icon={exit ? faCheck : faFloppyDisk}/></button>
+                            </div>
+                          </div>
                           <label>{leng.clinica}</label>
                           <textarea name="clinica" id="" rows="4" onChange={({ target }) => setNewEntryData((prev) => { return { ...prev, clinica: target.value } })} value={newEntryData.clinica}></textarea>
                         </div>
@@ -466,6 +581,13 @@ const PatientEntries = () => {
                           }
                           <label>{leng.descripcion}</label>
                           <textarea name="desc_diagnostico" id="" rows="4" onChange={({ target }) => setNewEntryData((prev) => { return { ...prev, descDiagnostico: target.value } })} value={newEntryData.descDiagnostico}></textarea>
+                          <div className="estado_diagnostico">
+                            <label>Estado del diagnostico:</label>
+                            <input type="radio" checked={newEntryData.estado === 'activo'} value={leng.hombre} name="inputEstado" onChange={() => handleChangeDiagnosticStatus('active')} required="required"/>
+                            <p>{leng.activo}</p>
+                            <input type="radio" checked={newEntryData.estado === 'inactivo'} value={leng.mujer} name="inputEstado" onChange={() => handleChangeDiagnosticStatus('inactive')} required="required"/>
+                            <p>{leng.inactivo}</p>
+                          </div>
                         </div>
                         <div className="entryForm_plan_terapeutico">
                           <div className="float_title">{leng.plan}</div>
@@ -483,7 +605,7 @@ const PatientEntries = () => {
                                         return (
                                           <div key={index} className="prescription">
                                             <div className="prescription_name">{prescription.nombreMedicamento}</div>
-                                            <button type='button' onClick={() => { deletePrescription(index) }} className='delete_prescription_button'><FontAwesomeIcon icon={faTrash}/></button>
+                                            <button type='button' onClick={() => setDeleteIndexPres(index)} className='delete_prescription_button'><FontAwesomeIcon icon={faTrash}/></button>
                                           </div>
                                         )
                                       })
@@ -506,7 +628,7 @@ const PatientEntries = () => {
                               ? <div className="error"><p className="error_message">{errormessage}</p></div>
                               : null
                           }
-                          <button className='button_classic addNote' onClick={addNote}>{leng.guardar}</button>
+                          <button type='button' className='button_classic addNote' onClick={addNote}>{leng.guardar}</button>
                         </div>
                       </form>
                       <div className="patient_entries_container_diagnosis">

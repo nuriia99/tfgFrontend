@@ -12,9 +12,12 @@ export const getDate = (date) => {
 export const getHour = (date) => {
   const d = new Date(date)
   let hour = d.getHours() - 1
-  if (hour < 10) hour = '0' + hour
+  if (hour === -1) hour = '23'
+  else if (hour === 0) hour = '00'
+  else if (hour < 10) hour = '0' + hour
   let minute = d.getMinutes()
-  if (minute < 10) minute = '0' + minute
+  if (minute === 0) minute = '00'
+  else if (minute < 10) minute = '0' + minute
   return hour + ':' + minute
 }
 

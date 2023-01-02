@@ -2,7 +2,7 @@ import { React, useState, useEffect } from 'react'
 import { useGlobalContext } from '../../../hooks/useGlobalContext'
 import { usePatientContext } from '../../../hooks/usePatientContext'
 // import { getLenguage } from '../../../utils/lenguage'
-import { getName } from '../../../utils/utils'
+import { getHour, getName } from '../../../utils/utils'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRightFromBracket, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import usePost from '../../../hooks/usePost'
@@ -14,13 +14,13 @@ import SearchForm from '../../home/SearchForm'
 import DatePicker from 'react-date-picker'
 import { Option, Select } from '../../home/Select'
 
-const AddAppointment = ({ type, quitAddAppointment, modifying }) => {
+const AddAppointment = ({ type, quitAddAppointment, modifying, patient }) => {
   const { globalData, updateData } = useGlobalContext()
   const leng = getLenguage(globalData.lenguage, 'patient')
   const { patientData, updatePatient } = usePatientContext()
   // const [error, setError] = useState(null)
   const [appointment, setAppointment] = useState({
-    paciente: patientData.patient._id,
+    paciente: patientData ? patientData.patient._id : patient._id,
     fecha: new Date(),
     hora: '10:30',
     especialidad: globalData.role,
@@ -35,6 +35,7 @@ const AddAppointment = ({ type, quitAddAppointment, modifying }) => {
 
   useEffect(() => {
     if (patientData) setPatients([patientData.patient])
+    else setPatients([patient])
     if (globalData.schedules === null) fetchData('/schedules/getSchedules', { centro: globalData.center })
     else {
       setData(globalData.schedules)
@@ -47,16 +48,14 @@ const AddAppointment = ({ type, quitAddAppointment, modifying }) => {
       })
     }
     if (modifying) {
-      console.log(modifying)
       setAppointment(prev => {
         const date = new Date(modifying.fecha)
-        const hour = (date.getHours() - 1 < 10 ? '0' + (date.getHours() - 1) : (date.getHours() - 1)) + ':' + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes())
         return (
           {
             ...prev,
             paciente: modifying.paciente,
             fecha: modifying.fecha,
-            hora: hour,
+            hora: getHour(date),
             trabajador: modifying.trabajador,
             especialidad: modifying.especialidad,
             agenda: modifying.agenda,
@@ -114,9 +113,11 @@ const AddAppointment = ({ type, quitAddAppointment, modifying }) => {
         else if (dataAppointment.data.message === 'El trabajador no tiene ese turno asignado') setError(leng.errorTurno)
         else setError(leng.errorPasado)
       } else {
-        const newPatient = { ...patientData.patient }
-        newPatient.citasPrevias.push({ ...appointment, _id: dataAppointment.data._id })
-        updatePatient(newPatient)
+        if (patientData) {
+          const newPatient = { ...patientData.patient }
+          newPatient.citasPrevias.push({ ...appointment, _id: dataAppointment.data._id })
+          updatePatient({ patient: newPatient })
+        }
         quitAddAppointment()
       }
     }
@@ -129,17 +130,17 @@ const AddAppointment = ({ type, quitAddAppointment, modifying }) => {
         else if (dataPatch.data.message === 'El trabajador no tiene ese turno asignado') setError(leng.errorTurno)
         else setError(leng.errorPasado)
       } else {
-        const newPatient = { ...patientData.patient }
-        const newAppointments = newPatient.citasPrevias.map((a) => {
-          console.log(a, dataPatch)
-          if (a._id === dataPatch.data._id) {
-            a = { ...appointment, _id: dataPatch.data._id }
-          }
-          return a
-        })
-        newPatient.citasPrevias = newAppointments
-        console.log(newPatient)
-        updatePatient(newPatient)
+        if (patientData) {
+          const newPatient = { ...patientData.patient }
+          const newAppointments = newPatient.citasPrevias.map((a) => {
+            if (a._id === dataPatch.data._id) {
+              a = { ...appointment, _id: dataPatch.data._id }
+            }
+            return a
+          })
+          newPatient.citasPrevias = newAppointments
+          updatePatient({ patient: newPatient })
+        }
         quitAddAppointment()
       }
     }
@@ -166,7 +167,7 @@ const AddAppointment = ({ type, quitAddAppointment, modifying }) => {
             <div className="addAppointment_time">
               <div className='addAppointment_time_item'>
                 <label>Hora: </label>
-                <input type="time" value={appointment.hora} name="inputCIP" onChange={({ target }) => setAppointment((prev) => { return { ...prev, hora: target.value } })} required="required"/>
+                <input type="time" value={appointment.hora} name="inputTime" onChange={({ target }) => setAppointment((prev) => { return { ...prev, hora: target.value } })} required="required"/>
               </div>
               <div>
                 <label>Fecha: </label>
