@@ -22,7 +22,7 @@ const PatientInfo = ({ handleClickPrincipalComponent }) => {
     info
       ? <div className="patient_info">
           <p name='entries' onClick={handleClickPrincipalComponent} className='patient_info_name'><FontAwesomeIcon className='icon' icon={faHospitalUser}/>{getName(info.nombre, info.apellido1, info.apellido2)}</p>
-          <div className='patient_info_line'>
+          <div className='patient_info_line2'>
             <p className='title'>{leng.edad}: {info.edad} {leng.años} - {leng.sexo}: {info.sexo} - {leng.genero}: {info.genero}</p>
             <button className={'patient_info_line_button ' + active} onClick={handleClick}><FontAwesomeIcon className='icon' icon={faAnglesDown}/></button>
           </div>

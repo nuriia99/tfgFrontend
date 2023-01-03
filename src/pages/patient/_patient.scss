@@ -1,6 +1,12 @@
 .patient {
   width: 100%;
   height: calc(100vh - 50px);
+  @include breakpoint-down(medium){
+    margin-top: 50px;
+    height: fit-content;
+    min-height: calc(100vh - 50px);
+    box-sizing: border-box;
+  }
   &_container{
     background-color: $BlueIcsLight2;
     height: 100%;
@@ -9,6 +15,10 @@
     max-height: calc(100vh - 50px);
     display: flex;
     box-sizing: border-box;
+    @include breakpoint-down(medium){
+      flex-direction: column;
+      max-height: fit-content;
+    }
 
     &_right{
       position: relative;
@@ -16,9 +26,15 @@
       background-color: white;
       border-radius: 10px;
       margin: 10px;
-        box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
-        transition: all 0.5s ease-in-out;
+      box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+      transition: all 0.5s ease-in-out;
+      box-sizing: border-box;
+      @include breakpoint-up(medium){
         min-width: 400px;
+      }
+      @include breakpoint-down(medium){
+        margin-top: 0;
+      }
     }
     
     &_left{
@@ -28,14 +44,8 @@
       padding: 10px;
       box-sizing: border-box;
       row-gap: 10px;
-      &::-webkit-scrollbar{
-        width: 8px;
-        background: $BlackLight2;
-        border-radius: 0 8px 8px 0;
-      }
-      &::-webkit-scrollbar-thumb{
-        background: $navyBlue;
-        border-radius: 0 8px 8px 0;
+      @include breakpoint-down(medium){
+        width: 100%;
       }
       
       &_info{

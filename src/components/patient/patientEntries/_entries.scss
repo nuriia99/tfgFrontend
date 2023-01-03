@@ -7,11 +7,17 @@
   padding: 20px;
   padding-top: 40px;
   box-sizing: border-box;
+  @include breakpoint-down(medium){
+    min-width: 100%;
+  }
   &_container{
     height: 100%;
     width: 100%;
     display: flex;
     position: relative;
+    @include breakpoint-down(medium){
+      flex-direction: column;
+    }
 
     .navbar_entries{
       position: absolute;
@@ -25,6 +31,9 @@
         }
         margin-top: 5px;
       }
+      @include breakpoint-down(medium){
+        top: -35px;
+      }
     }
 
     &_addEntry{
@@ -34,6 +43,9 @@
       background-color: $BlueIcsLight2;
       display: flex;
       justify-content: space-between;
+      @include breakpoint-down(medium){
+        flex-direction: column;
+      }
       
       .entryForm{
         flex: 1;
@@ -44,7 +56,6 @@
         padding: 10px 0;
         padding-top: 15px;
 
-        
 
         
         .button_classic{
@@ -129,6 +140,13 @@
               margin: 0;
               padding: 0 6px;
             }
+            @include breakpoint-down(medium){
+              flex-direction: column;
+              &_row{
+                display: flex;
+                padding: 3px;
+              }
+            }
           }
         }
 
@@ -199,6 +217,9 @@
           box-sizing: border-box;
           display: flex;
           justify-content: space-between;
+          @include breakpoint-down(medium){
+            width: 83%;
+          }
           .search_button, .delete_prescription_button{
             background-color: white;
             border: 0;
@@ -245,6 +266,9 @@
           width: 90%;
           resize: none;
           border: 1px solid $BlackLight2;
+          @include breakpoint-down(medium){
+            width: 83%;
+          }
         }
       }
       .patient_entries_container_diagnosis{
@@ -257,14 +281,8 @@
       overflow-y: auto;
       width: 70%;
       background-color: $greyLight;
-      &::-webkit-scrollbar{
-        width: 8px;
-        background: $BlackLight2;
-        border-radius: 0 8px 8px 0;
-      }
-      &::-webkit-scrollbar-thumb{
-        background: $navyBlue;
-        border-radius: 0 8px 8px 0;
+      @include breakpoint-down(medium){
+        min-width: 100%;
       }
       .entry{
         background-color: $BlueIcsLight2;
@@ -335,8 +353,21 @@
       box-sizing: border-box;
       height: 100%;
       min-width: 160px;
+      @include breakpoint-down(medium){
+        min-width: 100%;
+      }
       
+      &.hide-for-mobile{
+        @include breakpoint-down(medium){
+          display:none;
+        }
+      }
       
+      &.hide-for-desktop{
+        @include breakpoint-up(medium){
+          display:none;
+        }
+      }
 
       &_options{
         display: flex;

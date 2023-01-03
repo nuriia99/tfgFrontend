@@ -194,12 +194,12 @@ const AddAppointment = ({ type, quitAddAppointment, modifying, patient }) => {
                 {
                   patients
                     ? <>
-                      <div className="addAppointment_paciente_list_table">
+                      <div className="classic_table">
                         <table>
                           <thead>
                             <tr>
-                              <th>{leng.nombreCompleto}</th>
-                              <th>CIP</th>
+                              <th className='big'>{leng.nombreCompleto}</th>
+                              <th className='big'>CIP</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -208,13 +208,20 @@ const AddAppointment = ({ type, quitAddAppointment, modifying, patient }) => {
                                 let select = false
                                 if (appointment.paciente === p._id) select = true
                                 return <tr key={index} onClick={() => handleClick(p)} className={select ? 'pair' : null}>
-                                  <td>{getName(p.nombre, p.apellido1, p.apellido2)}</td>
-                                  <td>{p.cip}</td>
+                                  <td className='big'>{getName(p.nombre, p.apellido1, p.apellido2)}</td>
+                                  <td className='big'>{p.cip}</td>
                                 </tr>
                               })
                             }
                           </tbody>
                         </table>
+                        {
+                          patients.length < 1
+                            ? <>
+                              <div className='empty'>{leng.empty}</div>
+                            </>
+                            : null
+                        }
                       </div>
                     </>
                     : null

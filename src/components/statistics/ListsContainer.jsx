@@ -324,12 +324,18 @@ const ListsContainer = () => {
               <div className="lists_container_form_info_sex">
                 <div className="state">
                   <label>{leng.sexo}</label>
-                  <input type="radio" checked={parameters.sex === 'M'} value={leng.activo} name='inputM' onChange={(e) => changeParameters('M', 'sex')} required="required"/>
-                  <label>{leng.masc}</label>
-                  <input type="radio" checked={parameters.sex === 'F'} value={leng.inactivo} name='inputF' onChange={(e) => changeParameters('F', 'sex')} required="required"/>
-                  <label>{leng.fem}</label>
-                  <input type="radio" checked={parameters.sex === 'B'} value={leng.inactivo} name='inputB' onChange={(e) => changeParameters('B', 'sex')} required="required"/>
-                  <label>{leng.todos}</label>
+                  <div className="state_row">
+                    <input type="radio" checked={parameters.sex === 'M'} value={leng.activo} name='inputM' onChange={(e) => changeParameters('M', 'sex')} required="required"/>
+                    <label>{leng.masc}</label>
+                  </div>
+                  <div className="state_row">
+                    <input type="radio" checked={parameters.sex === 'F'} value={leng.inactivo} name='inputF' onChange={(e) => changeParameters('F', 'sex')} required="required"/>
+                    <label>{leng.fem}</label>
+                  </div>
+                  <div className="state_row">
+                    <input type="radio" checked={parameters.sex === 'B'} value={leng.inactivo} name='inputB' onChange={(e) => changeParameters('B', 'sex')} required="required"/>
+                    <label>{leng.todos}</label>
+                  </div>
                 </div>
               </div>
             </div>

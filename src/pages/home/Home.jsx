@@ -40,6 +40,9 @@ const Home = () => {
     }
   }, [])
 
+  window.onscroll = function (e) {
+  }
+
   const { fetchData, data: dataFetch } = useFetch()
   useEffect(() => {
     if (dataFetch) {
@@ -49,6 +52,7 @@ const Home = () => {
 
   const handleSearch = (patients) => {
     setPatients(patients)
+    setSelectedRow()
   }
 
   const submitSchedule = (schedule) => {
@@ -63,10 +67,10 @@ const Home = () => {
   const refreshSchedule = () => {
     setScheduleDay(new Date())
     setPatients()
+    setSelectedRow()
   }
 
   const handleClickRow = (paciente) => {
-    console.log(paciente)
     setSelectedRow(paciente)
   }
   const handleClickNewAppointment = (paciente) => {
@@ -142,6 +146,13 @@ const Home = () => {
                             }
                           </tbody>
                         </table>
+                        {
+                          patients.length < 1
+                            ? <>
+                              <div className='empty'>{leng.empty}</div>
+                            </>
+                            : null
+                        }
                       </div>
                       {
                         selectedRow

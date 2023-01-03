@@ -1,9 +1,18 @@
+.statistics{
+  @include breakpoint-down(medium){
+    width: 100%;
+  }
+}
 .goals{
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 100px 0;
   width: 100%;
+  @include breakpoint-down(medium){
+    overflow-x: auto;
+    width: fit-content;
+  }
   &_seccion{
     display: flex;
     align-items: center;
@@ -130,6 +139,9 @@
 .infoGoal{
   display: flex;
   flex-direction: column;
+  @include breakpoint-down(medium){
+    margin-top: 50px;
+  }
   .exit{
     width: 40px;
     align-self: flex-end;
@@ -144,6 +156,9 @@
 .listPatients{
   display: flex;
   flex-direction: column;
+  @include breakpoint-down(medium){
+    margin-top: 50px;
+  }
   .exit{
     width: 40px;
     align-self: flex-end;
@@ -263,10 +278,15 @@
         border: 1px solid $BlueIcs;
         letter-spacing: 0.0688rem;
       }
-      label{
-        font-weight: 600;
-        padding: 10px 20px;
+    label{
+      font-weight: 600;
+      padding: 10px 20px;
+      @include breakpoint-down(medium){
+        padding: 0;
+        padding-bottom: 4px;
+        margin: 0;
       }
+    }
 
     &_form{
       padding: 30px 0;
@@ -285,6 +305,11 @@
         box-sizing: border-box;
         display: flex;
         justify-content: space-between;
+        @include breakpoint-down(medium){
+          width: 100%;
+          padding-left: 0;
+          margin: 0;
+        }
         .search_button, .delete_prescription_button{
           background-color: white;
           border: 0;
@@ -306,10 +331,18 @@
         display: flex;
         align-items: center;
         width: 100%;
+        @include breakpoint-down(medium){
+          padding: 0;
+          flex-direction: column;
+        }
         
         &_age{
           width: fit-content;
           padding-right: 30px;
+          @include breakpoint-down(medium){
+            padding-top: 5px;
+            align-self: flex-start;
+          }
           label{
             padding-left: 0;
             align-self: center;
@@ -319,10 +352,23 @@
           flex: 1;
           align-self: flex-start;
           padding-bottom: 3px;
+          
           label{
             padding: 10px 7px;
             &:is(:first-child){
               padding-left: 20px;
+            }
+          }
+          @include breakpoint-down(medium){
+            .state{
+              display: flex;
+              flex-direction: column;
+              label{
+                padding-left: 0;
+              }
+              label:not(:first-child){
+                padding-left: 5px;
+              }
             }
           }
         }
@@ -330,6 +376,10 @@
       }
       &_dates{
         display: flex;
+        @include breakpoint-down(medium){
+          flex-direction: column;
+          row-gap: 10px;
+        }
         .datePicker{
           display: flex;
           align-items: center;
@@ -342,6 +392,24 @@
       &_selector{
         display: flex;
         align-items: center;
+        @include breakpoint-down(medium){
+          flex-direction: column;
+          row-gap: 10px;
+          justify-content: center;
+          align-items: flex-start; 
+          label{
+            padding-top: 10px;
+          }  
+          .select{
+            max-width: 100%;
+            padding: 3px 0;
+            .select_title{
+              padding: 10px 12px;
+              font-size: 13px;
+            }
+            
+          }
+        }
         .select{
           width: 300px;
         }
@@ -349,6 +417,10 @@
       .button_classic{
         width: 20%;
         margin: 20px;
+        @include breakpoint-down(medium){
+          width: 80px;
+          margin: 10px 0;
+        }
       }
     }
 

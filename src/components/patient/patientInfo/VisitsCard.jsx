@@ -64,6 +64,13 @@ const VisitsCard = ({ handleClickPrincipalComponent }) => {
                     }
                   </tbody>
                 </table>
+                {
+                  appoitnments.length < 1
+                    ? <>
+                      <div className='empty'>{leng.empty}</div>
+                    </>
+                    : null
+                }
               </div>
             </>
             : null

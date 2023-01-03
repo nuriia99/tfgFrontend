@@ -14,7 +14,7 @@ const Goals = () => {
 
   return (
     worker
-      ? <div>
+      ? <div className='statistics'>
       <Navbar/>
       <GoalsContainer/>
     </div>

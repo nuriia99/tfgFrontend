@@ -1,7 +1,6 @@
 body, html{
   margin: 0;
   font-family: "Segoe UI",Helvetica,Arial,sans-serif,"Segoe UI Emoji","Segoe UI Symbol";
-  background-color: $BlueIcsLight2;
 }
 
 
@@ -205,6 +204,9 @@ body, html{
   cursor: pointer;
   font-size: 14px;
   font-weight: 700;
+  @include breakpoint-down(medium){
+    height: 36px;
+  }
 }
 
 .button_tag.inactive {
@@ -221,6 +223,9 @@ body, html{
   color: $LightBlack;
   &:hover{
     background-color: $BlueIcs;
+  }
+  @include breakpoint-down(medium){
+    height: 31px;
   }
 }
 
@@ -319,6 +324,9 @@ body, html{
   width: 180px;
   background-color: white;
   padding: 10px 0;
+  @include breakpoint-down(medium){
+    width: 160px;
+  }
   .values{
     background-color: $navyBlueLight;
     width: fit-content;
@@ -428,10 +436,14 @@ body, html{
 .DatePicker{
   z-index: 3;
 }
+
 .react-calendar{
   position: fixed;
   height: fit-content;
   width: 280px;
+  @include breakpoint-down(medium){
+    width: 250px;
+  }
 }
 
 input, textarea{
@@ -451,7 +463,9 @@ input, textarea{
     tbody{
       tr {
         cursor: pointer;
+        
       }
+      
     }
     tr, thead{
       width: 100%;
@@ -515,7 +529,15 @@ input, textarea{
       }
     }
   }
+  
 }
+.empty{
+  padding: 5px;
+  box-sizing: border-box;
+  width: 100%;
+  background-color: #dadada;
+}
+
 
 .classic_table.no_selected_rows{
   tbody tr{
@@ -558,6 +580,7 @@ input, textarea{
   display: flex;
   align-items: center;
   justify-content: center;
+  
   &_box{
     width: fit-content;
     height: fit-content;
@@ -567,6 +590,9 @@ input, textarea{
     display: flex;
     flex-direction: column;
     align-items: center;
+    @include breakpoint-down(medium){
+      margin: 0 10px;
+    }
     .icon{
       width: 80px;
       height: 80px;
@@ -587,4 +613,123 @@ input, textarea{
       }
     }
   }
+}
+.overlay2{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: rgba(51,51,51,0.7);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  @include breakpoint-down(medium){
+    visibility: hidden;
+    top: 50px;
+    align-items: flex-start;
+  }
+  &_box{
+    width: fit-content;
+    height: fit-content;
+    background-color: white;
+    border-radius: 10px;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    @include breakpoint-down(medium){
+      margin-top: 30px;
+      width: 80%;
+      padding: 20px 20px;
+      row-gap: 15px;
+      &_item{
+        padding: 10px;
+        width: 90%;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        &:hover{
+          background-color: $BlueIcsLight;
+        }
+        a {
+          text-decoration:none;
+          color: black;
+        }
+      }
+      
+    }
+    .icon{
+      width: 80px;
+      height: 80px;
+      color: $RedError;
+    }
+    &_buttons{
+      display: flex;
+      column-gap: 20px;
+      button{
+        width: 80px;
+        &.cancel{
+          background-color: $RedErrorLight;
+          border: 1px solid $RedError;
+          &:hover{
+            background-color: $RedErrorLight2;
+          }
+        }
+      }
+    }
+  }
+}
+
+// mobile
+
+.hide-for-mobile{
+  @include breakpoint-down(medium){
+      display:none;
+  }
+}
+
+.hide-for-desktop{
+  @include breakpoint-up(medium){
+      display:none;
+  }
+}
+
+// keyfrmes
+
+@keyframes fade-in{
+  from{
+      visibility: hidden;
+      opacity: 0;
+  }
+  1%{
+      visibility: visible;
+      opacity: 0;
+  }
+  to{
+      visibility: visible;
+      opacity: 1;
+  }
+}
+.fade-in{
+  animation: fade-in 500ms ease-in-out forwards; 
+}
+@keyframes fade-out{
+  from{
+      visibility: visible;
+      opacity: 1;
+  }
+  99%{
+      visibility: visible;
+      opacity: 0;
+  }
+  to{
+      visibility: hidden;
+      opacity: 0;
+  }
+}
+.fade-out{
+  animation: fade-out 500ms ease-in-out forwards; 
 }

@@ -30,7 +30,7 @@ const PatientActiveIntelligence = ({ handleClick }) => {
   return (
     ai
       ? <div className='patient_ai_panel_container'>
-          <div className='patient_ai_table'>
+          <div className='patient_ai_table hide-for-mobile'>
             {
               ai.map((row, index) => {
                 if (index === 0) {
@@ -72,6 +72,41 @@ const PatientActiveIntelligence = ({ handleClick }) => {
                 }
               })
             }
+          </div>
+          <div className="patient_ai_table hide-for-desktop">
+            <div className="classic_table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>{leng.inteligenciaActiva}</th>
+                    <th>Valor</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {
+                  ai.map((row, index) => {
+                    if (index !== 0) {
+                      const name = row[0]
+                      const value = row.at(-1) !== '-' ? row.at(-1) : ''
+                      return (
+                        <tr key={index}>
+                          <td>{name}</td>
+                          <td>{value}</td>
+                        </tr>
+                      )
+                    } else return null
+                  })
+                }
+                </tbody>
+              </table>
+              {
+                ai.length < 1
+                  ? <>
+                    <div className='empty'>{leng.empty}</div>
+                  </>
+                  : null
+              }
+            </div>
           </div>
         </div>
       : null

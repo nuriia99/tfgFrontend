@@ -18,7 +18,8 @@ export const homeEs = {
   comentario: 'Comentario',
   nombreCompleto: 'Nombre completo',
   cursoClinico: 'Ver curso clínico',
-  consulta: 'Nueva consulta'
+  consulta: 'Nueva consulta',
+  empty: 'No se han encontrado datos.'
 }
 
 export const homeCa = {
@@ -41,5 +42,6 @@ export const homeCa = {
   comentario: 'Comentari',
   nombreCompleto: 'Nombre complet',
   cursoClinico: 'Veure curs clínic',
-  consulta: 'Nova consulta'
+  consulta: 'Nova consulta',
+  empty: 'No s\'han trobat dades.'
 }

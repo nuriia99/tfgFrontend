@@ -6,6 +6,11 @@
   padding: 10px;
   box-sizing: border-box;
   justify-content: center;
+  @include breakpoint-down(medium){
+    margin-top: 50px;
+    height: fit-content;
+    min-height: calc(100vh - 50px);
+  }
   .addAppointment{
     padding: 20px;
     border-radius: 10px;
@@ -18,6 +23,12 @@
     background-color: white;
     border-radius: 10px;
     box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+    @include breakpoint-down(medium){
+      flex-direction: column;
+      min-width: 0;
+      align-items: center;
+      height: 100%;
+    }
 
     &_left{
       height: 100%;
@@ -25,13 +36,27 @@
       border-right: 1px solid $BlueIcs;
       padding-top: 10px;
       box-sizing: border-box;
-      overflow-y: auto;
+      
+      @include breakpoint-up(medium){
+        overflow-y: auto;
+      }
+      @include breakpoint-down(medium){
+        border: 0;
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex: 1;
+      }
       &_search{
         margin: 10px;
         margin-top: 18px;
         min-width: 200px;
         border: 1px solid $BlueIcs;
         position: relative;
+        @include breakpoint-down(medium){
+          width: 90%;
+        }
         span{
           position: absolute;
           z-index: 1;
@@ -118,6 +143,9 @@
         min-width: 200px;
         border: 1px solid $BlueIcs;
         position: relative;
+        @include breakpoint-down(medium){
+          width: 90%;
+        }
         &_title{
           position: absolute;
           z-index: 1;
@@ -162,37 +190,63 @@
       min-width: 220px;
       padding: 40px;
       box-sizing: border-box;
-      overflow-y: auto;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      @include breakpoint-up(medium){
+        overflow-y: auto;
+      }
+      @include breakpoint-down(medium){
+        height: 400px;
+        padding: 40px 0;
+      }
       .classic_table {
         box-sizing: border-box;
         height: 78%;
+        @include breakpoint-down(medium){
+          height: fit-content;
+        }
       }
 
       .schedule{
         height: 100%;
         box-sizing: border-box;
+        @include breakpoint-down(medium){
+          height: fit-content;
+        }
         
         &_infoPatient{
           height: 22%;
           max-height: 105px;
           box-sizing: border-box;
-          overflow-y: auto;
           border: 1px solid $navyBlueLight;
           padding: 10px;
           display: flex;
           flex-direction: column;
           justify-content: space-around;
+          @include breakpoint-up(medium){
+            overflow-y: auto;
+          }
+          @include breakpoint-down(medium){
+            margin-top: 30px;
+            height: fit-content;
+            max-height: max-content;
+          }
           &_row{
             display: flex;
             justify-content: space-between;
             column-gap: 20px;
+            @include breakpoint-down(medium){
+              flex-direction: column;
+              align-items: center;
+            }
 
             &_items{
               display: flex;
               align-items: center;
+              @include breakpoint-down(medium){
+              flex-direction: column;
+            }
             }
             p{
               margin: 0;

@@ -213,7 +213,7 @@ const AddPrescription = ({ diagnosis, quitAddPrescription, addPrescription, modi
                 ? <div className="error"><p className="error_message">{error}</p></div>
                 : null
             }
-            <button onClick={submitPres} className='button_classic'>{modifying ? leng.guardar : leng.añadir }</button>
+            <button onClick={submitPres} className='button_classic hide-for-mobile'>{modifying ? leng.guardar : leng.añadir }</button>
           </div>
           <div className="addPrescription_container_right">
             <div className="seccions">
@@ -273,6 +273,7 @@ const AddPrescription = ({ diagnosis, quitAddPrescription, addPrescription, modi
               </div>
             </div>
             <div className="exit">
+              <button onClick={submitPres} className='button_classic hide-for-desktop'>{modifying ? leng.guardar : leng.añadir }</button>
               <button onClick={quitAddPrescription} className='button_classic'><FontAwesomeIcon className='icon' icon={faArrowRightFromBracket}/></button>
             </div>
           </div>

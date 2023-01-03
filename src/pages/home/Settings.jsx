@@ -13,10 +13,10 @@ const Settings = () => {
   }, [])
   return (
     worker
-      ? <div>
+      ? <>
       <Navbar/>
       <ProfileSettings />
-    </div>
+    </>
       : null
   )
 }

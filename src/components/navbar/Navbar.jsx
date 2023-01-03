@@ -8,10 +8,46 @@ const Navbar = () => {
   const { globalData } = useGlobalContext()
   const leng = getLenguage(globalData.lenguage, 'statistics')
   const [select, setSelect] = useState('')
+  const [open, setOpen] = useState('')
+
+  visualViewport.onresize = () => {
+    if (visualViewport.width > 1023) {
+      setOpen('')
+    }
+  }
+  const handleOpen = () => {
+    setOpen(prev => {
+      if (prev === '') return 'open fade-in'
+      else if (prev === 'open fade-in') return 'close fade-out'
+      else if (prev === 'close fade-out') return 'open fade-in'
+    })
+  }
+
   return (
       <div id="navbar" className='navbar'>
         <div className="navbar_container">
-          <div className="navbar_container_links">
+          <div className={ open === 'open fade-in' ? 'navbar_mobile hide-for-desktop open' : 'navbar_mobile hide-for-desktop'}>
+            <a href='/app/home'><FontAwesomeIcon icon={faHouseChimney} className='button'/></a>
+            <a onClick={handleOpen} id="btn-ham" className='header-toggle'>
+              <span></span>
+              <span></span>
+              <span></span>
+            </a>
+            <div className={'overlay2 ' + open}>
+              <div className="overlay2_box">
+                <div className="overlay2_box_item">
+                  <a href='/app/settings' className='settings_button'>{leng.configuracion}</a>
+                </div>
+                <div className="overlay2_box_item">
+                  <a href="/app/goals" onMouseOver={() => setSelect('objetivos')}>{leng.objetivos}</a>
+                </div>
+                <div className="overlay2_box_item">
+                  <a href="/app/lists" onMouseOver={() => setSelect('listados')}>{leng.listados}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="navbar_container_links hide-for-mobile">
             <a href='/app/home'><FontAwesomeIcon icon={faHouseChimney} className='button'/></a>
             <div className="goals">
               <a href='/app/goals' className='goals_button'><FontAwesomeIcon icon={faChartLine} className='button_chart'/><p>{leng.estadisticas}</p></a>
@@ -21,7 +57,7 @@ const Navbar = () => {
               </ul>
             </div>
           </div>
-          <span className="navbar_container_items">
+          <span className="navbar_container_items hide-for-mobile">
             <p className='navbar_container_item'>{globalData.worker.nombre}</p>
             <p className='navbar_container_item'> - </p>
             <p className='navbar_container_item'>{globalData.role}</p>

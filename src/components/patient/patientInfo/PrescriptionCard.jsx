@@ -58,6 +58,19 @@ const PrescriptionCard = ({ handleClickPrincipalComponent }) => {
             }
           </tbody>
         </table>
+        {
+          uniquePrescription
+            ? <>
+              {
+                [...uniquePrescription].length < 1
+                  ? <>
+                    <div className='empty'>{leng.empty}</div>
+                  </>
+                  : null
+              }
+            </>
+            : null
+        }
       </div>
     </div>
     </>

@@ -87,6 +87,13 @@ const Schedule = ({ idSchedule, scheduleDay, isCuap, handleClickNewAppointment }
                         }
                       </tbody>
                     </table>
+                    {
+                      scheduleData.citasPrevias.length < 1
+                        ? <>
+                          <div className='empty'>{leng.empty}</div>
+                        </>
+                        : null
+                    }
                   </div>
                   {
                     selectedRow
@@ -146,6 +153,13 @@ const Schedule = ({ idSchedule, scheduleDay, isCuap, handleClickNewAppointment }
                         }
                     </tbody>
                   </table>
+                  {
+                    scheduleData.visitasUrgencia.length < 1
+                      ? <>
+                        <div className='empty'>{leng.empty}</div>
+                      </>
+                      : null
+                  }
                 </div>
             }
           </>

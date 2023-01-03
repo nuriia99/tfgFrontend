@@ -129,6 +129,13 @@ const PrescriptionList = () => {
                             }
                             </tbody>
                           </table>
+                          {
+                            prescriptions.length < 1
+                              ? <>
+                                <div className='empty'>{leng.empty}</div>
+                              </>
+                              : null
+                          }
                         </div>
                       </div>
                   </>

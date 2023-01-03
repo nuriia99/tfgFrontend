@@ -1,0 +1,18 @@
+
+// 640px, 1024px, 1400px -> for every device grater than
+$breakpoints-up: ("medium": "64em");
+//639px, 1023px, 1399px -> for every device smaller than
+$breakpoints-down: ("medium": "63.937em");
+
+@mixin breakpoint-up($size) {
+    @media(min-width: map-get($breakpoints-up, $size)){
+        @content;
+    }
+}
+
+@mixin breakpoint-down($size) {
+    @media(max-width: map-get($breakpoints-down, $size)){
+        @content;
+    }
+}
+

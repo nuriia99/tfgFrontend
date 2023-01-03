@@ -31,12 +31,32 @@
     }
   }
 
+  &_line2{
+    display:flex;
+    justify-content: left;
+    align-self: center;
+    max-height: fit-content;
+    transition: all 0.4s;
+    width: 100%;
+    .title{
+      padding-bottom: 4px;
+      font-weight: 600;
+      color: rgba(74,85,104, 1);
+      font-size: 14px;
+    }
+    .value{
+      padding-bottom: 4px;
+      font-size: 14px;
+    }
+  }
+
   &_line{
     display:flex;
     justify-content: left;
     align-self: center;
     max-height: fit-content;
     transition: all 0.4s;
+    width: 100%;
     
     .title{
       padding-bottom: 4px;
@@ -47,6 +67,16 @@
     .value{
       padding-bottom: 4px;
       font-size: 14px;
+    }
+
+    @include breakpoint-down(medium){
+      align-self: flex-start;
+      min-width: auto;
+      flex-direction: column;
+      .title, .value{
+        padding: 0 0 4px 20px;
+      }
+      
     }
 
     &_button{
@@ -73,11 +103,15 @@
     &.active{
       visibility: visible;
       max-height: 200px;
+      @include breakpoint-down(medium){
+        max-height: 340px;
+      }
       opacity: 1;
     }
     .title{
       padding: 0 5px 4px 20px;
     }
+    
     
   }
   
@@ -145,6 +179,16 @@
       margin: 20px;
       display: grid;
       overflow-x: auto;
+      &.hide-for-mobile{
+        @include breakpoint-down(medium){
+            display:none;
+        }
+      }
+      &.hide-for-desktop{
+        @include breakpoint-up(medium){
+            display:none;
+        }
+      }
 
       &_row{
         display: flex;
@@ -431,6 +475,9 @@
     width: 100%;
     display: flex;
     position: relative;
+    @include breakpoint-down(medium){
+      flex-direction: column;
+    }
     
 
     &_left{
@@ -441,6 +488,9 @@
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
+      @include breakpoint-down(medium){
+        border: 0;
+      }
 
       .error{
         align-self: center;
@@ -495,6 +545,9 @@
           display: flex;
           justify-content: space-between;
           align-items: center;
+          @include breakpoint-down(medium){
+            width: 80%;
+          }
           
           .search_button, .delete_prescription_button{
             background-color: white;
@@ -526,6 +579,9 @@
             border-right: 1px solid $BlueIcs;
             background-color: $BlueIcsLight2;
             letter-spacing: 0.0688rem;
+            @include breakpoint-down(medium){
+              padding: 5px 5px;
+            }
         }
 
         label{
@@ -561,6 +617,10 @@
       flex-direction: column;
       justify-content: space-between;
       box-sizing: border-box;
+      @include breakpoint-down(medium){
+        width: 100%;
+        min-width: fit-content;
+      }
 
       .exit{
         width: 30px;
@@ -570,7 +630,25 @@
             color: $RedError;
           }
         }
+        @include breakpoint-down(medium){
+          display: flex;
+          column-gap: 10px;
+          width: 100%;
+          padding-top: 10px;
+          button.hide-for-desktop{
+            width: 600%;
+            &:hover{
+              color: $LightBlack;
+            }
+          }
+        }
       }
+      @include breakpoint-down(medium){
+        .seccions{
+          width: 100%;
+        }
+      }
+      
 
       .seccion{
         margin-top: 10px;
@@ -580,6 +658,10 @@
         position: relative;
         padding: 20px 5px;
         box-sizing: border-box;
+        @include breakpoint-down(medium){
+          width: 100%;
+          min-width: fit-content;
+        }
 
         &:not(:first-child){
           margin-top: 25px;
@@ -600,6 +682,9 @@
             border-right: 1px solid $BlueIcs;
             background-color: $BlueIcsLight2;
             letter-spacing: 0.0688rem;
+            @include breakpoint-down(medium){
+              padding: 5px 7px;
+            }
         }
 
         label{
@@ -619,6 +704,9 @@
         p{
           padding: 0 5px;
           margin: 0;
+          @include breakpoint-down(medium){
+            width: 10px;
+          }
         }
         input{
           width: 40px;
@@ -629,6 +717,12 @@
           padding: 10px;
           display: flex;
           width: 100%;
+          @include breakpoint-down(medium){
+            flex-direction: column;
+            box-sizing: border-box;
+            width: 200px;
+            margin: 0;
+          }
           &_radio{
             display: grid;
             grid-template-areas: 
@@ -789,6 +883,9 @@
   overflow-y: auto;
   padding-right: 10px;
   background-color: white;
+  @include breakpoint-down(medium){
+    padding-right: 0;
+  }
 
   .button_classic{
     min-height: 40px;
@@ -970,6 +1067,21 @@
       align-items: center;
       display: flex;
       gap: 15px;
+      @include breakpoint-down(medium){
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start; 
+        label{
+          padding-top: 10px;
+        }  
+        .select{
+          max-width: 100%;
+          .select_title{
+            padding: 10px 12px;
+          }
+          
+        }
+      }
     }
   }
   &_time{
@@ -977,6 +1089,9 @@
     align-items: center;
     &_item{
       padding-right: 20px;
+      @include breakpoint-down(medium){
+        padding-right: 0;
+      }
     }
   }
 }

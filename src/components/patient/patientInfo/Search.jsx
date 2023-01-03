@@ -34,7 +34,7 @@ const Search = ({ type, submit }) => {
     } else if (type === 'diagnosis') {
       fetchData('/prescriptions/searchDiagnosis/?name=' + name)
     } else {
-      if (globalData.schedules === null) fetchData('/schedules/getSchedules', { centro: globalData.center, name })
+      if (globalData.schedules === null || name !== '') fetchData('/schedules/getSchedules', { centro: globalData.center, name })
       else {
         updateData({ schedules: dataFetch })
         splitSchedules(globalData.schedules)
@@ -125,6 +125,13 @@ const Search = ({ type, submit }) => {
                                 }
                               </tbody>
                             </table>
+                            {
+                              data.length < 1
+                                ? <>
+                                  <div className='empty'>{leng.empty}</div>
+                                </>
+                                : null
+                            }
                           </div>
                         </div>
                         <button onClick={() => { submit(data[rowSelected]) }} className='button_classic'>{leng.escoger}</button>
@@ -150,6 +157,13 @@ const Search = ({ type, submit }) => {
                                 }
                               </tbody>
                             </table>
+                            {
+                              activeSchedules.length < 1
+                                ? <>
+                                  <div className='empty'>{leng.empty}</div>
+                                </>
+                                : null
+                            }
                           </div>
                           <div className="classic_table">
                             <table>
@@ -170,6 +184,13 @@ const Search = ({ type, submit }) => {
                                 }
                               </tbody>
                             </table>
+                            {
+                              inactiveSchedules.length < 1
+                                ? <>
+                                  <div className='empty'>{leng.empty}</div>
+                                </>
+                                : null
+                            }
                           </div>
                         </div>
                         <button onClick={() => { submit(rowSelectedActive !== undefined ? activeSchedules[rowSelectedActive] : inactiveSchedules[rowSelectedInactive]) }} className='button_classic'>{leng.escoger}</button>

@@ -97,6 +97,13 @@ const DocumentsList = () => {
                 }
                 </tbody>
               </table>
+              {
+                documentos.length < 1
+                  ? <>
+                    <div className='empty'>{leng.empty}</div>
+                  </>
+                  : null
+              }
             </div>
           </div>
         </div>

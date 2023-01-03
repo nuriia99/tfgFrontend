@@ -88,7 +88,8 @@ export const patientEs = {
   seguroDocumento: '¿Seguro que quieres eliminar el documento?',
   seguroVisita: '¿Seguro que quieres eliminar la visita?',
   seguroPrescripcion: '¿Seguro que quieres eliminar la prescripción?',
-  seguroNota: '¿Seguro que quieres eliminar la nota?'
+  seguroNota: '¿Seguro que quieres eliminar la nota?',
+  empty: 'No se han encontrado datos.'
 }
 
 export const patientCa = {
@@ -181,5 +182,6 @@ export const patientCa = {
   seguroDocumento: 'Segur que vols eliminar el document?',
   seguroVisita: 'Segur que vols eliminar la visita?',
   seguroPrescripcion: 'Segur que vols eliminar la prescripció?',
-  seguroNota: 'Segur que vols eliminar la nota?'
+  seguroNota: 'Segur que vols eliminar la nota?',
+  empty: 'No s\'han trobat dades.'
 }

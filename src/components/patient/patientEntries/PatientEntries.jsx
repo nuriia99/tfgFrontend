@@ -61,9 +61,11 @@ const PatientEntries = () => {
           } else {
             const newEntries = []
             allEntries.forEach((entry) => {
+              let isDiagnosis = false
               entry.notas.forEach(nota => {
-                if (nota.diagnostico.nombre === diagnosis.nombre) newEntries.push(entry)
+                if (nota.diagnostico.nombre === diagnosis.nombre) isDiagnosis = true
               })
+              if (isDiagnosis) newEntries.push(entry)
             })
             setEntries(newEntries)
             return diagnosis.nombre
@@ -506,16 +508,27 @@ const PatientEntries = () => {
                 {
                   principalComponent === 'entries'
                     ? <>
+                    <div className="patient_entries_container_diagnosis hide-for-desktop">
+                      <div className="patient_entries_container_diagnosis_options">
+                        <button id='active_section' name="active" onClick={handleActive} className={'button_tag ' + status.active}>{leng.activo}</button>
+                        <button id='inactive_section' name="inactive" onClick={handleActive} className={'button_tag ' + status.inactive}>{leng.inactivo}</button>
+                      </div>
+                      <div className="patient_entries_container_diagnosis_list">
+                        {diagnosisComponent}
+                      </div>
+                    </div>
                     <div className="patient_entries_container_list">
                     {
                       entries.map((entry, index) => {
                         return (
+                          <>
                           <PatientEntry clickNote={(note) => { clickNote(index, note) }} key={entry._id} entry={entry}></PatientEntry>
+                          </>
                         )
                       })
                     }
                     </div>
-                    <div className="patient_entries_container_diagnosis">
+                    <div className="patient_entries_container_diagnosis hide-for-mobile">
                       <div className="patient_entries_container_diagnosis_options">
                         <button id='active_section' name="active" onClick={handleActive} className={'button_tag ' + status.active}>{leng.activo}</button>
                         <button id='inactive_section' name="inactive" onClick={handleActive} className={'button_tag ' + status.inactive}>{leng.inactivo}</button>
@@ -561,6 +574,15 @@ const PatientEntries = () => {
                         <div className="entryForm_diagnostico">
                           <div className="float_title">{leng.orientacion}</div>
                           <label>{leng.diagnostico}</label>
+                          <div className="patient_entries_container_diagnosis hide-for-desktop">
+                            <div className="patient_entries_container_diagnosis_options">
+                              <button id='active_section' name="active" onClick={handleActive} className={'button_tag ' + status.active}>{leng.activo}</button>
+                              <button id='inactive_section' name="inactive" onClick={handleActive} className={'button_tag ' + status.inactive}>{leng.inactivo}</button>
+                            </div>
+                            <div className="patient_entries_container_diagnosis_list">
+                              {diagnosisComponent}
+                            </div>
+                          </div>
                           <div className="search">
                             <div className="diagnosis">{newEntryData.diagnostico ? newEntryData.diagnostico.nombre : '' }</div>
                             <button type='button' onClick={() => { setSearch(true) }} className='search_button'><FontAwesomeIcon icon={faMagnifyingGlass}/></button>
@@ -583,10 +605,14 @@ const PatientEntries = () => {
                           <textarea name="desc_diagnostico" id="" rows="4" onChange={({ target }) => setNewEntryData((prev) => { return { ...prev, descDiagnostico: target.value } })} value={newEntryData.descDiagnostico}></textarea>
                           <div className="estado_diagnostico">
                             <label>Estado del diagnostico:</label>
-                            <input type="radio" checked={newEntryData.estado === 'activo'} value={leng.hombre} name="inputEstado" onChange={() => handleChangeDiagnosticStatus('active')} required="required"/>
-                            <p>{leng.activo}</p>
-                            <input type="radio" checked={newEntryData.estado === 'inactivo'} value={leng.mujer} name="inputEstado" onChange={() => handleChangeDiagnosticStatus('inactive')} required="required"/>
-                            <p>{leng.inactivo}</p>
+                            <div className="estado_diagnostico_row">
+                              <input type="radio" checked={newEntryData.estado === 'activo'} value={leng.hombre} name="inputEstado" onChange={() => handleChangeDiagnosticStatus('active')} required="required"/>
+                              <p>{leng.activo}</p>
+                            </div>
+                            <div className="estado_diagnostico_row">
+                              <input type="radio" checked={newEntryData.estado === 'inactivo'} value={leng.mujer} name="inputEstado" onChange={() => handleChangeDiagnosticStatus('inactive')} required="required"/>
+                              <p>{leng.inactivo}</p>
+                            </div>
                           </div>
                         </div>
                         <div className="entryForm_plan_terapeutico">
@@ -631,15 +657,15 @@ const PatientEntries = () => {
                           <button type='button' className='button_classic addNote' onClick={addNote}>{leng.guardar}</button>
                         </div>
                       </form>
-                      <div className="patient_entries_container_diagnosis">
-                          <div className="patient_entries_container_diagnosis_options">
-                            <button id='active_section' name="active" onClick={handleActive} className={'button_tag ' + status.active}>{leng.activo}</button>
-                            <button id='inactive_section' name="inactive" onClick={handleActive} className={'button_tag ' + status.inactive}>{leng.inactivo}</button>
-                          </div>
-                          <div className="patient_entries_container_diagnosis_list">
-                            {diagnosisComponent}
-                          </div>
+                      <div className="patient_entries_container_diagnosis hide-for-mobile">
+                        <div className="patient_entries_container_diagnosis_options">
+                          <button id='active_section' name="active" onClick={handleActive} className={'button_tag ' + status.active}>{leng.activo}</button>
+                          <button id='inactive_section' name="inactive" onClick={handleActive} className={'button_tag ' + status.inactive}>{leng.inactivo}</button>
                         </div>
+                        <div className="patient_entries_container_diagnosis_list">
+                          {diagnosisComponent}
+                        </div>
+                      </div>
                     </div>
                     </>
                 }

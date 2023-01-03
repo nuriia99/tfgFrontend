@@ -14,7 +14,8 @@ export const prescriptionEs = {
   durante: 'Durante:',
   guardar: 'Guardar prescripción',
   añadir: 'Añadir prescripción',
-  indefinido: 'indefinido'
+  indefinido: 'indefinido',
+  empty: 'No se han encontrado datos.'
 }
 
 export const prescriptionCa = {
@@ -33,5 +34,6 @@ export const prescriptionCa = {
   durante: 'Durant:',
   indefinido: 'indefinit',
   guardar: 'Desar prescripció',
-  añadir: 'Afegir prescripció'
+  añadir: 'Afegir prescripció',
+  empty: 'No s\'han trobat dades.'
 }
