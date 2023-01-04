@@ -102,21 +102,21 @@ const PrescriptionList = () => {
                       </div>
                       <div className="prescriptions_container_button"><button className='capsules_button' onClick={() => { setShowAddPrescription(true) }}><FontAwesomeIcon className='icon' icon={faCapsules}/></button></div>
                       <div className="prescriptions_container_table">
-                        <div className="classic_table">
-                          <table>
-                            <thead>
-                              <tr>
-                                <th>{leng.nombreMedicamento}</th>
-                                <th>{leng.principioActivo}</th>
-                                <th className='small'>{leng.frecuencia}</th>
-                                <th className='small'>{leng.duracion}</th>
-                                <th className='small'></th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                            {
-                              prescriptions
-                                ? <>
+                        {
+                          prescriptions
+                            ? <>
+                            <div className="classic_table">
+                              <table>
+                                <thead>
+                                  <tr>
+                                    <th>{leng.nombreMedicamento}</th>
+                                    <th>{leng.principioActivo}</th>
+                                    <th className='small'>{leng.frecuencia}</th>
+                                    <th className='small'>{leng.duracion}</th>
+                                    <th className='small'></th>
+                                  </tr>
+                                </thead>
+                                <tbody>
                                 {
                                   prescriptions.map((prescription, index) => {
                                     return (
@@ -124,19 +124,19 @@ const PrescriptionList = () => {
                                     )
                                   })
                                 }
-                                </>
-                                : null
-                            }
-                            </tbody>
-                          </table>
-                          {
-                            prescriptions.length < 1
-                              ? <>
-                                <div className='empty'>{leng.empty}</div>
-                              </>
-                              : null
-                          }
-                        </div>
+                                </tbody>
+                              </table>
+                              {
+                                prescriptions.length < 1
+                                  ? <>
+                                    <div className='empty'>{leng.empty}</div>
+                                  </>
+                                  : null
+                              }
+                            </div>
+                            </>
+                            : null
+                        }
                       </div>
                   </>
                 }
