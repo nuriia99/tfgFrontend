@@ -348,15 +348,23 @@ const ListsContainer = () => {
                 <div className="lists_container_result">
                   <span className='title'>{leng.listaPacientes}</span>
                   <label>{leng.resultadosFinales}</label>
-                  <div className="listPatients_container_row">
-                    <div className="little_value">{leng.pacientes}</div>
-                    <div className="little_value">{leng.hombres}</div>
-                    <div className="little_value">{leng.mujeres}</div>
-                  </div>
-                  <div className="listPatients_container_row values border">
-                    <div className="little_value">{dataPatients.length}</div>
-                    <div className="little_value">{result.numHombres}</div>
-                    <div className="little_value">{result.numMujeres}</div>
+                  <div className="classic_table">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>{leng.pacientes}</th>
+                          <th>{leng.hombres}</th>
+                          <th>{leng.mujeres}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td>{dataPatients.length}</td>
+                        <td>{result.numHombres}</td>
+                        <td>{result.numMujeres}</td>
+                      </tr>
+                      </tbody>
+                    </table>
                   </div>
                   <label>{leng.listaPacientes}</label>
                   <div className="selectorAI">
@@ -368,8 +376,12 @@ const ListsContainer = () => {
                     }
                   </div>
                   </div>
+                  <div className="exportButtons hide-for-desktop">
+                    <button className='excelButton' onClick={() => handleClickExport('xlsx')}><FontAwesomeIcon className='icon' icon={faFileExcel}/></button>
+                    <button className='pdfButton' onClick={() => handleClickExport('pdf')}><FontAwesomeIcon className='icon' icon={faFilePdf}/></button>
+                  </div>
                   <div className="table" id='table'>
-                    <div className="exportButtons">
+                    <div className="exportButtons hide-for-mobile">
                       <button className='excelButton' onClick={() => handleClickExport('xlsx')}><FontAwesomeIcon className='icon' icon={faFileExcel}/></button>
                       <button className='pdfButton' onClick={() => handleClickExport('pdf')}><FontAwesomeIcon className='icon' icon={faFilePdf}/></button>
                     </div>

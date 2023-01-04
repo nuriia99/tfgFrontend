@@ -1176,6 +1176,11 @@ input, textarea {
 .report {
   padding: 10px;
 }
+@media (max-width: 63.937em) {
+  .report {
+    margin-top: 50px;
+  }
+}
 .report .addPrescription_container_left .button_classic {
   margin: 10px;
   margin-top: 0;
@@ -1208,6 +1213,11 @@ input, textarea {
   box-sizing: border-box;
   align-items: center;
 }
+@media (max-width: 63.937em) {
+  .report .patient_report_container_infoReport .patient_report_container_datosPaciente {
+    flex-direction: column;
+  }
+}
 .report .patient_report_container_infoReport .patient_report_container_datosPaciente .button_classic {
   width: 140px;
 }
@@ -1227,6 +1237,15 @@ input, textarea {
   padding: 20px;
   box-sizing: border-box;
 }
+@media (max-width: 63.937em) {
+  .report .patient_report_container_infoReport .reportForm_datosInforme {
+    height: 205px;
+    padding-top: 30px;
+  }
+  .report .patient_report_container_infoReport .reportForm_datosInforme .float_title {
+    width: 75%;
+  }
+}
 .report .patient_report_container_infoReport .reportForm_datosInforme p {
   margin: 0;
   padding-right: 20px;
@@ -1238,6 +1257,17 @@ input, textarea {
 .report .patient_report_container_infoReport .reportForm_datosInforme .horas, .report .patient_report_container_infoReport .reportForm_datosInforme .visita {
   display: flex;
   padding: 3px 0;
+}
+.report .patient_report_container_infoReport .reportForm_datosInforme .horas .visita_row, .report .patient_report_container_infoReport .reportForm_datosInforme .visita .visita_row {
+  display: flex;
+}
+.report .patient_report_container_infoReport .reportForm_datosInforme .horas .visita_row p, .report .patient_report_container_infoReport .reportForm_datosInforme .visita .visita_row p {
+  padding-left: 4px;
+}
+@media (max-width: 63.937em) {
+  .report .patient_report_container_infoReport .reportForm_datosInforme .horas, .report .patient_report_container_infoReport .reportForm_datosInforme .visita {
+    flex-direction: column;
+  }
 }
 .report .patient_report_container_infoReport .reportForm_datosInforme .box {
   background-color: white;
@@ -1448,6 +1478,23 @@ input, textarea {
   min-height: 245px;
   max-height: 514px;
   min-width: 160px;
+}
+@media (max-width: 63.937em) {
+  .report .patient_report_container_diagnosis {
+    border: 0;
+    margin-top: 0;
+    width: 100%;
+  }
+}
+@media (max-width: 63.937em) {
+  .report .patient_report_container_diagnosis.hide-for-mobile {
+    display: none;
+  }
+}
+@media (min-width: 64em) {
+  .report .patient_report_container_diagnosis.hide-for-desktop {
+    display: none;
+  }
 }
 .report .patient_report_container_diagnosis_options {
   display: flex;
@@ -2199,6 +2246,11 @@ input, textarea {
   width: 90%;
   height: 90%;
   overflow-y: auto;
+}
+@media (max-width: 63.937em) {
+  .panel {
+    max-height: 146px;
+  }
 }
 
 .prescriptions {
@@ -3083,13 +3135,13 @@ input, textarea {
   margin: 0;
   padding: 0 6px;
 }
+.patient_entries_container_addEntry .entryForm_diagnostico .estado_diagnostico_row {
+  display: flex;
+  padding: 3px;
+}
 @media (max-width: 63.937em) {
   .patient_entries_container_addEntry .entryForm_diagnostico .estado_diagnostico {
     flex-direction: column;
-  }
-  .patient_entries_container_addEntry .entryForm_diagnostico .estado_diagnostico_row {
-    display: flex;
-    padding: 3px;
   }
 }
 .patient_entries_container_addEntry .entryForm_plan_terapeutico {
@@ -3617,6 +3669,11 @@ input, textarea {
   background-color: white;
   box-sizing: border-box;
 }
+@media (max-width: 63.937em) {
+  .lists_container {
+    padding: 0 20px;
+  }
+}
 .lists_container span.title {
   position: absolute;
   z-index: 1;
@@ -3792,9 +3849,24 @@ input, textarea {
   flex-direction: column;
   justify-content: center;
 }
+@media (max-width: 63.937em) {
+  .lists_container_result .classic_table {
+    max-width: 400px;
+  }
+}
 .lists_container_result .exportButtons {
   display: flex;
   justify-content: flex-end;
+}
+@media (max-width: 63.937em) {
+  .lists_container_result .exportButtons.hide-for-mobile {
+    display: none;
+  }
+}
+@media (min-width: 64em) {
+  .lists_container_result .exportButtons.hide-for-desktop {
+    display: none;
+  }
 }
 .lists_container_result .exportButtons .excelButton {
   margin-left: 20px;

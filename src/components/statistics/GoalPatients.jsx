@@ -33,54 +33,88 @@ const GoalPatients = ({ goal, handleBack }) => {
           <div className="listPatients_container_name">
             <h3>{goal.codigo} - {goal.nombre}</h3>
           </div>
-          <div className="listPatients_container_row">
-            <div className="res">{leng.resuelto}</div>
-            <div className="no_res">{leng.noResuelto}</div>
-            <div className="total">{leng.pacientes}</div>
-          </div>
-          <div className="listPatients_container_row values">
-            <div className="res">{goal.pacientesCompletados.length}</div>
-            <div className="no_res">{goal.pacientesTotales.length - goal.pacientesCompletados.length}</div>
-            <div className="total">{goal.pacientesTotales.length}</div>
+          <div className="classic_table no_selected_rows">
+            <table>
+              <thead>
+                <tr>
+                  <th>{leng.resuelto}</th>
+                  <th>{leng.noResuelto}</th>
+                  <th>{leng.pacientes}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{goal.pacientesCompletados.length}</td>
+                  <td>{goal.pacientesTotales.length - goal.pacientesCompletados.length}</td>
+                  <td>{goal.pacientesTotales.length}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
           <h4>{leng.listaPacientes}</h4>
-          <div className="listPatients_container_row2">
-            <div className="cip">{leng.cip}</div>
-            <div className="name">{leng.nombre}</div>
-            <div className="telephone">{leng.telefono}</div>
+          <div className="classic_table">
+            <table>
+              <thead>
+                <tr>
+                  <th>{leng.cip}</th>
+                  <th>{leng.nombre}</th>
+                  <th>{leng.telefono}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  pacientes.pacientesACompletarData.map((patient, index) => {
+                    return (
+                      <tr key={index}>
+                        <td><a href={'/app/patients/' + patient._id}>{patient.cip}</a></td>
+                        <td><a href={'/app/patients/' + patient._id}>{getName(patient.nombre, patient.apellido1, patient.apellido2)}</a></td>
+                        <td><a href={'/app/patients/' + patient._id}>{patient.telefono}</a></td>
+                      </tr>
+                    )
+                  })
+                }
+              </tbody>
+            </table>
+            {
+              pacientes.pacientesACompletarData.length < 1
+                ? <>
+                  <div className='empty'>{leng.empty}</div>
+                </>
+                : null
+            }
           </div>
-          {
-            pacientes.pacientesACompletarData.map((patient, index) => {
-              return (
-                <a href={'/app/patients/' + patient._id} key={index}>
-                  <div className="listPatients_container_row2 values">
-                    <div className="cip">{patient.cip}</div>
-                    <div className="name">{getName(patient.nombre, patient.apellido1, patient.apellido2)}</div>
-                    <div className="telephone">{patient.telefono}</div>
-                  </div>
-                </a>
-              )
-            })
-          }
           <h4>{leng.pacientesResueltos}</h4>
-          <div className="listPatients_container_row2">
-            <div className="cip">{leng.cip}</div>
-            <div className="name">{leng.nombre}</div>
-            <div className="telephone">{leng.telefono}</div>
+          <div className="classic_table">
+            <table>
+              <thead>
+                <tr>
+                  <th>{leng.cip}</th>
+                  <th>{leng.nombre}</th>
+                  <th>{leng.telefono}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  pacientes.pacientesCompletadosData.map((patient, index) => {
+                    return (
+                      <tr key={index}>
+                        <td><a href={'/app/patients/' + patient._id}>{patient.cip}</a></td>
+                        <td><a href={'/app/patients/' + patient._id}>{getName(patient.nombre, patient.apellido1, patient.apellido2)}</a></td>
+                        <td><a href={'/app/patients/' + patient._id}>{patient.telefono}</a></td>
+                      </tr>
+                    )
+                  })
+                }
+              </tbody>
+            </table>
+            {
+              pacientes.pacientesCompletadosData.length < 1
+                ? <>
+                  <div className='empty'>{leng.empty}</div>
+                </>
+                : null
+            }
           </div>
-          {
-            pacientes.pacientesCompletadosData.map((patient, index) => {
-              return (
-                <a href={'/app/patients/' + patient._id} key={index}>
-                  <div className="listPatients_container_row2 values">
-                    <div className="cip">{patient.cip}</div>
-                    <div className="name">{getName(patient.nombre, patient.apellido1, patient.apellido2)}</div>
-                    <div className="telephone">{patient.telefono}</div>
-                  </div>
-                </a>
-              )
-            })
-          }
         </div>
       </div>
         </>

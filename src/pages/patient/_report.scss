@@ -1,5 +1,8 @@
 .report{
   padding: 10px;
+  @include breakpoint-down(medium){
+    margin-top: 50px;
+  }
   .addPrescription_container_left .button_classic{
       margin: 10px;
       margin-top: 0;
@@ -31,6 +34,9 @@
       display: flex;
       box-sizing: border-box;
       align-items: center;
+      @include breakpoint-down(medium){
+        flex-direction: column;
+      }
 
       .button_classic{
         width: 140px;
@@ -53,6 +59,13 @@
       position: relative;
       padding: 20px;
       box-sizing: border-box;
+      @include breakpoint-down(medium){
+        height: 205px;
+        padding-top: 30px;
+        .float_title{
+          width: 75%;
+        }
+      }
       p{
         margin: 0;
         padding-right: 20px;
@@ -64,6 +77,13 @@
       .horas, .visita{
         display: flex;
         padding: 3px 0;
+        .visita_row{
+          display: flex;
+          p{padding-left: 4px;}
+        }
+        @include breakpoint-down(medium){
+          flex-direction: column;
+        }
       }
 
       .box{
@@ -278,6 +298,22 @@
     min-height: 245px;
     max-height: 514px;
     min-width: 160px;
+    @include breakpoint-down(medium){
+      border: 0;
+      margin-top: 0;
+      width: 100%;
+  }
+    &.hide-for-mobile{
+      @include breakpoint-down(medium){
+          display:none;
+      }
+    }
+    
+    &.hide-for-desktop{
+      @include breakpoint-up(medium){
+          display:none;
+      }
+    }
     
     
 

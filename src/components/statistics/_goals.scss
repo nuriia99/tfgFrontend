@@ -263,6 +263,9 @@
     width: 100%;
     background-color: white;
     box-sizing: border-box;
+    @include breakpoint-down(medium){
+      padding: 0 20px;
+    }
 
     span.title{
         position: absolute;
@@ -429,10 +432,28 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
+
+      @include breakpoint-down(medium){
+        .classic_table{
+          max-width: 400px;
+        }
+    }
       
       .exportButtons{
         display: flex;
         justify-content: flex-end;
+
+        &.hide-for-mobile{
+          @include breakpoint-down(medium){
+              display:none;
+          }
+        }
+        
+        &.hide-for-desktop{
+          @include breakpoint-up(medium){
+              display:none;
+          }
+        }
 
         .excelButton{
           margin-left: 20px;

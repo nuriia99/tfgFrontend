@@ -169,6 +169,13 @@ const PatientEntries = () => {
       arr.push(prescription)
       return { ...prev, prescripciones: arr }
     })
+    console.log(prescription)
+    setNewEntryData(prev => {
+      return {
+        ...prev,
+        planTerapeutico: prescription.nombreMedicamento + ' ' + prescription.frecuencia + ' cada ' + prescription.duracion + '\n ' + prev.planTerapeutico
+      }
+    })
     setShowAddPrescription(false)
   }
 
@@ -576,8 +583,8 @@ const PatientEntries = () => {
                           <label>{leng.diagnostico}</label>
                           <div className="patient_entries_container_diagnosis hide-for-desktop">
                             <div className="patient_entries_container_diagnosis_options">
-                              <button id='active_section' name="active" onClick={handleActive} className={'button_tag ' + status.active}>{leng.activo}</button>
-                              <button id='inactive_section' name="inactive" onClick={handleActive} className={'button_tag ' + status.inactive}>{leng.inactivo}</button>
+                              <button type='button' id='active_section' name="active" onClick={handleActive} className={'button_tag ' + status.active}>{leng.activo}</button>
+                              <button type='button' id='inactive_section' name="inactive" onClick={handleActive} className={'button_tag ' + status.inactive}>{leng.inactivo}</button>
                             </div>
                             <div className="patient_entries_container_diagnosis_list">
                               {diagnosisComponent}
@@ -659,8 +666,8 @@ const PatientEntries = () => {
                       </form>
                       <div className="patient_entries_container_diagnosis hide-for-mobile">
                         <div className="patient_entries_container_diagnosis_options">
-                          <button id='active_section' name="active" onClick={handleActive} className={'button_tag ' + status.active}>{leng.activo}</button>
-                          <button id='inactive_section' name="inactive" onClick={handleActive} className={'button_tag ' + status.inactive}>{leng.inactivo}</button>
+                          <button type='button' id='active_section' name="active" onClick={handleActive} className={'button_tag ' + status.active}>{leng.activo}</button>
+                          <button type='button' id='inactive_section' name="inactive" onClick={handleActive} className={'button_tag ' + status.inactive}>{leng.inactivo}</button>
                         </div>
                         <div className="patient_entries_container_diagnosis_list">
                           {diagnosisComponent}

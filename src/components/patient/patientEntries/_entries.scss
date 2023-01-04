@@ -140,12 +140,12 @@
               margin: 0;
               padding: 0 6px;
             }
+            &_row{
+              display: flex;
+              padding: 3px;
+            }
             @include breakpoint-down(medium){
               flex-direction: column;
-              &_row{
-                display: flex;
-                padding: 3px;
-              }
             }
           }
         }

@@ -187,7 +187,35 @@ const ReportContainer = () => {
         tradSexo: leng.sexo,
         sexo: dataPatient.sexo,
         tradTitle: leng.informe,
-        paciente: dataPatient._id
+        paciente: dataPatient._id,
+        tradVisitado: leng.visitadoPor,
+        tradMed: leng.medico,
+        tradEnf: leng.enfermero,
+        med: newReportData.atencionMedico,
+        enf: newReportData.atencionEnfermero,
+        tradHoraEntrada: leng.horaEntrada,
+        horaEntrada: newReportData.horaEntrada,
+        tradHoraAsistencia: leng.horaAsistencia,
+        horaAsistencia: newReportData.horaAssistencia,
+        tradAnamnesio: leng.amnanesi,
+        anamnsesio: newReportData.clinica,
+        tradExploracion: leng.exploracion,
+        exploracion: newReportData.exploracion,
+        tradPruebasComplementarias: leng.pruebas,
+        pruebasComplementarias: newReportData.pruebasComplementarias,
+        tradDiagnositco: leng.diagnostico,
+        diagnostico: newReportData.diagnostico.nombre,
+        tradPlanTerapeutico: leng.plan,
+        planTerapeutico: newReportData.planTerapeutico,
+        tradFirma: leng.firma,
+        nombreMedico: globalData.worker.nombre,
+        tradNumColegiado: leng.numColegiado,
+        numColegiado: globalData.worker.numColegiado,
+        tradTelefono: leng.telefono,
+        telefono: globalData.worker.telefono,
+        tradEspecialidad: leng.especialidad,
+        especialidad: globalData.role,
+        visitado: newReportData.atencionMedico ? leng.medico : null + ' ' + newReportData.atencionEnfermero ? leng.enfermero : null
       }
       postData('/patients/report/upload', { report: data })
       delAppointment('/schedules/deleteUrgAppointment/' + globalData.report._id, { agenda: globalData.report.agenda })
@@ -267,10 +295,14 @@ const ReportContainer = () => {
                         </div>
                         <div className="visita">
                           <label>{leng.visitadoPor}:</label>
-                          <input type="radio" checked={newReportData.atencionMedico === true} name="inputMed" onClick={handleClickMed} required="required"/>
-                          <p>{leng.medico}</p>
-                          <input type="radio" checked={newReportData.atencionEnfermero === true} name="inputEnf" onClick={handleClickEnf} required="required"/>
-                          <p>{leng.enfermero}</p>
+                          <div className="visita_row">
+                            <input type="radio" checked={newReportData.atencionMedico === true} name="inputMed" onClick={handleClickMed} required="required"/>
+                            <p>{leng.medico}</p>
+                          </div>
+                          <div className="visita_row">
+                            <input type="radio" checked={newReportData.atencionEnfermero === true} name="inputEnf" onClick={handleClickEnf} required="required"/>
+                            <p>{leng.enfermero}</p>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -302,6 +334,15 @@ const ReportContainer = () => {
                         <div className="reportForm_diagnostico">
                           <div className="float_title">{leng.orientacion}</div>
                           <label>{leng.diagnostico}</label>
+                          <div className="patient_report_container_diagnosis hide-for-desktop">
+                            <div className="patient_report_container_diagnosis_options">
+                              <button type='button' id='active_section' name="active" onClick={handleActive} className={'button_tag ' + status.active}>{leng.activo}</button>
+                              <button type='button' id='inactive_section' name="inactive" onClick={handleActive} className={'button_tag ' + status.inactive}>{leng.inactivo}</button>
+                            </div>
+                            <div className="patient_report_container_diagnosis_list">
+                              {diagnosisComponent}
+                            </div>
+                          </div>
                           <div className="search">
                             <div className="diagnosis">{newReportData.diagnostico ? newReportData.diagnostico.nombre : '' }</div>
                             <button type='button' onClick={() => { setSearch(true) }} className='search_button'><FontAwesomeIcon icon={faMagnifyingGlass}/></button>
@@ -359,10 +400,10 @@ const ReportContainer = () => {
                           <button type='button' className='button_classic addNote' onClick={addReport}>{leng.guardar}</button>
                         </div>
                       </form>
-                      <div className="patient_report_container_diagnosis">
+                      <div className="patient_report_container_diagnosis hide-for-mobile">
                           <div className="patient_report_container_diagnosis_options">
-                            <button id='active_section' name="active" onClick={handleActive} className={'button_tag ' + status.active}>{leng.activo}</button>
-                            <button id='inactive_section' name="inactive" onClick={handleActive} className={'button_tag ' + status.inactive}>{leng.inactivo}</button>
+                            <button type='button' id='active_section' name="active" onClick={handleActive} className={'button_tag ' + status.active}>{leng.activo}</button>
+                            <button type='button' id='inactive_section' name="inactive" onClick={handleActive} className={'button_tag ' + status.inactive}>{leng.inactivo}</button>
                           </div>
                           <div className="patient_report_container_diagnosis_list">
                             {diagnosisComponent}
