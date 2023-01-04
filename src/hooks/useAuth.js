@@ -12,6 +12,7 @@ export const useLogin = () => {
   const login = async (username, password) => {
     setLoading(true)
     setError(null)
+    console.log(process.env.REACT_APP_URL + '/auth/login')
     await axios.post(process.env.REACT_APP_URL + '/auth/login', { username, password })
       .then((response) => {
         const { workerData, token } = response.data
