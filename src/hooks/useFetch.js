@@ -12,7 +12,7 @@ const useFetch = (url) => {
   const fetchData = async (url, params) => {
     setLoading(true)
     try {
-      const res = await axios.get(process.env.REACT_APP_URL + url, {
+      const res = await axios.get('https://tfg-sistema-sanitario-upc-backend.onrender.com' + url, {
         headers: {
           Authorization: `Bearer ${globalData.token}`
         },

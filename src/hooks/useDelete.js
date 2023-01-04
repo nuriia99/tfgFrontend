@@ -15,7 +15,7 @@ const useDelete = (url) => {
     setError(false)
     setData()
     try {
-      await axios.delete(process.env.REACT_APP_URL + url, {
+      await axios.delete('https://tfg-sistema-sanitario-upc-backend.onrender.com' + url, {
         headers: {
           Authorization: `Bearer ${globalData.token}`
         },
