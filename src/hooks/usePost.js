@@ -15,7 +15,7 @@ const usePost = (url) => {
     setError(false)
     setData()
     try {
-      await axios.post('https://tfg-sistema-sanitario-upc-backend.onrender.com' + url, params, {
+      await axios.post(process.env.REACT_APP_URL + url, params, {
         headers: {
           Authorization: `Bearer ${globalData.token}`
         }

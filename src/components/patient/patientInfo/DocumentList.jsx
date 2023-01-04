@@ -33,7 +33,7 @@ const DocumentsList = () => {
       headers: { Authorization: `Bearer ${globalData.token}` },
       params
     }
-    axios.get('https://tfg-sistema-sanitario-upc-backend.onrender.com/patients/report/download', requestOptions
+    axios.get(process.env.REACT_APP_URL + 'https://tfg-sistema-sanitario-upc-backend.onrender.com/patients/report/download', requestOptions
     )
       .then((res) => {
         const pdf = new Blob([res.data], { type: 'application/pdf' })

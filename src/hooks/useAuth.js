@@ -12,7 +12,7 @@ export const useLogin = () => {
   const login = async (username, password) => {
     setLoading(true)
     setError(null)
-    await axios.post('https://tfg-sistema-sanitario-upc-backend.onrender.com/auth/login', { username, password })
+    await axios.post(process.env.REACT_APP_URL + '/auth/login', { username, password })
       .then((response) => {
         const { workerData, token } = response.data
         updateWorker({ workerData, token })
