@@ -15,7 +15,7 @@ const usePost = (url) => {
     setError(false)
     setData()
     try {
-      await axios.post(url, params, {
+      await axios.post(process.env.REACT_APP_URL + url, params, {
         headers: {
           Authorization: `Bearer ${globalData.token}`
         }

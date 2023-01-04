@@ -15,7 +15,7 @@ const useDelete = (url) => {
     setError(false)
     setData()
     try {
-      await axios.delete(url, {
+      await axios.delete(process.env.REACT_APP_URL + url, {
         headers: {
           Authorization: `Bearer ${globalData.token}`
         },

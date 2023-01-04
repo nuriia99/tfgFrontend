@@ -12,7 +12,7 @@ const useFetch = (url) => {
   const fetchData = async (url, params) => {
     setLoading(true)
     try {
-      const res = await axios.get(url, {
+      const res = await axios.get(process.env.REACT_APP_URL + url, {
         headers: {
           Authorization: `Bearer ${globalData.token}`
         },

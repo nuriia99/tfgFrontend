@@ -15,7 +15,7 @@ const usePatch = (url) => {
     setError(false)
     setData()
     try {
-      await axios.patch(url, params, {
+      await axios.patch(process.env.REACT_APP_URL + url, params, {
         headers: {
           Authorization: `Bearer ${globalData.token}`
         }
