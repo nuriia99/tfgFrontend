@@ -103,7 +103,7 @@ const PrescriptionList = () => {
                       <div className="prescriptions_container_button"><button className='capsules_button' onClick={() => { setShowAddPrescription(true) }}><FontAwesomeIcon className='icon' icon={faCapsules}/></button></div>
                       <div className="prescriptions_container_table">
                         {
-                          prescriptions
+                          prescriptions // check prescriptions
                             ? <>
                             <div className="classic_table">
                               <table>
