@@ -61,6 +61,9 @@ export const statisticsEs = {
   colesterolTotal: 'Colesterol Total',
   alcohol: 'Alcohol',
   drogas: 'Drogas',
+  tensionArterial: 'Tensión arterial',
+  glucemiaCapilar: 'Glucemia capilar',
+  saturacionOxigeno: 'Saturación de oxigeno',
   selectAI: 'Añade un atributo de la inteligencia activa.',
   configuracion: 'Configuración',
   empty: 'No se han encontrado datos.'
@@ -129,6 +132,9 @@ export const statisticsCa = {
   colesterolTotal: 'Colesterol Total',
   alcohol: 'Alcohol',
   drogas: 'Drogues',
+  tensionArterial: 'Tensió arterial',
+  glucemiaCapilar: 'Glucèmia capil·lar',
+  saturacionOxigeno: 'Saturació d\'oxigen',
   selectAI: 'Afegeix un atribut de la intel·ligència activa.',
   configuracion: 'Configuració',
   empty: 'No s\'han trobat dades.'

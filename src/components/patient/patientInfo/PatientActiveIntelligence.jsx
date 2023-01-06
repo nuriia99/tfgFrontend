@@ -25,7 +25,10 @@ const PatientActiveIntelligence = ({ handleClick }) => {
     ColesterolTotal: leng.colesterol,
     Alergias: leng.alergias,
     Alcohol: leng.alcohol,
-    Drogas: leng.drogas
+    Drogas: leng.drogas,
+    TensionArterial: leng.tension,
+    GlucemiaCapilar: leng.glucemia,
+    SaturacionOxigeno: leng.saturacion
   }
   return (
     ai
@@ -86,7 +89,7 @@ const PatientActiveIntelligence = ({ handleClick }) => {
                 {
                   ai.map((row, index) => {
                     if (index !== 0) {
-                      const name = row[0]
+                      const name = names[row[0].replace(/\s+/g, '')]
                       const value = row.at(-1) !== '-' ? row.at(-1) : ''
                       return (
                         <tr key={index}>

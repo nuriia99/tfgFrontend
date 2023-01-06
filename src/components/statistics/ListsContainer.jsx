@@ -31,7 +31,7 @@ const ListsContainer = () => {
     endDate: new Date(),
     currentSelect: 'Todos los pacientes'
   })
-  const AI = ['tabaquismo', 'drogas', 'alcohol', 'actividadFisica', 'valoracionPacientesCronicos', 'frecuenciaCardiaca', 'peso', 'estatura', 'colesterolTotal', 'colesterolTotal']
+  const AI = ['tabaquismo', 'drogas', 'alcohol', 'actividadFisica', 'valoracionPacientesCronicos', 'frecuenciaCardiaca', 'peso', 'estatura', 'colesterolTotal', 'colesterolTotal', 'tensionArterial', 'glucemiaCapilar', 'saturacionOxigeno']
 
   const submitDiagnosis = (diagnosis) => {
     if (diagnosis !== '') setDiagnosis(prev => [...prev, { diagnosis, statusDiagnosis: 'active' }])
@@ -184,6 +184,8 @@ const ListsContainer = () => {
         const a = newData.map((patient) => {
           let value = '-'
           patient.inteligenciaActiva.every(ia => {
+            console.log(ia.name)
+            console.log(AI[index])
             if (ia.name === AI[index]) {
               if (ia.values.length > 0) value = ia.values.at(-1).value
               return false
