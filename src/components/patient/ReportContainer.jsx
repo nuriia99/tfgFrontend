@@ -229,6 +229,12 @@ const ReportContainer = () => {
       arr.push(prescription)
       return { ...prev, prescripciones: arr }
     })
+    setNewReportData(prev => {
+      return {
+        ...prev,
+        planTerapeutico: prescription.nombreMedicamento + ' ' + prescription.frecuencia + ' cada ' + prescription.duracion + '\n ' + prev.planTerapeutico
+      }
+    })
     setShowAddPrescription(false)
   }
 
