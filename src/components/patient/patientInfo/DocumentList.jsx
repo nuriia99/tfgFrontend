@@ -26,15 +26,14 @@ const DocumentsList = () => {
     }
   }, [data])
 
-  const openPdf = (e) => {
-    const params = { reportName: e.target.getAttribute('name') }
+  const openPdf = (d) => {
+    const params = { patient: patientData.patient.id, document: d._id }
     const requestOptions = {
       responseType: 'blob',
       headers: { Authorization: `Bearer ${globalData.token}` },
       params
     }
-    axios.get(process.env.REACT_APP_URL + 'https://tfg-sistema-sanitario-upc-backend.onrender.com/patients/report/download', requestOptions
-    )
+    axios.get(process.env.REACT_APP_URL + '/patients/report/download', requestOptions)
       .then((res) => {
         const pdf = new Blob([res.data], { type: 'application/pdf' })
         const url = URL.createObjectURL(pdf)
@@ -88,8 +87,8 @@ const DocumentsList = () => {
                   documentos.map((doc, index) => {
                     return (
                       <tr className='documents_row' key={index}>
-                        <td onClick={openPdf} name={doc.pdfUrl}>{doc.nombre}</td>
-                        <td className={'small date_' + index} onClick={openPdf} name={doc.pdfUrl} >{getDate(doc.fechaSubida)}</td>
+                        <td onClick={() => openPdf(doc)} name={doc.pdfUrl}>{doc.nombre}</td>
+                        <td className={'small date_' + index} onClick={() => openPdf(doc)} name={doc.pdfUrl} >{getDate(doc.fechaSubida)}</td>
                         <td className='small' onClick={() => { setDeleteIndex(index) }}><button type='button' className='delete_prescription_button'><FontAwesomeIcon icon={faTrash}/></button></td>
                       </tr>
                     )

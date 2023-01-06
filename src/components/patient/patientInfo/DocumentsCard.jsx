@@ -10,15 +10,14 @@ const DocumentsCard = ({ handleClickPrincipalComponent }) => {
   const { globalData } = useGlobalContext()
   const { patientData } = usePatientContext()
   const leng = getLenguage(globalData.lenguage, 'patient')
-  const openPdf = (name) => {
-    const params = { reportName: name }
+  const openPdf = (d) => {
+    const params = { patient: patientData.patient.id, document: d._id }
     const requestOptions = {
       responseType: 'blob',
       headers: { Authorization: `Bearer ${globalData.token}` },
       params
     }
-    axios.get(process.env.REACT_APP_URL + '/patients/report/download', requestOptions
-    )
+    axios.get(process.env.REACT_APP_URL + '/patients/report/download', requestOptions)
       .then((res) => {
         const pdf = new Blob([res.data], { type: 'application/pdf' })
         const url = URL.createObjectURL(pdf)
@@ -46,7 +45,7 @@ const DocumentsCard = ({ handleClickPrincipalComponent }) => {
                   {
                     patientData.patient.documentos.map((doc, index) => {
                       return (
-                        <tr key={index} onClick={() => openPdf(doc.pdfUrl)}>
+                        <tr key={index} onClick={() => openPdf(doc)}>
                           <td>{doc.nombre}</td>
                         </tr>
                       )
