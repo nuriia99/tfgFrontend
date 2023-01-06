@@ -91,7 +91,7 @@ const AddAppointment = ({ type, quitAddAppointment, modifying, patient }) => {
   const handleChangeShedule = (option) => {
     data.every(s => {
       if (s.nombre === option.nombre) {
-        setAppointment(prev => { return ({ ...prev, agenda: s, trabajador: s.trabajador, especialidad: s.especialidad }) })
+        setAppointment(prev => { return ({ ...prev, agenda: s, trabajador: s.trabajador, especialidad: s.especialidad ? s.especialidad : 'Medicina general' }) })
         return false
       }
       return true

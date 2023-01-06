@@ -93,7 +93,7 @@ const VisitsList = () => {
                                   <td className='small' onClick={() => handleClickAppointment(index)}>{getHour(appointment.fecha)}</td>
                                   <td className='small' onClick={() => handleClickAppointment(index)}>{getDate(appointment.fecha)}</td>
                                   <td className='small' onClick={() => handleClickAppointment(index)}>{appointment.centro}</td>
-                                  <td onClick={() => handleClickAppointment(index)}>{getName(appointment.trabajador.nombre, appointment.trabajador.apellido1, appointment.trabajador.apellido2)}</td>
+                                  <td onClick={() => handleClickAppointment(index)}>{appointment.trabajador ? getName(appointment.trabajador.nombre, appointment.trabajador.apellido1, appointment.trabajador.apellido2) : null}</td>
                                   <td className='small' onClick={() => handleClickAppointment(index)}>{appointment.especialidad}</td>
                                   <td className='small' onClick={() => handleClickAppointment(index)}>{appointment.tipoVisita}</td>
                                   <td onClick={() => handleClickAppointment(index)}>{appointment.motivo}</td>

@@ -17,7 +17,7 @@ import useFetch from '../../hooks/useFetch'
 
 const PatientContainer = () => {
   const { globalData } = useGlobalContext()
-  const { updatePatientAndAi } = usePatientContext()
+  const { patientData, updatePatientAndAi, updatePatient } = usePatientContext()
   const leng = getLenguage(globalData.lenguage, 'patient')
   const { worker } = globalData
   const [aiPanel, setAiPanel] = useState(false)
@@ -56,6 +56,7 @@ const PatientContainer = () => {
 
   const { fetchData: fetchDataPatient, data: dataPatient } = useFetch()
   const { fetchData: fetchDataAi, data: dataAi } = useFetch()
+  const { fetchData: fetchDataAppointmens, data: dataAppointmens } = useFetch()
 
   useEffect(() => {
     fetchDataPatient('/patients/' + patientId)
@@ -63,8 +64,19 @@ const PatientContainer = () => {
   }, [])
 
   useEffect(() => {
-    if (dataPatient && dataAi) updatePatientAndAi({ dataPatient, dataAi })
+    if (dataPatient && dataAi) {
+      updatePatientAndAi({ dataPatient, dataAi })
+      fetchDataAppointmens('/schedules/getAppointments/' + patientId)
+    }
   }, [dataPatient, dataAi])
+  useEffect(() => {
+    if (dataAppointmens) {
+      console.log(dataAppointmens)
+      const newPatient = { ...patientData.patient }
+      newPatient.citasPrevias = dataAppointmens.citasPrevias
+      updatePatient({ patient: newPatient })
+    }
+  }, [dataAppointmens])
 
   return (
     <>

@@ -27,6 +27,7 @@ const Search = ({ type, submit }) => {
     diagnosis: leng.diagnosisName,
     schedule: leng.scheduleName
   }
+  console.log(globalData.schedules)
 
   useEffect(() => {
     if (type === 'med') {
@@ -49,7 +50,7 @@ const Search = ({ type, submit }) => {
     const currentDate = new Date()
     schedules.forEach(s => {
       let isActive = false
-      if (s.trabajador._id === globalData.worker._id) {
+      if (s.trabajador === null || s.trabajador._id === globalData.worker._id) {
         s.citasPrevias.every(c => {
           const appointmentDate = new Date(c.fecha)
           if (currentDate.getFullYear() === appointmentDate.getFullYear() && currentDate.getMonth() === appointmentDate.getMonth() && currentDate.getDate() === appointmentDate.getDate()) {
