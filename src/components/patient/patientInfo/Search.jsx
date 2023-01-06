@@ -27,7 +27,6 @@ const Search = ({ type, submit }) => {
     diagnosis: leng.diagnosisName,
     schedule: leng.scheduleName
   }
-  console.log(globalData.schedules)
 
   useEffect(() => {
     if (type === 'med') {

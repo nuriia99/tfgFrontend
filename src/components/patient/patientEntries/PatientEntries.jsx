@@ -169,7 +169,6 @@ const PatientEntries = () => {
       arr.push(prescription)
       return { ...prev, prescripciones: arr }
     })
-    console.log(prescription)
     setNewEntryData(prev => {
       return {
         ...prev,

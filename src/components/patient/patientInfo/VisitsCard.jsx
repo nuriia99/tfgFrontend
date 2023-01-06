@@ -7,28 +7,10 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 const VisitsCard = ({ handleClickPrincipalComponent }) => {
   const { globalData } = useGlobalContext()
-  const { patientData, updatePatient } = usePatientContext()
+  const { patientData } = usePatientContext()
   const leng = getLenguage(globalData.lenguage, 'patient')
 
-  const [appoitnments, setAppointments] = useState()
-
-  useEffect(() => {
-    const newPatient = { ...patientData.patient }
-    const newAppointments = patientData.patient.citasPrevias.filter((a) => {
-      let currentDay = new Date()
-      currentDay = currentDay.setHours(0, 0, 0, 0)
-      currentDay = new Date(currentDay)
-      currentDay = currentDay.toISOString()
-      return a.fecha > currentDay
-    })
-    newPatient.citasPrevias = newAppointments.sort((a, b) => {
-      const date1 = new Date(a.fecha)
-      const date2 = new Date(b.fecha)
-      return date1 - date2
-    })
-    setAppointments(newPatient.citasPrevias)
-    updatePatient({ patient: newPatient })
-  }, [])
+  const [appoitnments, setAppointments] = useState(patientData.patient.citasPrevias)
 
   useEffect(() => {
     setAppointments(patientData.patient.citasPrevias)

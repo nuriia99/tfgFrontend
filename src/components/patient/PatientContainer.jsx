@@ -71,9 +71,8 @@ const PatientContainer = () => {
   }, [dataPatient, dataAi])
   useEffect(() => {
     if (dataAppointmens) {
-      console.log(dataAppointmens)
       const newPatient = { ...patientData.patient }
-      newPatient.citasPrevias = dataAppointmens.citasPrevias
+      newPatient.citasPrevias = dataAppointmens
       updatePatient({ patient: newPatient })
     }
   }, [dataAppointmens])

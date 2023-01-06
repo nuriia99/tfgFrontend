@@ -45,7 +45,6 @@ const Schedule = ({ idSchedule, scheduleDay, isCuap, handleClickNewAppointment }
   }
 
   const handleClickReport = (index) => {
-    console.log(scheduleData.visitasUrgencia[index])
     updateData({ report: scheduleData.visitasUrgencia[index] })
     navigate('/app/patients/informe/' + scheduleData.visitasUrgencia[index].paciente._id)
   }
