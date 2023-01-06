@@ -1,5 +1,5 @@
 {
-  "proxy": "https://tfg-sistema-sanitario-upc.onrender.com/",
+  "proxy": "https://tfg-sistema-sanitario-upc.netlify.app",
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
