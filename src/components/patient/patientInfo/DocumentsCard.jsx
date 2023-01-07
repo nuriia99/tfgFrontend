@@ -1,28 +1,121 @@
-import { React } from 'react'
+import { React, useEffect } from 'react'
 import { useGlobalContext } from '../../../hooks/useGlobalContext'
 import { usePatientContext } from '../../../hooks/usePatientContext'
 import { getLenguage } from '../../../utils/lenguage'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import axios from 'axios'
+import useFetch from '../../../hooks/useFetch'
+import { jsPDF } from 'jspdf'
 
 const DocumentsCard = ({ handleClickPrincipalComponent }) => {
   const { globalData } = useGlobalContext()
   const { patientData } = usePatientContext()
   const leng = getLenguage(globalData.lenguage, 'patient')
-  const openPdf = (d) => {
-    const params = { patient: patientData.patient.id, document: d._id }
-    const requestOptions = {
-      responseType: 'blob',
-      headers: { Authorization: `Bearer ${globalData.token}` },
-      params
-    }
-    axios.get(process.env.REACT_APP_URL + '/patients/report/download', requestOptions)
-      .then((res) => {
-        const pdf = new Blob([res.data], { type: 'application/pdf' })
-        const url = URL.createObjectURL(pdf)
-        window.open(url, '_blank', 'noopener,noreferrer')
+  const { fetchData, data: dataRep } = useFetch()
+  const openPdf = async (d) => {
+    await fetchData('/patients/report/download', { patient: patientData.patient.id, document: d._id })
+  }
+  useEffect(() => {
+    if (dataRep) {
+      console.log(dataRep)
+      // eslint-disable-next-line new-cap
+      const pdf = new jsPDF()
+      pdf.setProperties({
+        title: dataRep.nombre
       })
+      pdf.html(htmlTemplate(JSON.parse(dataRep.pdfUrl)), {
+        callback: function (pdf) {
+          console.log('a')
+          pdf.output('dataurlnewwindow')
+        },
+        x: 15,
+        y: 15,
+        width: 170,
+        windowWidth: 650
+      })
+    }
+  }, [dataRep])
+  const htmlTemplate = (report) => {
+    return `
+    <!doctype html>
+      <html>
+        <head>
+          <meta charset="utf-8">
+          <title>PDF Result Template</title>
+        </head>
+        <body>
+          <div class="export">
+            <div class="export_title">
+              ${report.tradTitle}
+            </div>
+            <div class="export_first">
+              <div class="export_first_patientData">
+                <div class="export_first_patientData_row">
+                  <label>${report.tradName}:</label>
+                  <p>${report.name}</p>
+                </div>
+                <div class="export_first_patientData_row">
+                  <label>CIP : </label>
+                  <p>${report.cip}</p>
+                  <label>${report.tradNacimiento}</label>
+                  <p>${report.nacimiento}</p>
+                  <label>${report.tradSexo}</label>
+                  <p>${report.sexo}</p>
+                </div>
+              </div>
+            </div>
+            <div class="solid"></div>
+            <div class="export_second">
+              <div class='export_first_center'>${report.center}</div>
+              <div class="export_second_dates">
+                <label>${report.tradHoraEntrada}:</label>
+                <p className='box'>${report.horaEntrada}</p>
+                <label>${report.tradHoraAsistencia}:</label>
+                <p className='box'>${report.horaAsistencia}</p>
+              </div>
+              <div class="export_second_visita">
+                <label>${report.tradVisitado}:</label>
+                <div>
+                  <p>${report.visitado}</p>
+                </div>
+              </div>
+            </div>
+            <div class="solid"></div>
+            <div class="export_second">
+              <label>${report.tradAnamnesio}</label>
+              <div className='box'>${report.anamnsesio}</div>
+            </div>
+            <div class="export_second">
+              <label>${report.tradExploracion}</label>
+              <div className='box'>${report.exploracion}</div>
+            </div>
+            <div class="export_second">
+              <label>${report.tradPruebasComplementarias}</label>
+              <div className='box'>${report.pruebasComplementarias}</div>
+            </div>
+            <div class="export_second">
+              <label>${report.tradDiagnositco}</label>
+              <div className='box'>${report.diagnostico}</div>
+            </div>
+            <div class="export_second">
+              <label>${report.tradPlanTerapeutico}</label>
+              <div className='box'>${report.planTerapeutico}</div>
+            </div>
+            <div class="solid"></div>
+            <div class="firma">
+              <label>${report.tradFirma}</label>
+              <div>${report.nombreMedico}</div>
+              <label>${report.tradNumColegiado}</label>
+              <div>${report.numColegiado}</div>
+              <label>${report.tradTelefono}</label>
+              <div>${report.telefono}</div>
+              <label>${report.tradEspecialidad}</label>
+              <div>${report.especialidad}</div>
+            </div>
+          </div>
+        </body>
+    </html>
+      `
   }
   return (
     <div className="panel">

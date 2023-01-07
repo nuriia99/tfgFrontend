@@ -1175,6 +1175,7 @@ input, textarea {
 
 .report {
   padding: 10px;
+  background-color: #d8eefe;
 }
 @media (max-width: 63.937em) {
   .report {
@@ -1539,6 +1540,67 @@ input, textarea {
 }
 .report .patient_report_container_diagnosis_list .diagnosis_item_name {
   flex: 1;
+}
+
+.export {
+  font-family: "Segoe UI", Helvetica, Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+  position: absolute;
+  top: 0;
+  z-index: -10;
+  display: flex;
+  flex-direction: column;
+  padding: 30px 50px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.export label {
+  font-weight: 800;
+  padding: 0;
+  padding-right: 4px;
+}
+
+.export p {
+  margin: 0;
+  padding-right: 10px;
+}
+
+.export_first {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.export_first_patientData_row {
+  display: flex;
+  padding: 10px 0;
+}
+
+.export_title {
+  background-color: #0979b0;
+  margin: 15px 0;
+  padding: 5px;
+  color: white;
+}
+
+.export_second, .export_second_dates, .export_second_visita {
+  display: flex;
+  padding: 20px 0;
+}
+
+.export_second {
+  display: flex;
+  flex-direction: column;
+}
+
+.visita_row {
+  display: flex;
+}
+
+.solid {
+  background-color: #bbb;
+  height: 3px;
+  width: 100%;
 }
 
 .navbar {
