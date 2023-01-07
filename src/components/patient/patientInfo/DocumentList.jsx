@@ -6,7 +6,8 @@ import { getDate } from '../../../utils/utils'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleExclamation, faTrash } from '@fortawesome/free-solid-svg-icons'
 import useDelete from '../../../hooks/useDelete'
-import axios from 'axios'
+// import axios from 'axios'
+import { jsPDF } from 'jspdf'
 
 const DocumentsList = () => {
   const { globalData } = useGlobalContext()
@@ -27,18 +28,32 @@ const DocumentsList = () => {
   }, [data])
 
   const openPdf = (d) => {
-    const params = { patient: patientData.patient.id, document: d._id }
-    const requestOptions = {
-      responseType: 'blob',
-      headers: { Authorization: `Bearer ${globalData.token}` },
-      params
-    }
-    axios.get(process.env.REACT_APP_URL + '/patients/report/download', requestOptions)
-      .then((res) => {
-        const pdf = new Blob([res.data], { type: 'application/pdf' })
-        const url = URL.createObjectURL(pdf)
-        window.open(url, '_blank', 'noopener,noreferrer')
-      })
+    // eslint-disable-next-line new-cap
+    const pdf = new jsPDF()
+    pdf.setProperties({
+      title: 'Report'
+    })
+    pdf.html(document.querySelector('.prueba'), {
+      callback: function (pdf) {
+        pdf.output('dataurlnewwindow')
+      },
+      x: 15,
+      y: 15,
+      width: 170,
+      windowWidth: 650
+    })
+    // const params = { patient: patientData.patient.id, document: d._id }
+    // const requestOptions = {
+    //   responseType: 'blob',
+    //   headers: { Authorization: `Bearer ${globalData.token}` },
+    //   params
+    // }
+    // axios.get(process.env.REACT_APP_URL + '/patients/report/download', requestOptions)
+    //   .then((res) => {
+    //     const pdf = new Blob([res.data], { type: 'application/pdf' })
+    //     const url = URL.createObjectURL(pdf)
+    //     window.open(url, '_blank', 'noopener,noreferrer')
+    //   })
   }
 
   const deleteDoc = () => {
@@ -106,6 +121,9 @@ const DocumentsList = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className="prueba">
+        hey
       </div>
     </>
   )
