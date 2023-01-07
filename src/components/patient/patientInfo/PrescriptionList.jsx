@@ -8,12 +8,11 @@ import AddPrescription from './AddPrescription'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCapsules, faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
 
-// patient={{ allergy: globalData.patient.inteligenciaActiva.alergias, prescriptions: globalData.patient.prescripciones }}
 const PrescriptionList = () => {
   const { globalData } = useGlobalContext()
   const { patientData, updatePatient } = usePatientContext()
   const leng = getLenguage(globalData.lenguage, 'patient')
-  const allergy = patientData.patient.inteligenciaActiva.at(-1).at(-1)
+  const allergy = patientData.patient.inteligenciaActiva.at(10).at(-1)
   const currentDate = new Date()
   const [prescriptions, setPrescriptions] = useState()
   const [deleteIndex, setDeleteIndex] = useState()

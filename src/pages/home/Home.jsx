@@ -168,9 +168,9 @@ const Home = () => {
                               </div>
                               <div className="schedule_infoPatient_row">
                                 <div className='schedule_infoPatient_row_items'>
-                                  <label>Direccion: </label>
+                                  <label>{leng.direccion}</label>
                                   <p>{selectedRow.direccion}</p>
-                                  <label>Telefono: </label>
+                                  <label>{leng.telefono}</label>
                                   <p>{selectedRow.telefono}</p>
                                 </div>
                                 <button onClick={handleClickNewAppointment} className='button_classic'>{leng.consulta}</button>

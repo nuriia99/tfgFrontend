@@ -268,12 +268,18 @@ const ListsContainer = () => {
                     </div>
                     <div className="state">
                       <label>{leng.estado}</label>
-                      <input type="radio" checked={d.statusDiagnosis === 'active'} value={leng.activo} name={'inputDiagnosisActive' + index} onChange={() => changeDiagnosis(index, 'active')} required="required"/>
-                      <label>{leng.activo}</label>
-                      <input type="radio" checked={d.statusDiagnosis === 'inactive'} value={leng.inactivo} name={'inputDiagnosisInactive' + index} onChange={() => changeDiagnosis(index, 'inactive')} required="required"/>
-                      <label>{leng.inactivo}</label>
-                      <input type="radio" checked={d.statusDiagnosis === 'B'} value={leng.inactivo} name={'inputDiagnosisBoth' + index} onChange={(e) => changeDiagnosis(index, 'B')} required="required"/>
-                      <label>{leng.todos}</label>
+                      <div className="state_row">
+                        <input type="radio" checked={d.statusDiagnosis === 'active'} value={leng.activo} name={'inputDiagnosisActive' + index} onChange={() => changeDiagnosis(index, 'active')} required="required"/>
+                        <label>{leng.activo}</label>
+                      </div>
+                      <div className="state_row">
+                        <input type="radio" checked={d.statusDiagnosis === 'inactive'} value={leng.inactivo} name={'inputDiagnosisInactive' + index} onChange={() => changeDiagnosis(index, 'inactive')} required="required"/>
+                        <label>{leng.inactivo}</label>
+                      </div>
+                      <div className="state_row">
+                        <input type="radio" checked={d.statusDiagnosis === 'B'} value={leng.inactivo} name={'inputDiagnosisBoth' + index} onChange={(e) => changeDiagnosis(index, 'B')} required="required"/>
+                        <label>{leng.todos}</label>
+                      </div>
                     </div>
                   </div>
                 )
@@ -294,12 +300,18 @@ const ListsContainer = () => {
                     </div>
                     <div className="state">
                       <label>{leng.estado}</label>
-                      <input type="radio" checked={d.statusMed === 'active'} value={leng.activo} name={'inputMedActive' + index} onChange={() => changeMed(index, 'active')} required="required"/>
-                      <label>{leng.activo}</label>
-                      <input type="radio" checked={d.statusMed === 'inactive'} value={leng.inactivo} name={'inputMedInactive' + index} onChange={() => changeMed(index, 'inactive')} required="required"/>
-                      <label>{leng.inactivo}</label>
-                      <input type="radio" checked={d.statusMed === 'B'} value={leng.inactivo} name={'inputMedBoth' + index} onChange={(e) => changeMed(index, 'B')} required="required"/>
-                      <label>{leng.todos}</label>
+                      <div className="state_row">
+                        <input type="radio" checked={d.statusMed === 'active'} value={leng.activo} name={'inputMedActive' + index} onChange={() => changeMed(index, 'active')} required="required"/>
+                        <label>{leng.activo}</label>
+                      </div>
+                      <div className="state_row">
+                        <input type="radio" checked={d.statusMed === 'inactive'} value={leng.inactivo} name={'inputMedInactive' + index} onChange={() => changeMed(index, 'inactive')} required="required"/>
+                        <label>{leng.inactivo}</label>
+                      </div>
+                      <div className="state_row">
+                        <input type="radio" checked={d.statusMed === 'B'} value={leng.inactivo} name={'inputMedBoth' + index} onChange={(e) => changeMed(index, 'B')} required="required"/>
+                        <label>{leng.todos}</label>
+                      </div>
                     </div>
                   </div>
                 )

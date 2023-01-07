@@ -3801,6 +3801,22 @@ input, textarea {
   margin: 0;
   padding: 0 8px;
 }
+@media (max-width: 63.937em) {
+  .lists_container_form_diagnosis {
+    flex-direction: column;
+  }
+  .lists_container_form_diagnosis .state {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .lists_container_form_diagnosis .state_row {
+    display: flex;
+  }
+  .lists_container_form_diagnosis .state input {
+    margin-left: 8px;
+  }
+}
 .lists_container_form_info {
   padding: 10px 20px;
   display: flex;

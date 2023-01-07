@@ -19,7 +19,9 @@ export const homeEs = {
   nombreCompleto: 'Nombre completo',
   cursoClinico: 'Ver curso clínico',
   consulta: 'Nueva consulta',
-  empty: 'No se han encontrado datos.'
+  empty: 'No se han encontrado datos.',
+  telefono: 'Teléfono: ',
+  direccion: 'Dirección: '
 }
 
 export const homeCa = {
@@ -33,6 +35,8 @@ export const homeCa = {
   hombre: 'Masculí',
   mujer: 'Femení',
   edad: 'Edat',
+  telefono: 'Telèfon: ',
+  direccion: 'Direcció: ',
   visitasDia: 'Visites dia: ',
   cambiarAgenda: 'Canviar agenda',
   horaLlegada: 'Arribada',
