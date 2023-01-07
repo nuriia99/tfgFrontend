@@ -184,8 +184,6 @@ const ListsContainer = () => {
         const a = newData.map((patient) => {
           let value = '-'
           patient.inteligenciaActiva.every(ia => {
-            console.log(ia.name)
-            console.log(AI[index])
             if (ia.name === AI[index]) {
               if (ia.values.length > 0) value = ia.values.at(-1).value
               return false
@@ -210,7 +208,11 @@ const ListsContainer = () => {
         return { ...prev, selectedAI, columnasHeader: arr1, columnasValue: arr2 }
       })
     }
+    const newVector = [...result.sort]
+    newVector.push(0)
+    setResult(prev => { return { ...prev, sort: newVector } })
   }
+  console.log(result.sort)
 
   const handleClickExport = (fileExtension) => {
     if (fileExtension === 'xlsx') {
