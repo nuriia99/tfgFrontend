@@ -12,8 +12,10 @@ const PatientEntries = ({ entry, clickNote }) => {
   const lengWorker = globalData.lenguage
   const date = getDate(entry.fecha)
   const hour = getHour(entry.fecha)
+  const [originalNotes] = useState(entry.notas)
   const [notes, setNotes] = useState(entry.notas)
   const [visibility, setVisibility] = useState('')
+  const [isTranslated, setIsTranslated] = useState(false)
 
   const { postData: postDataTranslation, data: dataTranslation } = usePost()
 
@@ -26,7 +28,13 @@ const PatientEntries = ({ entry, clickNote }) => {
   }, [])
 
   const handleTraduction = async () => {
-    await postDataTranslation('/entries/translateEntry', { notas: notes, lengWorker })
+    if (!isTranslated) {
+      await postDataTranslation('/entries/translateEntry', { notas: notes, lengWorker })
+      setIsTranslated(true)
+    } else {
+      setNotes(originalNotes)
+      setIsTranslated(false)
+    }
   }
 
   return (
