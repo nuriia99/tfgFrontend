@@ -23,7 +23,13 @@ const Schedule = ({ idSchedule, scheduleDay, isCuap, handleClickNewAppointment }
   }, [idSchedule, scheduleDay])
 
   useEffect(() => {
-    setScheduleData(dataSearch)
+    if (dataSearch) {
+      console.log(dataSearch)
+      dataSearch.citasPrevias.sort((a, b) => {
+        return b.fecha > a.fecha ? -1 : 1
+      })
+      setScheduleData(dataSearch)
+    }
     // setSelectedRow()
   }, [dataSearch])
 

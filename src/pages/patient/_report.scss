@@ -1,6 +1,7 @@
 .report{
   padding: 10px;
   background-color: $BlueIcsLight2;
+  min-height: calc(100vh - 70px);
   @include breakpoint-down(medium){
     margin-top: 50px;
   }

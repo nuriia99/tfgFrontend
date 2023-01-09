@@ -1176,6 +1176,7 @@ input, textarea {
 .report {
   padding: 10px;
   background-color: #d8eefe;
+  min-height: calc(100vh - 70px);
 }
 @media (max-width: 63.937em) {
   .report {
@@ -3721,6 +3722,7 @@ input, textarea {
   padding: 100px 40px;
   width: 100%;
   box-sizing: border-box;
+  background-color: #d8eefe;
 }
 .lists_container {
   position: relative;
@@ -3793,6 +3795,16 @@ input, textarea {
   border: 0;
   cursor: pointer;
 }
+.lists_container_form .state {
+  display: flex;
+  align-items: center;
+}
+@media (max-width: 63.937em) {
+  .lists_container_form .state {
+    align-items: flex-start;
+    padding: 10px 0;
+  }
+}
 .lists_container_form_diagnosis {
   display: flex;
   align-items: center;
@@ -3808,6 +3820,7 @@ input, textarea {
   .lists_container_form_diagnosis .state {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     width: 100%;
   }
   .lists_container_form_diagnosis .state_row {

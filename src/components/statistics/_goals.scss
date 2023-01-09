@@ -255,6 +255,7 @@
   padding: 100px 40px;
   width: 100%;
   box-sizing: border-box;
+  background-color: $BlueIcsLight2;
   &_container{
     position: relative;
     border: 1px solid $BlueIcs;
@@ -320,6 +321,15 @@
         }
         
       }
+
+      .state{
+        display: flex;
+        align-items: center;
+        @include breakpoint-down(medium){
+          align-items: flex-start;
+          padding: 10px 0;
+        }
+      }
       
       &_diagnosis{
         display: flex;
@@ -333,6 +343,7 @@
           .state{
             display: flex;
             flex-direction: column;
+            align-items: flex-start;
             width: 100%;
             &_row{
               display: flex;

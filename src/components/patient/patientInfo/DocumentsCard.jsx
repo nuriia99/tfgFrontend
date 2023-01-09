@@ -83,23 +83,23 @@ const DocumentsCard = ({ handleClickPrincipalComponent }) => {
             <div class="solid"></div>
             <div class="export_second">
               <label>${report.tradAnamnesio}</label>
-              <div className='box'>${report.anamnsesio}</div>
+              <p className='box'>${report.anamnsesio}</p>
             </div>
             <div class="export_second">
               <label>${report.tradExploracion}</label>
-              <div className='box'>${report.exploracion}</div>
+              <p className='box'>${report.exploracion}</p>
             </div>
             <div class="export_second">
               <label>${report.tradPruebasComplementarias}</label>
-              <div className='box'>${report.pruebasComplementarias}</div>
+              <p className='box'>${report.pruebasComplementarias}</p>
             </div>
             <div class="export_second">
               <label>${report.tradDiagnositco}</label>
-              <div className='box'>${report.diagnostico}</div>
+              <p className='box'>${report.diagnostico}</p>
             </div>
             <div class="export_second">
               <label>${report.tradPlanTerapeutico}</label>
-              <div className='box'>${report.planTerapeutico}</div>
+              <p className='box'>${report.planTerapeutico}</p>
             </div>
             <div class="solid"></div>
             <div class="firma">
