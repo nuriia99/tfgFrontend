@@ -31,7 +31,7 @@ const ListsContainer = () => {
     endDate: new Date(),
     currentSelect: 'Todos los pacientes'
   })
-  const AI = ['tabaquismo', 'drogas', 'alcohol', 'actividadFisica', 'valoracionPacientesCronicos', 'frecuenciaCardiaca', 'peso', 'estatura', 'colesterolTotal', 'colesterolTotal', 'tensionArterial', 'glucemiaCapilar', 'saturacionOxigeno']
+  const AI = ['tabaquismo', 'drogas', 'alcohol', 'actividadFisica', 'valoracionPacientesCronicos', 'frecuenciaCardiaca', 'peso', 'estatura', 'colesterolTotal', 'tensionArterial', 'glucemiaCapilar', 'saturacionOxigeno']
 
   const submitDiagnosis = (diagnosis) => {
     if (diagnosis !== '') setDiagnosis(prev => [...prev, { diagnosis, statusDiagnosis: 'active' }])
