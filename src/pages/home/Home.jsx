@@ -58,7 +58,7 @@ const Home = () => {
   const submitSchedule = (schedule) => {
     if (schedule) {
       setAgenda(schedule)
-      setScheduleDay(new Date())
+      // setScheduleDay(new Date())
       setPatients()
     }
     setSelectS(false)
@@ -77,6 +77,7 @@ const Home = () => {
     if (paciente._id) setSelectedRow(paciente)
     setShowAddAppointment(true)
   }
+  console.log(scheduleDay)
 
   return (
     worker
