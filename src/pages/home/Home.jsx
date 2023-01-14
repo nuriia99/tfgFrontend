@@ -77,7 +77,6 @@ const Home = () => {
     if (paciente._id) setSelectedRow(paciente)
     setShowAddAppointment(true)
   }
-  console.log(scheduleDay)
 
   return (
     worker

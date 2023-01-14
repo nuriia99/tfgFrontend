@@ -17,6 +17,7 @@ const Schedule = ({ idSchedule, scheduleDay, isCuap, handleClickNewAppointment }
 
   useEffect(() => {
     const searchSchedule = async () => {
+      console.log(scheduleDay)
       await fetchDataSearch('/schedules/getSchedule/' + idSchedule, { scheduleDay, isCuap })
     }
     searchSchedule()
