@@ -528,6 +528,10 @@ input, textarea {
   background-color: white;
 }
 
+.alert {
+  color: rgb(182, 0, 0);
+}
+
 .float_title {
   position: absolute;
   z-index: 1;
@@ -2424,9 +2428,6 @@ input, textarea {
 }
 .prescriptions_container_table .table .table_row_values.duracion {
   width: 70px;
-}
-.prescriptions_container_table .table .table_row_values.alert {
-  color: rgb(182, 0, 0);
 }
 .prescriptions_container_table .table .table_row_values.delete {
   width: 20px;

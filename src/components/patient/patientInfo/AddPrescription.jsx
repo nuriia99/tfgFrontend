@@ -9,6 +9,7 @@ import usePost from '../../../hooks/usePost'
 import useFetch from '../../../hooks/useFetch'
 import usePatch from '../../../hooks/usePatch'
 import { getLenguage } from '../../../utils/lenguage'
+import _ from 'lodash'
 
 const AddPrescription = ({ diagnosis, quitAddPrescription, addPrescription, modifying }) => {
   const { globalData } = useGlobalContext()
@@ -34,6 +35,8 @@ const AddPrescription = ({ diagnosis, quitAddPrescription, addPrescription, modi
   })
   const [insPac, setInsPac] = useState('')
   const [insFar, setInsFar] = useState('')
+  const alergias = _.toUpper(patientData.patient.inteligenciaActiva.at(10).at(-1))
+  const alert = alergias.includes(prescription.principioActivo)
 
   const { fetchData: getRecs, data: dataRecs } = useFetch()
 
@@ -180,7 +183,7 @@ const AddPrescription = ({ diagnosis, quitAddPrescription, addPrescription, modi
               <div className="float_title">{leng.busqueda}</div>
               <label>{leng.elecMed}</label>
               <div className="search">
-                <div className="med">{prescription.nombreMedicamento}</div>
+                <div className={alert ? 'med alert' : 'med'}>{prescription.nombreMedicamento}</div>
                 <button type='button' onClick={() => { setSearch(true) }} className='search_button'><FontAwesomeIcon icon={faMagnifyingGlass}/></button>
               </div>
               {

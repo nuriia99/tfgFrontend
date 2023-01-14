@@ -106,6 +106,7 @@ const ListsContainer = () => {
   })
 
   useEffect(() => {
+    console.log(dataSearch)
     if (dataSearch) {
       const newData = [...dataSearch.data]
       setResult(prev => { return { ...prev, numHombres: 0, numMujeres: 0 } })
@@ -122,7 +123,7 @@ const ListsContainer = () => {
         if (index2 === 0) newVector.push(1)
         else newVector.push(0)
       })
-      setResult(prev => { return { ...prev, sort: newVector } })
+      setResult(prev => { return { ...prev, sort: newVector, columnasHeader: ['CIP', leng.nombre, leng.edad2, leng.sexo2], columnasValue: ['cip', 'nombre', 'edad', 'sexo'] } })
       const selectedAI = []
       AI.forEach(() => selectedAI.push(0))
       setResult(prev => { return { ...prev, selectedAI } })
@@ -212,7 +213,6 @@ const ListsContainer = () => {
     newVector.push(0)
     setResult(prev => { return { ...prev, sort: newVector } })
   }
-  console.log(result.sort)
 
   const handleClickExport = (fileExtension) => {
     if (fileExtension === 'xlsx') {

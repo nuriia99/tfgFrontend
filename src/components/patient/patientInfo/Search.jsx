@@ -3,10 +3,13 @@ import useFetch from '../../../hooks/useFetch'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 import { getLenguage } from '../../../utils/lenguage'
+import _ from 'lodash'
 import { useGlobalContext } from '../../../hooks/useGlobalContext'
+import { usePatientContext } from '../../../hooks/usePatientContext'
 
 const Search = ({ type, submit }) => {
   const { globalData, updateData } = useGlobalContext()
+  const { patientData } = usePatientContext()
   const leng = getLenguage(globalData.lenguage, 'patient')
   const [name, setName] = useState('')
   const { fetchData, data: dataFetch } = useFetch()
@@ -27,6 +30,7 @@ const Search = ({ type, submit }) => {
     diagnosis: leng.diagnosisName,
     schedule: leng.scheduleName
   }
+  const [alertAllergy, setAlertAllergy] = useState(false)
 
   useEffect(() => {
     if (type === 'med') {
@@ -72,6 +76,14 @@ const Search = ({ type, submit }) => {
       if (type === 'schedule') {
         updateData({ schedules: dataFetch })
         splitSchedules(dataFetch)
+      } else if (type === 'med') {
+        const newVector = []
+        const alergias = _.toUpper(patientData.patient.inteligenciaActiva.at(10).at(-1))
+        dataFetch.forEach(m => {
+          if (alergias.includes(m.principioActivo)) newVector.push(1)
+          else newVector.push(0)
+        })
+        setAlertAllergy(newVector)
       }
     }
   }, [dataFetch])
@@ -117,8 +129,8 @@ const Search = ({ type, submit }) => {
                                 {
                                   data.map((med, index) => {
                                     return (
-                                      <tr key={index} onClick={() => { handleClick(index) }} className={rowSelected === index ? 'pair med_row' : 'med_row'}>
-                                        <td>{med.nombre}</td>
+                                      <tr key={index} onClick={() => { handleClick(index) }} className={rowSelected === index ? 'pair med_row' : 'med_row '}>
+                                        <td className={ alertAllergy[index] ? 'alert' : null}>{med.nombre}</td>
                                       </tr>
                                     )
                                   })

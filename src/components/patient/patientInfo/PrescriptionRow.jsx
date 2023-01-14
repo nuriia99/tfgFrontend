@@ -6,7 +6,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
 const PrescriptionRow = ({ prescription, deletePres, modPres }) => {
   const { patientData } = usePatientContext()
-  const alergias = _.toUpper(patientData.patient.inteligenciaActiva.at(-1))
+  const alergias = _.toUpper(patientData.patient.inteligenciaActiva.at(10).at(-1))
   const alert = alergias.includes(prescription.principioActivo)
 
   return (
