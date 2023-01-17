@@ -17,7 +17,6 @@ const Schedule = ({ idSchedule, scheduleDay, isCuap, handleClickNewAppointment }
 
   useEffect(() => {
     const searchSchedule = async () => {
-      console.log(scheduleDay)
       await fetchDataSearch('/schedules/getSchedule/' + idSchedule, { scheduleDay, isCuap })
     }
     searchSchedule()
@@ -25,7 +24,6 @@ const Schedule = ({ idSchedule, scheduleDay, isCuap, handleClickNewAppointment }
 
   useEffect(() => {
     if (dataSearch) {
-      console.log(dataSearch)
       dataSearch.citasPrevias.sort((a, b) => {
         return b.fecha > a.fecha ? -1 : 1
       })

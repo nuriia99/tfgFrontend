@@ -106,7 +106,6 @@ const ListsContainer = () => {
   })
 
   useEffect(() => {
-    console.log(dataSearch)
     if (dataSearch) {
       const newData = [...dataSearch.data]
       setResult(prev => { return { ...prev, numHombres: 0, numMujeres: 0 } })

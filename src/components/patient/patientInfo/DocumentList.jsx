@@ -33,7 +33,6 @@ const DocumentsList = () => {
   }
   useEffect(() => {
     if (dataRep) {
-      console.log(dataRep)
       // eslint-disable-next-line new-cap
       const pdf = new jsPDF()
       pdf.setProperties({
@@ -41,7 +40,6 @@ const DocumentsList = () => {
       })
       pdf.html(htmlTemplate(JSON.parse(dataRep.pdfUrl)), {
         callback: function (pdf) {
-          console.log('a')
           pdf.output('dataurlnewwindow')
         },
         x: 15,
@@ -98,26 +96,13 @@ const DocumentsList = () => {
               </div>
             </div>
             <div class="solid"></div>
-            <div class="export_second">
-              <label>${report.tradAnamnesio}</label>
-              <div className='box'>${report.anamnsesio}</div>
-            </div>
-            <div class="export_second">
-              <label>${report.tradExploracion}</label>
-              <div className='box'>${report.exploracion}</div>
-            </div>
-            <div class="export_second">
-              <label>${report.tradPruebasComplementarias}</label>
-              <div className='box'>${report.pruebasComplementarias}</div>
-            </div>
-            <div class="export_second">
-              <label>${report.tradDiagnositco}</label>
-              <div className='box'>${report.diagnostico}</div>
-            </div>
-            <div class="export_second">
-              <label>${report.tradPlanTerapeutico}</label>
-              <div className='box'>${report.planTerapeutico}</div>
-            </div>
+            ${report.motivo ? `<div class="export_second"><label>${report.tradMotivo}</label><div className='box'>${report.motivo}</div></div>` : ''}
+            ${report.antecedentes ? `<div class="export_second"><label>${report.tradAntecedentes}</label><div className='box'>${report.antecedentes}</div></div>` : ''}
+            ${report.clinica ? `<div class="export_second"><label>${report.tradClinica}</label><div className='box'>${report.clinica}</div></div>` : ''}
+            ${report.exploracion ? `<div class="export_second"><label>${report.tradExploracion}</label><div className='box'>${report.exploracion}</div></div>` : ''}
+            ${report.pruebasComplementarias ? `<div class="export_second"><label>${report.tradPruebasComplementarias}</label><div className='box'>${report.pruebasComplementarias}</div></div>` : ''}
+            ${report.diagnostico ? `<div class="export_second"><label>${report.tradDiagnositco}</label><div className='box'>${report.diagnostico}</div></div>` : ''}
+            ${report.planTerapeutico ? `<div class="export_second"><label>${report.tradPlanTerapeutico}</label><div className='box'>${report.planTerapeutico}</div></div>` : ''}
             <div class="solid"></div>
             <div class="firma">
               <label>${report.tradFirma}</label>
