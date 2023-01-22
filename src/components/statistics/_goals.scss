@@ -256,6 +256,11 @@
   width: 100%;
   box-sizing: border-box;
   background-color: $BlueIcsLight2;
+  min-height: calc(100vh - 50px);
+  @include breakpoint-down(medium){
+    min-height: calc(100vh);
+  }
+
   &_container{
     position: relative;
     border: 1px solid $BlueIcs;

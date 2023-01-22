@@ -139,11 +139,14 @@ const ListsContainer = () => {
       if (result.sort[index] === 0 || result.sort[index] === 2) {
         if (index > 0) {
           newData.sort((p1, p2) => {
+            if (typeof p1[result.columnasValue[index]] === 'string' && p1[result.columnasValue[index]].replace(/[^0-9]+/g, '') !== '') {
+              return (parseInt(p1[result.columnasValue[index]].replace(/[^0-9]+/g, '')) > parseInt(p2[result.columnasValue[index]].replace(/[^0-9]+/g, ''))) ? 1 : (parseInt(p1[result.columnasValue[index]].replace(/[^0-9]+/g, '')) < parseInt(p2[result.columnasValue[index]].replace(/[^0-9]+/g, ''))) ? -1 : 0
+            }
             return (p1[result.columnasValue[index]] > p2[result.columnasValue[index]]) ? 1 : (p1[result.columnasValue[index]] < p2[result.columnasValue[index]]) ? -1 : 0
           })
         } else {
           newData.sort((p1, p2) => {
-            return (p1.nombre > p2.nombre) ? 1 : (p1.nombre < p2.nombre) ? -1 : 0
+            return (p1.cip > p2.cip) ? 1 : (p1.cip < p2.cip) ? -1 : 0
           })
         }
         const newVector = [...result.sort]
@@ -155,11 +158,14 @@ const ListsContainer = () => {
       } else {
         if (index > 0) {
           newData.sort((p1, p2) => {
+            if (typeof p1[result.columnasValue[index]] === 'string' && p1[result.columnasValue[index]].replace(/[^0-9]+/g, '') !== '') {
+              return (parseInt(p1[result.columnasValue[index]].replace(/[^0-9]+/g, '')) < parseInt(p2[result.columnasValue[index]].replace(/[^0-9]+/g, ''))) ? 1 : (parseInt(p1[result.columnasValue[index]].replace(/[^0-9]+/g, '')) > parseInt(p2[result.columnasValue[index]].replace(/[^0-9]+/g, ''))) ? -1 : 0
+            }
             return (p1[result.columnasValue[index]] < p2[result.columnasValue[index]]) ? 1 : (p1[result.columnasValue[index]] > p2[result.columnasValue[index]]) ? -1 : 0
           })
         } else {
           newData.sort((p1, p2) => {
-            return (p1.nombre < p2.nombre) ? 1 : (p1.nombre > p2.nombre) ? -1 : 0
+            return (p1.cip < p2.cip) ? 1 : (p1.cip > p2.cip) ? -1 : 0
           })
         }
         const newVector = [...result.sort]
@@ -199,10 +205,10 @@ const ListsContainer = () => {
     } else {
       selectedAI[index] = 0
       setResult(prev => {
-        const pos1 = result.columnasHeader.indexOf(AI[index])
+        const pos1 = result.columnasHeader.indexOf(leng[AI[index]])
         const arr1 = [...prev.columnasHeader]
         arr1.splice(pos1, 1)
-        const pos2 = result.columnasHeader.indexOf(AI[index])
+        const pos2 = result.columnasHeader.indexOf(leng[AI[index]])
         const arr2 = [...prev.columnasValue]
         arr2.splice(pos2, 1)
         return { ...prev, selectedAI, columnasHeader: arr1, columnasValue: arr2 }

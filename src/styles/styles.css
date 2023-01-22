@@ -3724,6 +3724,12 @@ input, textarea {
   width: 100%;
   box-sizing: border-box;
   background-color: #d8eefe;
+  min-height: calc(100vh - 50px);
+}
+@media (max-width: 63.937em) {
+  .lists {
+    min-height: 100vh;
+  }
 }
 .lists_container {
   position: relative;

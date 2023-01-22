@@ -101,6 +101,10 @@ const GoalsList = ({ handleClickCode, handleClickName }) => {
                         if (resultado < goal.objetivo / 2) colorRes = 'red'
                         else if (resultado < goal.objetivo) colorRes = 'yellow'
                         else colorRes = 'green'
+                        let puntos
+                        console.log(resultado)
+                        if (resultado < goal.objetivo) puntos = Math.round((resultado * goal.puntosTotales) / goal.objetivo)
+                        else puntos = goal.puntosTotales
                         return (
                           <div key={goal.codigo} className='goals_goal'>
                             <div onClick={() => { handleClickCode(goal) }} className='goals_goal_code'>{goal.codigo}</div>
@@ -110,7 +114,7 @@ const GoalsList = ({ handleClickCode, handleClickName }) => {
                               <Line data={graphData} options={options} height='30' width='80'></Line>
                             </div>
                             <div className='goals_goal_pac_pendientes'>{pacientesACompletar < 0 ? '0' : pacientesACompletar}</div>
-                            <div className='goals_goal_puntos'>{Math.round((resultado * goal.puntosTotales) / 100)} de {goal.puntosTotales}</div>
+                            <div className='goals_goal_puntos'>{puntos} de {goal.puntosTotales}</div>
                           </div>
                         )
                       })
