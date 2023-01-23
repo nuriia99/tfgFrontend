@@ -423,7 +423,7 @@ const ReportContainer = () => {
                         </div>
                     </div>
                   </>
-                  : <AddPrescription diagnosis={newReportData.diagnostico} addPrescription={addPrescription} quitAddPrescription={quitAddPrescription}/>
+                  : <AddPrescription diagnosis={newReportData.diagnostico} addPrescription={addPrescription} quitAddPrescription={quitAddPrescription} report={true}/>
               }
             </>
             : null

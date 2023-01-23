@@ -11,7 +11,7 @@ import usePatch from '../../../hooks/usePatch'
 import { getLenguage } from '../../../utils/lenguage'
 import _ from 'lodash'
 
-const AddPrescription = ({ diagnosis, quitAddPrescription, addPrescription, modifying }) => {
+const AddPrescription = ({ diagnosis, quitAddPrescription, addPrescription, modifying, report }) => {
   const { globalData } = useGlobalContext()
   const leng = getLenguage(globalData.lenguage, 'prescription')
   const { patientData, updatePatient } = usePatientContext()
@@ -35,7 +35,9 @@ const AddPrescription = ({ diagnosis, quitAddPrescription, addPrescription, modi
   })
   const [insPac, setInsPac] = useState('')
   const [insFar, setInsFar] = useState('')
-  const alergias = _.toUpper(patientData.patient.inteligenciaActiva.at(10).at(-1))
+  let alergias
+  if (report) alergias = _.toUpper(patientData.patient.inteligenciaActiva.at(9).values.at(-1))
+  else alergias = _.toUpper(patientData.patient.inteligenciaActiva.at(10).at(-1))
   const alert = alergias.includes(prescription.principioActivo)
 
   const { fetchData: getRecs, data: dataRecs } = useFetch()
